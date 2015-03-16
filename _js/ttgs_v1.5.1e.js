@@ -1,6 +1,28 @@
 /*
  Created by Nicholas Ronnei & Hung Le on 2/19/2015.
  */
+var parkEntrances = [
+    ['Elm Creek Park Reserve Entrance', 'http://goo.gl/DveKGN', 'Entrance identified as transit friendly, but bring your bike!  This entrance sits about 3 miles from the commuter train NSSC reccommends for accessing this park.', '45.18075934', '-93.41573883'],
+    ['Springbrook Nature Center Entrance', 'http://goo.gl/Nnryai', 'This entrance is about 0.6 miles from the bus stop NSSC identifies as a good option for accessing this park.', '45.12449237', '-93.27460761'],
+    ['Golden Valley Rd & Theodore Wirth Pkwy Entrance', 'http://goo.gl/j6wC5p', 'Take Bus 14 to reach this entrance.', '44.99928288', '-93.32272341'],
+    ['Wirth Chalet & Theodore Wirth Pkwy Entrance', 'http://goo.gl/g8xQ4h', 'Take Bus 7 to reach this entrance.', '44.99195747', '-93.32166499'],
+    ['Wayzata Blvd N & Theodore Wirth Pkwy Entrance', 'http://goo.gl/i8lgNS', 'Take Bus 9 to reach this entrance.', '44.97086952', '-93.32226364'],
+    ['Richfield Rd & Wm Berry Rd Entrance', 'http://goo.gl/ee0UMv', 'Take Bus 6 to reach this entrance.', '44.9339563', '-93.30942457'],
+    ['50th St W & Minnehaha Parkway Entrance', 'http://goo.gl/5eSXXv', 'Take buses 4 or 6 to reach this stop. This is the southernmost access to the Minneapolis Chain of Lakes, stopping just south of Lake Harriet.', '44.91287848', '-93.29798804'],
+    ['46th St & 44th Ave Entrance', 'http://goo.gl/1IBme1', 'Take Buses 46,74,84 to access this entrance.', '44.91827598', '-93.21035849'],
+    ['46th St & 46th Ave Entrance', 'http://goo.gl/ItUyWW', 'Take Bus 23 to access this entrance.', '44.9177217', '-93.21203487'],
+    ['46th St & Minneapolis Entrance', 'http://goo.gl/xqazgk', 'Take Buses 7 or 9 to access the park from this entrance.', '44.91690759', '-93.21421421'],
+    ['Hyland Lake Park Reserve Entrance', 'http://goo.gl/GJpsRg', 'Sits about 0.6 miles from the Normandale Blvd & Poplar Bridge Rd bus stop.', '44.83311265', '-93.36311821'],
+    ['MN Valley National Wildlife Refuge Entrance (Bass Ponds)', 'http://goo.gl/XJv3tr', 'Enter here for the best access to the Bass Ponds.  Take the MOA stop on the Hiawatha LRT or the 539 bus to 86th and Old Shakopee Rd.', '44.84870649', '-93.22874384'],
+    ['MN Valley National Wildlife Refuge Entrance (Visitor Center)', 'http://goo.gl/oxmd7T', 'Enter here for the best access to the Visitor Center.  Take the American Blvd stop on the Hiawatha LRT.', '44.86122776', '-93.2146195'],
+    ['Como Park Entrance', 'http://goo.gl/MA9Sjx', 'Best accessed via bus 3.', '44.97790397', '-93.14678783'],
+    ['Bruce Vento Nature Sanctuary Entrance', 'http://goo.gl/tmoQPi', 'None', '44.95255521', '-93.07390328'],
+    ['Crosby Farms Regional Park Entrance', 'http://goo.gl/zUZvRL', 'None', '44.89749832', '-93.16608086'],
+    ['Thompson County Park Entrance', 'http://goo.gl/7a4OSn', 'None', '44.91236178', '-93.07112191'],
+    ['Kaposia Park Entrance', 'http://goo.gl/fWExyl', 'None', '44.91381562', '-93.0543134'],
+    ['Fort Snelling State Park Entrance', 'http://goo.gl/l9RW3Q', 'None', '44.89244109', '-93.18290096'],
+    ['Lebanon Hills Regional Park Entrance', 'http://goo.gl/1ASLgW', 'Access via the Johnny Cake Ridge Rd stop.', '44.7730489', '-93.18736295']
+];
 
 var parkInfo = [
     ['Minnesota Valley National Wildlife Refuge', 'The Refuge has many sections along its 99 miles of the Minnesota River. Two access points are easy via transit: the Bloomington Visitor Center and the Bass Ponds. Both of these are within the Long Meadow Lake Unit. Great places to see wildlife.', '952-854-5900', '3815 American Blvd E, Bloomington, MN, 55425', 'http://goo.gl/Hxg9If', '44.82883648', '-93.23845108'],
@@ -19,15 +41,21 @@ var parkInfo = [
     ['Thompson County Park', 'This Dakota County park has a large picnic area with a view of Thompson Lake. It has trails leading to the North Urban Regional Trail, which connects to nearby Kaposia Park and the Mississippi River Regional Trail. Dakota Lodge is a four-season event center within the park. Horseshoe pits, a playground, a fishing pier, and winter activities are other amenities.\r\n', 'N/A', '360 Butler Ave E, West St. Paul, MN, 55118', 'http://goo.gl/FOdlnD', '44.90801365', '-93.06842709'],
     ['Wood Lake Nature Center', 'An urban park that has a wild feel despite proximity to I-35. Three miles of flat, wooded trails and boardwalk take you around and across lake and wetlands. Very good for birding walks. Great interpretive center.', '612-861-9365 ', '6710 Lakeshore Dr. Richfield, MN, 55423', 'http://goo.gl/lDxL6X', '44.87330418', '-93.29566872']
 ];
+
+
 var center = new google.maps.LatLng(44.958072, -93.180199);
 var ib = new InfoBox();
 var holder = new google.maps.LatLng(0, 0);
 var dirArray = [holder, holder];
+var entranceMarkers = [];
+var infoMarkers = [];
 var ds = new google.maps.DirectionsService();
 var map;
-var initialPos, userLocation, geocoder, dd, browserSupportFlag;
+var initialPos, userLocation, pos, geocoder, dd, ddFlag, browserSupportFlag;
 
 function initialize() {
+    geocoder = new google.maps.Geocoder();
+    dd = new google.maps.DirectionsRenderer();
     var mapOps = {
         zoom: 10,
         center: center,
@@ -35,12 +63,11 @@ function initialize() {
         mapTypeControl: false
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOps);
-    geocoder = new google.maps.Geocoder();
-    dd = new google.maps.DirectionsRenderer();
 
     //Start placing markers
-    setMarkers(map, parkInfo);
-
+    createParkInfo(parkInfo, infoMarkers);
+    setAllMap(infoMarkers, map);
+    createParkEntrances(parkEntrances, entranceMarkers);
     //End placing markers
 
 
@@ -58,16 +85,15 @@ function initialize() {
     if (navigator.geolocation) {  // Geolocation is possible
         browserSupportFlag = true;
         navigator.geolocation.getCurrentPosition(function (p) { // Callback for success
-            initialPos = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-            map.setCenter(initialPos);  // Center map on user's position
-            userLocation.setPosition(initialPos);  // Set marker position to user's position
-            userLocation.setMap(map);  // Update map to show change in marker
-            map.setZoom(12);  // Zoom in on user location
-            pushStartCoords(initialPos);
-        },
+                initialPos = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                map.setCenter(initialPos);  // Center map on user's position
+                userLocation.setPosition(initialPos);  // Set marker position to user's position
+                userLocation.setMap(map);  // Update map to show change in marker
+                map.setZoom(12);  // Zoom in on user location
+            },
             function () { // Handle user denial of location request
-            handleNoGeolocation(browserSupportFlag);
-        });
+                handleNoGeolocation(browserSupportFlag);
+            });
     } else {  // Browser doesn't support Geolocation
         browserSupportFlag = false;
         handleNoGeolocation(browserSupportFlag);
@@ -94,22 +120,32 @@ function initialize() {
         wrongLocationWindow.open(map, userLocation);
     });
 
-    // Trigger wrongLocationWindow after pin drops
-    if (userPin.show == true) {
-        delayedInfo(1200, function() {
-            google.maps.event.trigger(userLocation, 'click');
-        })
-    }
+    //// Trigger wrongLocationWindow after pin drops
+    //if (userPin.show == true) {
+    //    delayedInfo(1200, function() {
+    //        google.maps.event.trigger(userLocation, 'click');
+    //    })
+    //}
 
     //End handling user location
 
+    //Set visible extent for entrances
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        var zoomLevel = map.getZoom();
+        if (zoomLevel >= 14) {
+            setAllMap(entranceMarkers, map);
+        } else {
+            setAllMap(entranceMarkers,null)    }
+
+    });
+    dd.setMap(map);
 
 } // End initialize()
 
 
 // START custom functions
 // START functions for park info/markers
-function parkInfoMarker(park, map, index){
+function parkInfoMarker(park, i){
     var siteLatLng = new google.maps.LatLng(park[5], park[6]);
     var marker, icon;
     icon = {
@@ -125,7 +161,7 @@ function parkInfoMarker(park, map, index){
         map: map,
         title: park[0],
         icon: icon,
-        index: index
+        index: i
     });
 
 
@@ -141,9 +177,8 @@ function parkInfoMarker(park, map, index){
         '<p style="color:black"><b> Park Description</b><br>' + park[1] + '</p>' +
         '<p style="color:black"><b> Address</b><br>' + park[3] + '</p>' +
         '<p style="color:black"><b> Phone</b><br>' + park[2] + '</p>' +
-        //'<p> <a href='+park[4]+' target="_blank"> Website</a>' + '  </p>'+
-        //'<div id="gd-btn">Get Directions Here</div>'+
-        '<button id="gd-btn" onclick="getDirections()">Get Directions Here</button>' +
+            //'<p> <a href='+park[4]+' target="_blank"> Website</a>' + '  </p>'+
+            //'<div id="gd-btn">Get Directions Here</div>'+
         '</div>' +
         '</div>';
 
@@ -171,8 +206,8 @@ function parkInfoMarker(park, map, index){
         ib.close();
         ib.setOptions(myOptions);
         ib.open(map, this);
-        if (map.getZoom() < 13 ) {
-            map.setZoom(13);
+        if (map.getZoom() < 14 ) {
+            map.setZoom(14);
         }
         map.panTo(siteLatLng);
     });
@@ -193,18 +228,96 @@ function parkInfoMarker(park, map, index){
 
     return marker;
 }
-function setMarkers(map, parks) {
+function parkEntrancesMarker(ent, i) {
+    var siteLatLng = new google.maps.LatLng(ent[3], ent[4]);
+    var marker, icon;
+    icon = {
+        anchor: new google.maps.Point(0, 0),
+        origin: new google.maps.Point(0, 0),
+        scaledSize: new google.maps.Size(20, 20),
+        size: new google.maps.Size(20, 20),
+        url: 'http://www.clipartbest.com/cliparts/9cz/EGG/9czEGGdRi.png'
+    };
+
+
+    marker = new google.maps.Marker({
+        position: siteLatLng,
+        map: null,
+        title: ent[0],
+        icon: icon,
+        index: i
+    });
+
+    // Begin example code to get custom infobox
+    var boxText = document.createElement("div");
+    boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
+    boxText.innerHTML =
+        '<div class="parkEntrances">' +
+        '<div class="parkHead">' +
+        '<h3 style="color: #000000" class="parkName">'+ ent[0] + ' </h3>' +
+        '</div>' +
+        '<div class="parkContent">' +
+        '<p> <a href='+ent[1]+' target="_blank">Directions</a>' + '  </p>'+
+            //'<p style="color:black"><b> </b><br>'<href='+ park[1]' + ' target="_blank">direciton</a>'+' </p>' +
+        '<p style="color:black"><b> Description</b><br>' + ent[2] + '</p>' +
+        '<button id="gd-btn" onclick="getDirections(pos)">Get Directions Here</button>' +
+        '</div>' +
+        '</div>';
+
+    var myOptions = {
+        content: boxText
+        ,disableAutoPan: false
+        ,maxWidth: 0
+        ,pixelOffset: new google.maps.Size(-131, 16)
+        ,zIndex: null
+        ,boxStyle: {
+            background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.12/examples/tipbox.gif') no-repeat"
+            ,opacity: 0.9
+            ,width: "320px"
+        }
+        ,closeBoxMargin: "10px 2px 2px 2px"
+        ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+        ,infoBoxClearance: new google.maps.Size(50, 50)
+        ,isHidden: false
+        ,pane: "floatPane"
+        ,enableEventPropagation: false
+    };
+    // end example code for custom infobox
+
+    google.maps.event.addListener(marker, "click", function (e) {
+        pos = marker.getPosition();
+        ib.close();
+        ib.setOptions(myOptions);
+        ib.open(map, this);
+        map.panTo(this.getPosition());
+    });
+    return marker;
+}
+function createParkInfo(parks, mArray) {
     for (var i = 0; i < 16; i++) {
         var park = parks[i];
-        console.log(park);
-        var parkMarker = parkInfoMarker(park, map, i);
-        //markerArray.push(parkMarker);
+        var parkMarker = parkInfoMarker(park, i);
+        mArray.push(parkMarker);
     }
 }
+function createParkEntrances(ent, mArray) {
+    for (var i = 0; i < 16; i++) {
+        var e = ent[i];
+        var entMarker = parkEntrancesMarker(e, i);
+        mArray.push(entMarker);
+    }
+}
+function setAllMap(array, map) {
+    for (var i = 0; i < array.length; i++) {
+        array[i].setMap(map);
+    }
+}
+// END functions for station info/markers
+
 function delayedInfo(time, action){
     window.setTimeout(action, time);
 }
-// END functions for station info/markers
+
 // START functions for directions
 function handleNoGeolocation(errorFlag) {  // Handle geolocation errors
     if (errorFlag == true) {
@@ -220,7 +333,6 @@ function handleNoGeolocation(errorFlag) {  // Handle geolocation errors
     map.setCenter(initialPos);
     userLocation.setPosition(initialPos);
     userLocation.setMap(map);
-    pushStartCoords(initialPos);
 }
 function codeAdr() { // Geocode new address if location is incorrect
     var newAddress = document.getElementById("newLocation").value;
@@ -229,31 +341,25 @@ function codeAdr() { // Geocode new address if location is incorrect
             map.setCenter(results[0].geometry.location);
             userLocation.setPosition(results[0].geometry.location);
             userLocation.setMap(map);
-            var pos = userLocation.getPosition();
-            pushStartCoords(pos);
         } else {
             alert("Geocode was not successful for the following reason: " + status);
         }
     });
 }
-function pushStartCoords(pos) {
-    dirArray.splice(0, 1, pos);
-}
-function getDirections() {
-    console.log("You pushed the button!");
 
-    //var markerPos = marker.getPosition();
-    //var userPos = uL.getPosition();
-    //var request = {
-    //    origin: userPos,
-    //    destination: markerPos,
-    //    travelMode: google.maps.TravelMode.TRANSIT
-    //};
-    //ds.route(request, function(status, response){
-    //    if (status == google.maps.DirectionsStatus.OK) {
-    //        ds.setDirections(response);
-    //    }
-    //});
+function getDirections(pos) {
+    ddFlag = true;
+    var userPos = userLocation.getPosition();
+    var request = {
+        origin: userPos,
+        destination: pos,
+        travelMode: google.maps.TravelMode.TRANSIT
+    };
+    ds.route(request, function(result, status){
+        if (status == google.maps.DirectionsStatus.OK) {
+            dd.setDirections(result);
+        }
+    });
 }
 
 // END functions for directions
