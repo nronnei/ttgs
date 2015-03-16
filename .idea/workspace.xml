@@ -27,8 +27,8 @@
       <file leaf-file-name="ttgs.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ttgs.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24637681" vertical-offset="0" max-vertical-offset="1326">
-              <caret line="9" column="80" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
+            <state vertical-scroll-proportion="0.4380032" vertical-offset="0" max-vertical-offset="1326">
+              <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -37,16 +37,38 @@
       <file leaf-file-name="ttgs_v1.5.1e.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_js/ttgs_v1.5.1e.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5780">
-              <caret line="314" column="67" selection-start-line="314" selection-start-column="67" selection-end-line="314" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="6030" max-vertical-offset="7225">
+              <caret line="417" column="76" selection-start-line="417" selection-start-column="76" selection-end-line="417" selection-end-column="76" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1426527757247" expanded="true" signature="8730:8742" placeholder="..." />
-                <marker date="1426527757247" expanded="true" signature="8876:8887" placeholder="..." />
-                <marker date="1426527757247" expanded="true" signature="10453:10467" placeholder="..." />
-                <marker date="1426527757247" expanded="true" signature="10586:10597" placeholder="..." />
-                <marker date="1426527757247" expanded="true" signature="10669:10680" placeholder="..." />
-                <marker date="1426527757247" expanded="true" signature="10743:10754" placeholder="..." />
+                <element signature="e#79#3248#0" expanded="false" />
+                <marker date="1426528953876" expanded="true" signature="12040:12052" placeholder="..." />
+                <marker date="1426528953876" expanded="true" signature="12186:12197" placeholder="..." />
+                <marker date="1426528953876" expanded="true" signature="14079:14093" placeholder="..." />
+                <marker date="1426528953876" expanded="true" signature="14212:14223" placeholder="..." />
+                <marker date="1426528953876" expanded="true" signature="14295:14306" placeholder="..." />
+                <marker date="1426528953876" expanded="true" signature="14369:14380" placeholder="..." />
+                <marker date="1426528953876" expanded="true" signature="16930:16944" placeholder="..." />
+                <marker date="1426528953876" expanded="true" signature="17252:17263" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ttgs_v1.5.1e.js" pinned="false" current-in-tab="false">
+        <entry file="file://E:/ttgs_v1.5e/_js/ttgs_v1.5.1e.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7548">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="440" selection-end-column="0" />
+              <folding>
+                <marker date="1426222672000" expanded="true" signature="12040:12052" placeholder="..." />
+                <marker date="1426222672000" expanded="true" signature="12186:12197" placeholder="..." />
+                <marker date="1426222672000" expanded="true" signature="14079:14093" placeholder="..." />
+                <marker date="1426222672000" expanded="true" signature="14212:14223" placeholder="..." />
+                <marker date="1426222672000" expanded="true" signature="14295:14306" placeholder="..." />
+                <marker date="1426222672000" expanded="true" signature="14369:14380" placeholder="..." />
+                <marker date="1426222672000" expanded="true" signature="16930:16944" placeholder="..." />
+                <marker date="1426222672000" expanded="true" signature="17252:17263" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -60,8 +82,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/_js/ttgs_v1.5.1e.js" />
         <option value="$PROJECT_DIR$/ttgs.html" />
+        <option value="$PROJECT_DIR$/_js/ttgs_v1.5.1e.js" />
       </list>
     </option>
   </component>
@@ -150,9 +172,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.gitconfig" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="options.lastSelected" value="vcs.Git" />
+    <property name="options.lastSelected" value="settings.github" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
@@ -192,6 +214,9 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="3b02e9d2-9457-443a-bcff-ba0e9f4c2539" name="Default" comment="" />
@@ -246,26 +271,46 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://E:/ttgs_v1.5e/_js/ttgs_v1.5.1e.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7548">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="440" selection-end-column="0" />
+          <folding>
+            <marker date="1426222672000" expanded="true" signature="12040:12052" placeholder="..." />
+            <marker date="1426222672000" expanded="true" signature="12186:12197" placeholder="..." />
+            <marker date="1426222672000" expanded="true" signature="14079:14093" placeholder="..." />
+            <marker date="1426222672000" expanded="true" signature="14212:14223" placeholder="..." />
+            <marker date="1426222672000" expanded="true" signature="14295:14306" placeholder="..." />
+            <marker date="1426222672000" expanded="true" signature="14369:14380" placeholder="..." />
+            <marker date="1426222672000" expanded="true" signature="16930:16944" placeholder="..." />
+            <marker date="1426222672000" expanded="true" signature="17252:17263" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/_js/ttgs_v1.5.1e.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5780">
-          <caret line="314" column="67" selection-start-line="314" selection-start-column="67" selection-end-line="314" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="6030" max-vertical-offset="7225">
+          <caret line="417" column="76" selection-start-line="417" selection-start-column="76" selection-end-line="417" selection-end-column="76" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1426527757247" expanded="true" signature="8730:8742" placeholder="..." />
-            <marker date="1426527757247" expanded="true" signature="8876:8887" placeholder="..." />
-            <marker date="1426527757247" expanded="true" signature="10453:10467" placeholder="..." />
-            <marker date="1426527757247" expanded="true" signature="10586:10597" placeholder="..." />
-            <marker date="1426527757247" expanded="true" signature="10669:10680" placeholder="..." />
-            <marker date="1426527757247" expanded="true" signature="10743:10754" placeholder="..." />
+            <element signature="e#79#3248#0" expanded="false" />
+            <marker date="1426528953876" expanded="true" signature="12040:12052" placeholder="..." />
+            <marker date="1426528953876" expanded="true" signature="12186:12197" placeholder="..." />
+            <marker date="1426528953876" expanded="true" signature="14079:14093" placeholder="..." />
+            <marker date="1426528953876" expanded="true" signature="14212:14223" placeholder="..." />
+            <marker date="1426528953876" expanded="true" signature="14295:14306" placeholder="..." />
+            <marker date="1426528953876" expanded="true" signature="14369:14380" placeholder="..." />
+            <marker date="1426528953876" expanded="true" signature="16930:16944" placeholder="..." />
+            <marker date="1426528953876" expanded="true" signature="17252:17263" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ttgs.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24637681" vertical-offset="0" max-vertical-offset="1326">
-          <caret line="9" column="80" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
+        <state vertical-scroll-proportion="0.4380032" vertical-offset="0" max-vertical-offset="1326">
+          <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
           <folding />
         </state>
       </provider>
