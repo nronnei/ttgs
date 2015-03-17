@@ -46,7 +46,6 @@ var parkInfo = [
 var center = new google.maps.LatLng(44.958072, -93.180199);
 var ib = new InfoBox();
 var holder = new google.maps.LatLng(0, 0);
-var dirArray = [holder, holder];
 var entranceMarkers = [];
 var infoMarkers = [];
 var ds = new google.maps.DirectionsService();
