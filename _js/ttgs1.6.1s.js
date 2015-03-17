@@ -8,19 +8,19 @@
 			var map,   
 				directionsService, directionsDisplay, 
 				autoSrc, autoDest, pinA, pinB, 
-				
-				markerA = new google.maps.MarkerImage('m1.png',
-						new google.maps.Size(24, 27),
-						new google.maps.Point(0, 0),
-						new google.maps.Point(12, 27)),		
-				markerB = new google.maps.MarkerImage('m2.png',
-						new google.maps.Size(24, 28),
-						new google.maps.Point(0, 0),
-						new google.maps.Point(12, 28)), 
+
+				//markerA = new google.maps.MarkerImage('m1.png',
+				//		new google.maps.Size(24, 27),
+				//		new google.maps.Point(0, 0),
+				//		new google.maps.Point(12, 27)),
+				//markerB = new google.maps.MarkerImage('m2.png',
+				//		new google.maps.Size(24, 28),
+				//		new google.maps.Point(0, 0),
+				//		new google.maps.Point(12, 28)),
 				
 				// Caching the Selectors		
 				$Selectors = {
-					mapCanvas: $('#mapCanvas')[0],
+					mapCanvas: $('#map-canvas')[0],
 					dirPanel: $('#directionsPanel'),
 					dirInputs: $('.directionInputs'),
 					dirSrc: $('#dirSource'),
@@ -123,13 +123,13 @@
                     for (var i = 0; i < parkInfo.length; i++) {
                         var park = parkInfo[i];
                         var infoMarker = function() {
-                            var siteLatLng = new google.maps.LatLng(park[3], park[4]);
+                            var siteLatLng = new google.maps.LatLng(park[5], park[6]);
                             var icon = {
                                 anchor: new google.maps.Point(0, 0),
                                 origin: new google.maps.Point(0, 0),
                                 scaledSize: new google.maps.Size(20, 20),
                                 size: new google.maps.Size(20, 20),
-                                url: 'http://www.clipartbest.com/cliparts/9cz/EGG/9czEGGdRi.png'
+                                url: 'http://maps.google.com/mapfiles/kml/pal2/icon4.png'
                             };
                             var marker = new google.maps.Marker({
                                 position: siteLatLng,
@@ -181,7 +181,8 @@
                                 infoBox.close();
                                 infoBox.setOptions(myOptions);
                                 infoBox.open(map, this);
-                                map.panTo(this.getPosition());
+                                map.setZoom(14);
+                                map.panTo(marker.getPosition());
                             });
                             console.log(marker.title);
                             return marker;
@@ -205,7 +206,7 @@
                             };
                             var marker = new google.maps.Marker({
                                 position: siteLatLng,
-                                map: map,
+                                map: null,
                                 title: ent[0],
                                 icon: icon,
                                 index: i
@@ -263,9 +264,8 @@
 
 				mapSetup = function() {					
 					map = new google.maps.Map($Selectors.mapCanvas, {
-							zoom: 9,
-							center: new google.maps.LatLng(44.958072, -93.180199),
-							
+							zoom: 10,
+							center: new google.maps.LatLng(44.95467069112005, -93.23650393164066),
 		                    mapTypeControl: true,
 		                    mapTypeControlOptions: {
 		                        style: google.maps.MapTypeControlStyle.DEFAULT,
@@ -333,27 +333,56 @@
 				//	});
 				//}, // fetchAddress Ends
 				//
-				//invokeEvents = function() {
-				//	// Get Directions
-				//	$Selectors.getDirBtn.on('click', function(e) {
-				//		e.preventDefault();
-				//		var src = $Selectors.dirSrc.val(),
-				//			dst = $Selectors.dirDst.val();
-				//
-				//		directionsRender(src, dst);
-				//	});
-				//
-				//	// Reset Btn
-				//	$Selectors.paneResetBtn.on('click', function(e) {
-				//		$Selectors.dirSteps.html('');
-				//		$Selectors.dirSrc.val('');
-				//		$Selectors.dirDst.val('');
-				//
-				//		if(pinA) pinA.setMap(null);
-				//		if(pinB) pinB.setMap(null);
-				//
-				//		directionsDisplay.setMap(null);
-				//	});
+				invokeEvents = function() {
+                    // Helpers
+                    function setAllMap(array, map) {
+                        for (var i = 0; i < array.length; i++) {
+                            array[i].setMap(map);
+                        }
+                    }
+                    function logCenter() {
+                        console.log(map.getCenter());
+                    }
+                    function logZoom() {
+                        console.log(map.getZoom());
+                    }
+
+                    // End helpers
+
+                    //// Get Directions
+					//$Selectors.getDirBtn.on('click', function(e) {
+					//	e.preventDefault();
+					//	var src = $Selectors.dirSrc.val(),
+					//		dst = $Selectors.dirDst.val();
+                    //
+					//	directionsRender(src, dst);
+					//});
+
+                    // Set visibile extent for park entrances
+                    google.maps.event.addListener(map, 'zoom_changed', function() {
+                        var zoomLevel = map.getZoom();
+                        if (zoomLevel >= 14) {
+                            setAllMap(entranceMarkerArray, map);
+                        } else {
+                            setAllMap(entranceMarkerArray,null)    }
+                        logCenter();
+                        logZoom();
+                    });
+
+                    // Set click behavior
+
+
+					//// Reset Btn
+					//$Selectors.paneResetBtn.on('click', function(e) {
+					//	$Selectors.dirSteps.html('');
+					//	$Selectors.dirSrc.val('');
+					//	$Selectors.dirDst.val('');
+                    //
+					//	if(pinA) pinA.setMap(null);
+					//	if(pinB) pinB.setMap(null);
+                    //
+					//	directionsDisplay.setMap(null);
+					//});
 				//
 				//	// Toggle Btn
 				//	$Selectors.paneToggle.toggle(function(e) {
@@ -372,11 +401,11 @@
 				//			});
 				//		}
 				//	});
-				//}, //invokeEvents Ends
+				}, //invokeEvents Ends
 				
 				_init = function() {
 					mapSetup();
-					//invokeEvents();
+					invokeEvents();
 				}; // _init Ends
 				
 			this.init = function() {
