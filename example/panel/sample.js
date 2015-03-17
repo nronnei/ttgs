@@ -52,9 +52,9 @@
 						controlUI = document.createElement('div'), 
 						trafficLayer = new google.maps.TrafficLayer();
 							
-					jQuery(controlDiv).addClass('gmap-control-container').addClass('gmnoprint');
-					jQuery(controlUI).text('Traffic').addClass('gmap-control');
-					jQuery(controlDiv).append(controlUI);				
+					$(controlDiv).addClass('gmap-control-container').addClass('gmnoprint');
+					$(controlUI).text('Traffic').addClass('gmap-control');
+					$(controlDiv).append(controlUI);
 							
 					// Traffic Btn Click Event	  
 					google.maps.event.addDomListener(controlUI, 'click', function() {
@@ -188,7 +188,7 @@
 			this.init = function() {
 				_init();
 				return this; // Refers to: mapDemo.Directions
-			}
+			};
 			return this.init(); // Refers to: mapDemo.Directions.init()
 		} // _Directions Ends
 		return new _Directions(); // Creating a new object of _Directions rather than a funtion
