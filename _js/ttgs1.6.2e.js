@@ -27,9 +27,11 @@
 					dirDst: $('#dirDestination'),
 					getDirBtn: $('#getDirections'),
 					dirSteps: $('#directionSteps'),
-					paneToggle: $('#paneToggle'),
+					panelToggleBtn: $('.panelToggleBtn'),
 					useGPSBtn: $('#useGPS'),
-					paneResetBtn: $('#paneReset')
+					paneResetBtn: $('#paneReset'),
+                    opsContentWrap: $('#ops-content-wrap'),
+                    accordion: $('#accordion')
 				},
 				
 				//autoCompleteSetup = function() {
