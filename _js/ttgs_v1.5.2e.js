@@ -366,7 +366,9 @@ function getDirections(pos) {
 $(document).ready(function(){
     var collapsed = true;
     $('#accordion').accordion({
-        heightStyle: "fill"
+        heightStyle: "fill",
+        autoHeight: false,
+        navigation: true
     });
     $('#innerContainer').click(function(){
         var opsPanelOptions = {

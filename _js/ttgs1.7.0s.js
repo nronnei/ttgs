@@ -5,9 +5,9 @@
 (function(mapDemo, $) {
 	mapDemo.Directions = (function() {
 		function _Directions() {
-			var map,   
-				directionsService, directionsDisplay, 
-				autoSrc, autoDest, pinA, pinB, 
+			var map,
+				directionsService, directionsDisplay,
+				autoSrc, autoDest, pinA, pinB,
 
 				//markerA = new google.maps.MarkerImage('m1.png',
 				//		new google.maps.Size(24, 27),
@@ -17,35 +17,37 @@
 				//		new google.maps.Size(24, 28),
 				//		new google.maps.Point(0, 0),
 				//		new google.maps.Point(12, 28)),
-				
-				// Caching the Selectors		
+
+				// Caching the Selectors
 				$Selectors = {
-					mapCanvas: $('#map-canvas')[0],
-					dirPanel: $('#directionsPanel'),
+					mapCanvas: $('#mapCanvas')[0],
+					dirPanel: $('#panel'),
 					dirInputs: $('.directionInputs'),
-					dirSrc: $('#dirSource'),
+					dirOrigin: $('#dirOrigin'),
 					dirDst: $('#dirDestination'),
 					getDirBtn: $('#getDirections'),
 					dirSteps: $('#directionSteps'),
-					paneToggle: $('#paneToggle'),
-					useGPSBtn: $('#useGPS'),
+					panelToggle: $('.panelToggleBtn'),
+                    iC: $('#innerContainer'),
+					gpsBtn: $('#gpsBtn'),
 					paneResetBtn: $('#paneReset')
 				},
-				
-				//autoCompleteSetup = function() {
-				//	autoSrc = new google.maps.places.Autocomplete($Selectors.dirSrc[0]);
-				//	autoDest = new google.maps.places.Autocomplete($Selectors.dirDst[0]);
-				//}, // autoCompleteSetup Ends
-                //
-				//directionsSetup = function() {
-				//	directionsService = new google.maps.DirectionsService();
-				//	directionsDisplay = new google.maps.DirectionsRenderer({
-				//		suppressMarkers: true
-				//	});
-				//
-				//	directionsDisplay.setPanel($Selectors.dirSteps[0]);
-				//}, // direstionsSetup Ends
-				//
+
+
+				autoCompleteSetup = function() {
+					autoSrc = new google.maps.places.Autocomplete($Selectors.dirOrigin[0]);
+					autoDest = new google.maps.places.Autocomplete($Selectors.dirDst[0]);
+				}, // autoCompleteSetup Ends
+
+				directionsSetup = function() {
+					directionsService = new google.maps.DirectionsService();
+					directionsDisplay = new google.maps.DirectionsRenderer({
+						suppressMarkers: true
+					});
+
+					directionsDisplay.setPanel($Selectors.dirSteps[0]);
+				}, // direstionsSetup Ends
+
 				//trafficSetup = function() {
 				//	// Creating a Custom Control and appending it to the map
 				//	var controlDiv = document.createElement('div'),
@@ -262,41 +264,41 @@
                     }
                 },
 
-				mapSetup = function() {					
+				mapSetup = function() {
 					map = new google.maps.Map($Selectors.mapCanvas, {
 							zoom: 10,
 							center: new google.maps.LatLng(44.95467069112005, -93.23650393164066),
-		                    mapTypeControl: true,
-		                    mapTypeControlOptions: {
-		                        style: google.maps.MapTypeControlStyle.DEFAULT,
-		                        position: google.maps.ControlPosition.TOP_RIGHT
-		                    },
-		
-		                    panControl: true,
-		                    panControlOptions: {
-		                        position: google.maps.ControlPosition.RIGHT_TOP
-		                    },
-		
-		                    zoomControl: true,
-		                    zoomControlOptions: {
-		                        style: google.maps.ZoomControlStyle.LARGE,
-		                        position: google.maps.ControlPosition.RIGHT_TOP
-		                    },
-		                    
-		                    scaleControl: true,
-							streetViewControl: true, 
-							overviewMapControl: true,
-							 							
+                            //mapTypeControl: true,
+                            //mapTypeControlOptions: {
+		                     //   style: google.maps.MapTypeControlStyle.DEFAULT,
+		                     //   position: google.maps.ControlPosition.TOP_LEFT
+                            //},
+                            //
+                            //panControl: true,
+                            //panControlOptions: {
+		                     //   position: google.maps.ControlPosition.LEFT_TOP
+                            //},
+                            //
+                            //zoomControl: true,
+                            //zoomControlOptions: {
+		                     //   style: google.maps.ZoomControlStyle.LARGE,
+		                     //   position: google.maps.ControlPosition.LEFT_TOP
+                            //},
+                            //
+                            //scaleControl: true,
+							//streetViewControl: true,
+							//overviewMapControl: true,
+
 							mapTypeId: google.maps.MapTypeId.ROADMAP
 					});
-					
-					//autoCompleteSetup();
-					//directionsSetup();
+
+					autoCompleteSetup();
+					directionsSetup();
 					//trafficSetup();
                     infoSetup();
                     entranceSetup();
-				}, // mapSetup Ends 
-				
+				}, // mapSetup Ends
+
 				//directionsRender = function(source, destination) {
 				//	$Selectors.dirSteps.find('.msg').hide();
 				//	directionsDisplay.setMap(map);
@@ -321,18 +323,25 @@
 				//	});
 				//}, // directionsRender Ends
 				//
-				//fetchAddress = function(p) {
-				//	var Position = new google.maps.LatLng(p.coords.latitude, p.coords.longitude),
-				//		Locater = new google.maps.Geocoder();
-				//
-				//	Locater.geocode({'latLng': Position}, function (results, status) {
-				//		if (status == google.maps.GeocoderStatus.OK) {
-				//			var _r = results[0];
-				//			$Selectors.dirSrc.val(_r.formatted_address);
-				//		}
-				//	});
-				//}, // fetchAddress Ends
-				//
+                setUserLocation = function() {
+                    var input = $Selectors.dirOrigin.val();
+                    var pos = new google.maps.LatLng(input);
+                    var icon = {
+
+                    };
+                    var user = new google.maps.Marker({
+                        icon: icon,
+                        map: map,
+                        position: pos
+
+                    });
+                }, //setUserLocation Ends
+				userGeolocation = function(p) {
+                    var lat = p.coords.latitude;
+                    var lng = p.coords.longitude;
+                    $Selectors.dirOrigin.val(lat + ", " + lng);
+				}, // userGeolocation Ends
+
 				invokeEvents = function() {
                     // Helpers
                     function setAllMap(array, map) {
@@ -340,14 +349,18 @@
                             array[i].setMap(map);
                         }
                     }
-                    function logCenter() {
-                        console.log(map.getCenter());
-                    }
-                    function logZoom() {
-                        console.log(map.getZoom());
-                    }
-
                     // End helpers
+
+                    $(function(){
+                        var $a = $("#accordion");
+                        $a.accordion({
+                            heightStyle: "fill",
+                            navigation: true
+                        });
+                        //$("#innerContainer").click(function(){
+                        //    $("#panel").toggle(panelOptions);
+                        //})
+                    });
 
                     //// Get Directions
 					//$Selectors.getDirBtn.on('click', function(e) {
@@ -365,8 +378,6 @@
                             setAllMap(entranceMarkerArray, map);
                         } else {
                             setAllMap(entranceMarkerArray,null)    }
-                        logCenter();
-                        logZoom();
                     });
 
                     // Set click behavior
@@ -383,31 +394,50 @@
                     //
 					//	directionsDisplay.setMap(null);
 					//});
-				//
-				//	// Toggle Btn
-				//	$Selectors.paneToggle.toggle(function(e) {
-				//		$Selectors.dirPanel.animate({'left': '-=305px'});
-				//		jQuery(this).html('&gt;');
-				//	}, function() {
-				//		$Selectors.dirPanel.animate({'left': '+=305px'});
-				//		jQuery(this).html('&lt;');
-				//	});
-				//
-				//	// Use My Location / Geo Location Btn
-				//	$Selectors.useGPSBtn.on('click', function(e) {
-				//		if (navigator.geolocation) {
-				//			navigator.geolocation.getCurrentPosition(function(position) {
-				//				fetchAddress(position);
-				//			});
-				//		}
-				//	});
-				}, //invokeEvents Ends
-				
+
+					// Toggle Btn
+                    var panelOptions = {
+                        effect: 'slide',
+                        direction: 'right',
+                        easing: 'linear',
+                        duration: 500
+                    };
+                    var collapsed = false;
+					$Selectors.panelToggle.click(function() {
+						$Selectors.dirPanel.toggle(panelOptions);
+                        if (collapsed) {
+                            $Selectors.iC.html('&gt;');
+                            $Selectors.panelToggle.animate({right: '+=30%'}, {
+                                    duration: 500,
+                                    easing: 'linear'
+                                });
+                            collapsed = false;
+                        } else {
+                            $Selectors.iC.html('&lt;');
+                            $Selectors.panelToggle.animate({right: '-=30%'}, {
+                                duration: 500,
+                                easing: 'linear'
+                            });
+                            collapsed = true;
+                        }
+						//$Selectors.dirPanel.animate({'left': '+=305px'});
+					});
+
+					// Use My Location / Geo Location Btn
+					$Selectors.gpsBtn.click(function() {
+						if (navigator.geolocation) {
+							navigator.geolocation.getCurrentPosition(function(position) {
+								userGeolocation(position);
+							});
+						}
+					});
+                }, //invokeEvents Ends
+
 				_init = function() {
 					mapSetup();
 					invokeEvents();
 				}; // _init Ends
-				
+
 			this.init = function() {
 				_init();
 				return this; // Refers to: mapDemo.Directions
