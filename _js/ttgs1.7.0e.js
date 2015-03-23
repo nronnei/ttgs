@@ -7,9 +7,9 @@
 		function _Directions() {
 			var map,
 				directionsService, directionsDisplay,
-				autoSrc, autoDest, pinA, pinB,
+				autoSrc, autoDest, pinA, pinB, userPos,
 
-				//markerA = new google.maps.MarkerImage('m1.png',
+            //markerA = new google.maps.MarkerImage('m1.png',
 				//		new google.maps.Size(24, 27),
 				//		new google.maps.Point(0, 0),
 				//		new google.maps.Point(12, 27)),
@@ -34,11 +34,10 @@
 				},
 
 
-				//autoCompleteSetup = function() {
-				//	autoSrc = new google.maps.places.Autocomplete($Selectors.dirSrc[0]);
-				//	autoDest = new google.maps.places.Autocomplete($Selectors.dirDst[0]);
-				//}, // autoCompleteSetup Ends
-                //
+				autoCompleteSetup = function() {
+					autoSrc = new google.maps.places.Autocomplete($Selectors.dirOrigin[0]);
+				}, // autoCompleteSetup Ends
+
 				//directionsSetup = function() {
 				//	directionsService = new google.maps.DirectionsService();
 				//	directionsDisplay = new google.maps.DirectionsRenderer({
@@ -292,7 +291,7 @@
 							mapTypeId: google.maps.MapTypeId.ROADMAP
 					});
 
-					//autoCompleteSetup();
+					autoCompleteSetup();
 					//directionsSetup();
 					//trafficSetup();
                     infoSetup();
@@ -324,22 +323,30 @@
 				//}, // directionsRender Ends
 				//
                 setUserLocation = function() {
-                    var input = $Selectors.dirOrigin.val();
-                    var pos = new google.maps.LatLng(input);
                     var icon = {
-
+                        anchor: new google.maps.Point(0, 0),
+                        origin: new google.maps.Point(0, 0),
+                        scaledSize: new google.maps.Size(20, 20),
+                        size: new google.maps.Size(20, 20),
+                        url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png'
                     };
                     var user = new google.maps.Marker({
                         icon: icon,
                         map: map,
-                        position: pos
+                        title: "You are here!",
+                        position: userPos
 
                     });
+                    map.setZoom(14);
+                    map.setCenter(userPos);
                 }, //setUserLocation Ends
+
 				userGeolocation = function(p) {
                     var lat = p.coords.latitude;
                     var lng = p.coords.longitude;
                     $Selectors.dirOrigin.val(lat + ", " + lng);
+                    userPos = new google.maps.LatLng(lat, lng);
+                    setUserLocation();
 				}, // userGeolocation Ends
 
 				invokeEvents = function() {
@@ -351,15 +358,13 @@
                     }
                     // End helpers
 
+                    // Initiate the accordion
                     $(function(){
                         var $a = $("#accordion");
                         $a.accordion({
                             heightStyle: "fill",
                             navigation: true
                         });
-                        //$("#innerContainer").click(function(){
-                        //    $("#panel").toggle(panelOptions);
-                        //})
                     });
 
                     //// Get Directions
@@ -381,6 +386,14 @@
                     });
 
                     // Set click behavior
+
+                    // Keydown listener for entering directions
+                    //$Selectors.dirOrigin.keypress(function() {
+                    //    if(event.which == 13)
+                    //    {
+                    //        // Trigger submit
+                    //    }
+                    //});​
 
 
 					//// Reset Btn
