@@ -362,7 +362,13 @@
       <option name="project" value="LOCAL" />
       <updated>1427084038328</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="New responsive css file">
+      <created>1427332494625</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1427332494625</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -408,7 +414,8 @@
     <MESSAGE value="Removed the panel for the sake of ease, and got the thing running stable under the new code pattern (IIFE)" />
     <MESSAGE value="Most recent changes to my branch" />
     <MESSAGE value="Make sure we add all files to my branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make sure we add all files to my branch" />
+    <MESSAGE value="New responsive css file" />
+    <option name="LAST_COMMIT_MESSAGE" value="New responsive css file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
