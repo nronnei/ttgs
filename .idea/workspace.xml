@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3b02e9d2-9457-443a-bcff-ba0e9f4c2539" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_css/ttgsv1.7.1e.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ttgs.iws" />
@@ -29,7 +30,7 @@
       <file leaf-file-name="ttgs_v1.7e.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ttgs_v1.7e.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1923075" vertical-offset="187" max-vertical-offset="1037">
+            <state vertical-scroll-proportion="-14.384615" vertical-offset="0" max-vertical-offset="1037">
               <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
               <folding>
                 <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -40,28 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="accordion.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_css/accordion.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="485" max-vertical-offset="2567">
-              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-              <folding>
-                <element signature="e#774#801#0" expanded="false" />
-                <element signature="e#821#866#0" expanded="false" />
-                <element signature="e#887#933#0" expanded="false" />
-                <element signature="e#958#985#0" expanded="false" />
-                <element signature="e#1265#1339#0" expanded="false" />
-                <element signature="e#1375#1399#0" expanded="false" />
-                <element signature="e#1448#1493#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ttgs1.7.0e.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ttgs1.7.0e.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_js/ttgs1.7.0e.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7318612" vertical-offset="2579" max-vertical-offset="3961">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2562" max-vertical-offset="3961">
               <caret line="391" column="47" selection-start-line="391" selection-start-column="47" selection-end-line="391" selection-end-column="47" />
               <folding>
                 <element signature="e#2611#9001#0" expanded="false" />
@@ -112,32 +95,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ttgs.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_css/ttgs.css">
+      <file leaf-file-name="ttgsv1.7.1e.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_css/ttgsv1.7.1e.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2023">
-              <caret line="99" column="16" selection-start-line="99" selection-start-column="16" selection-end-line="99" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ttgsv1.7.0s.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_css/ttgsv1.7.0s.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2023">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sample.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/panel/sample.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="3434">
-              <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-              <folding />
+            <state vertical-scroll-proportion="0.8123028" vertical-offset="1219" max-vertical-offset="5066">
+              <caret line="102" column="20" selection-start-line="102" selection-start-column="20" selection-end-line="102" selection-end-column="20" />
+              <folding>
+                <element signature="e#2655#2779#0" expanded="false" />
+                <element signature="e#2817#2987#0" expanded="false" />
+                <element signature="e#3027#3180#0" expanded="false" />
+                <element signature="e#3219#3371#0" expanded="false" />
+                <element signature="e#3411#3560#0" expanded="false" />
+                <element signature="e#3599#3747#0" expanded="false" />
+                <element signature="e#3787#3936#0" expanded="false" />
+                <element signature="e#3975#4124#0" expanded="false" />
+                <element signature="e#4165#4314#0" expanded="false" />
+                <element signature="e#4354#4502#0" expanded="false" />
+                <element signature="e#4551#4700#0" expanded="false" />
+                <element signature="e#4748#4896#0" expanded="false" />
+                <element signature="e#4945#5094#0" expanded="false" />
+                <element signature="e#5142#5290#0" expanded="false" />
+                <element signature="e#5339#5488#0" expanded="false" />
+                <element signature="e#5536#5684#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -177,6 +157,7 @@
         <option value="$PROJECT_DIR$/_js/ttgs1.7.0s.js" />
         <option value="$PROJECT_DIR$/ttgs_v1.7e.html" />
         <option value="$PROJECT_DIR$/_js/ttgs1.7.0e.js" />
+        <option value="$PROJECT_DIR$/_css/ttgsv1.7.1e.css" />
       </list>
     </option>
   </component>
@@ -381,12 +362,18 @@
       <option name="project" value="LOCAL" />
       <updated>1427084038328</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="New responsive css file">
+      <created>1427332494625</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1427332494625</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -394,7 +381,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2489019" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2489019" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -427,7 +414,8 @@
     <MESSAGE value="Removed the panel for the sake of ease, and got the thing running stable under the new code pattern (IIFE)" />
     <MESSAGE value="Most recent changes to my branch" />
     <MESSAGE value="Make sure we add all files to my branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make sure we add all files to my branch" />
+    <MESSAGE value="New responsive css file" />
+    <option name="LAST_COMMIT_MESSAGE" value="New responsive css file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -599,27 +587,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_css/ttgs.css">
+    <entry file="file://$PROJECT_DIR$/ttgs_v1.7e.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2023">
-          <caret line="99" column="16" selection-start-line="99" selection-start-column="16" selection-end-line="99" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_css/ttgsv1.7.0s.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2023">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="-14.384615" vertical-offset="0" max-vertical-offset="1037">
+          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+          <folding>
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#3;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_css/accordion.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="485" max-vertical-offset="2567">
-          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1105" max-vertical-offset="2482">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
           <folding>
+            <element signature="e#665#745#0" expanded="false" />
             <element signature="e#774#801#0" expanded="false" />
             <element signature="e#821#866#0" expanded="false" />
             <element signature="e#887#933#0" expanded="false" />
@@ -631,10 +616,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/panel/sample.js">
+    <entry file="file://$PROJECT_DIR$/_js/ttgs1.7.0e.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="3434">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2562" max-vertical-offset="3961">
+          <caret line="391" column="47" selection-start-line="391" selection-start-column="47" selection-end-line="391" selection-end-column="47" />
+          <folding>
+            <element signature="e#2611#9001#0" expanded="false" />
+            <element signature="e#9035#12540#0" expanded="false" />
+            <element signature="e#12810#16970#0" expanded="false" />
+            <element signature="e#13153#13554#0" expanded="false" />
+            <element signature="e#13620#13880#0" expanded="false" />
+            <element signature="e#17017#21123#0" expanded="false" />
+            <element signature="e#22527#22579#0" expanded="false" />
+            <element signature="e#23472#23831#0" expanded="false" />
+            <element signature="e#23887#24071#0" expanded="false" />
+            <element signature="e#26645#26833#0" expanded="false" />
+            <element signature="e#26923#27768#0" expanded="false" />
+            <marker date="1427083960409" expanded="true" signature="14369:14383" placeholder="..." />
+            <marker date="1427083960409" expanded="true" signature="14574:14585" placeholder="..." />
+            <marker date="1427083960409" expanded="true" signature="14681:14692" placeholder="..." />
+            <marker date="1427083960409" expanded="true" signature="14779:14790" placeholder="..." />
+            <marker date="1427083960409" expanded="true" signature="18603:18617" placeholder="..." />
+            <marker date="1427083960409" expanded="true" signature="19045:19056" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_css/ttgsv1.7.0s.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="2023">
+          <caret line="60" column="1" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_css/ttgs.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.6012366" vertical-offset="0" max-vertical-offset="2023">
+          <caret line="99" column="16" selection-start-line="99" selection-start-column="16" selection-end-line="99" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -663,40 +682,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ttgs_v1.7e.html">
+    <entry file="file://$PROJECT_DIR$/example/panel/sample.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1923075" vertical-offset="187" max-vertical-offset="1037">
-          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#3;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.8312303" vertical-offset="34" max-vertical-offset="3434">
+          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_js/ttgs1.7.0e.js">
+    <entry file="file://$PROJECT_DIR$/_css/ttgsv1.7.1e.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7318612" vertical-offset="2579" max-vertical-offset="3961">
-          <caret line="391" column="47" selection-start-line="391" selection-start-column="47" selection-end-line="391" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.8123028" vertical-offset="1219" max-vertical-offset="5066">
+          <caret line="102" column="20" selection-start-line="102" selection-start-column="20" selection-end-line="102" selection-end-column="20" />
           <folding>
-            <element signature="e#2611#9001#0" expanded="false" />
-            <element signature="e#9035#12540#0" expanded="false" />
-            <element signature="e#12810#16970#0" expanded="false" />
-            <element signature="e#13153#13554#0" expanded="false" />
-            <element signature="e#13620#13880#0" expanded="false" />
-            <element signature="e#17017#21123#0" expanded="false" />
-            <element signature="e#22527#22579#0" expanded="false" />
-            <element signature="e#23472#23831#0" expanded="false" />
-            <element signature="e#23887#24071#0" expanded="false" />
-            <element signature="e#26645#26833#0" expanded="false" />
-            <element signature="e#26923#27768#0" expanded="false" />
-            <marker date="1427083960409" expanded="true" signature="14369:14383" placeholder="..." />
-            <marker date="1427083960409" expanded="true" signature="14574:14585" placeholder="..." />
-            <marker date="1427083960409" expanded="true" signature="14681:14692" placeholder="..." />
-            <marker date="1427083960409" expanded="true" signature="14779:14790" placeholder="..." />
-            <marker date="1427083960409" expanded="true" signature="18603:18617" placeholder="..." />
-            <marker date="1427083960409" expanded="true" signature="19045:19056" placeholder="..." />
+            <element signature="e#2655#2779#0" expanded="false" />
+            <element signature="e#2817#2987#0" expanded="false" />
+            <element signature="e#3027#3180#0" expanded="false" />
+            <element signature="e#3219#3371#0" expanded="false" />
+            <element signature="e#3411#3560#0" expanded="false" />
+            <element signature="e#3599#3747#0" expanded="false" />
+            <element signature="e#3787#3936#0" expanded="false" />
+            <element signature="e#3975#4124#0" expanded="false" />
+            <element signature="e#4165#4314#0" expanded="false" />
+            <element signature="e#4354#4502#0" expanded="false" />
+            <element signature="e#4551#4700#0" expanded="false" />
+            <element signature="e#4748#4896#0" expanded="false" />
+            <element signature="e#4945#5094#0" expanded="false" />
+            <element signature="e#5142#5290#0" expanded="false" />
+            <element signature="e#5339#5488#0" expanded="false" />
+            <element signature="e#5536#5684#0" expanded="false" />
           </folding>
         </state>
       </provider>
