@@ -1,78 +1,134 @@
 /**
- * @author Giri Jeedigunta
- * Visit: http://thewebstorebyg.wordpress.com/ for more tutorials on maps
+ * @author Nicholas Ronnei
+ * Special Thanks to:
+ * Giri Jeedigunta (http://thewebstorebyg.wordpress.com/) Visit for great tutorials on maps
+ * Tobias Bieniek (https://github.com/Turbo87) for his wonderful jQuery sidebar!
  */
+
+
+$.fn.sidebar = function() {
+    var $sidebar = this;
+    var $tabs = $sidebar.children('.sidebar-tabs').first();
+    var $container = $sidebar.children('.sidebar-content').first();
+
+    $sidebar.find('.sidebar-tabs > li > a').on('click', function() {
+        var $tab = $(this).closest('li');
+
+        if ($tab.hasClass('active'))
+            $sidebar.close();
+        else
+            $sidebar.open(this.hash.slice(1), $tab);
+    });
+
+    $sidebar.open = function(id, $tab) {
+        if (typeof $tab === 'undefined')
+            $tab = $tabs.find('li > a[href="#' + id + '"]').parent();
+
+        // hide old active contents
+        $container.children('.sidebar-pane.active').removeClass('active');
+
+        // show new content
+        $container.children('#' + id).addClass('active');
+
+        // remove old active highlights
+        $tabs.children('li.active').removeClass('active');
+
+        // set new highlight
+        $tab.addClass('active');
+
+        $sidebar.trigger('content', { 'id': id });
+
+        if ($sidebar.hasClass('collapsed')) {
+            // open sidebar
+            $sidebar.trigger('opening');
+            $sidebar.removeClass('collapsed');
+        }
+    };
+
+    $sidebar.close = function() {
+        // remove old active highlights
+        $tabs.children('li.active').removeClass('active');
+
+        if (!$sidebar.hasClass('collapsed')) {
+            // close sidebar
+            $sidebar.trigger('closing');
+            $sidebar.addClass('collapsed');
+        }
+    };
+
+    return $sidebar;
+};
+
+var sidebar = $('#sidebar').sidebar();
+
 (function(mapDemo, $) {
-	mapDemo.Directions = (function() {
-		function _Directions() {
-			var map,
-				directionsService, directionsDisplay,
-				autoSrc, autoDest, pinA, pinB,
+    mapDemo.Directions = (function() {
+        function _Directions() {
+            var map,
+                directionsService, directionsDisplay,
+                autoSrc, autoDest, pinA, pinB, userPos,
 
-				//markerA = new google.maps.MarkerImage('m1.png',
-				//		new google.maps.Size(24, 27),
-				//		new google.maps.Point(0, 0),
-				//		new google.maps.Point(12, 27)),
-				//markerB = new google.maps.MarkerImage('m2.png',
-				//		new google.maps.Size(24, 28),
-				//		new google.maps.Point(0, 0),
-				//		new google.maps.Point(12, 28)),
+            //markerA = new google.maps.MarkerImage('m1.png',
+            //		new google.maps.Size(24, 27),
+            //		new google.maps.Point(0, 0),
+            //		new google.maps.Point(12, 27)),
+            //markerB = new google.maps.MarkerImage('m2.png',
+            //		new google.maps.Size(24, 28),
+            //		new google.maps.Point(0, 0),
+            //		new google.maps.Point(12, 28)),
 
-				// Caching the Selectors
-				$Selectors = {
-					mapCanvas: $('#mapCanvas')[0],
-					dirPanel: $('#panel'),
-					dirInputs: $('.directionInputs'),
-					dirOrigin: $('#dirOrigin'),
-					dirDst: $('#dirDestination'),
-					getDirBtn: $('#getDirections'),
-					dirSteps: $('#directionSteps'),
-					panelToggle: $('.panelToggleBtn'),
-                    iC: $('#innerContainer'),
-					gpsBtn: $('#gpsBtn'),
-					paneResetBtn: $('#paneReset')
-				},
+            // Caching the Selectors
+                $Selectors = {
+                    mapCanvas: $('#mapCanvas')[0],
+                    dirPanel: $('#panel'),
+                    dirInputs: $('.directionInputs'),
+                    dirOrigin: $('#dirOrigin'),
+                    dirDst: $('#dirDestination'),
+                    getDirBtn: $('#getDirections'),
+                    dirSteps: $('#directionSteps'),
+                    gpsBtn: $('#useGPSBtn'),
+                    paneResetBtn: $('#paneReset')
+                },
 
 
-				autoCompleteSetup = function() {
-					autoSrc = new google.maps.places.Autocomplete($Selectors.dirOrigin[0]);
-					autoDest = new google.maps.places.Autocomplete($Selectors.dirDst[0]);
-				}, // autoCompleteSetup Ends
+                autoCompleteSetup = function() {
+                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirOrigin[0]);
+                }, // autoCompleteSetup Ends
 
-				directionsSetup = function() {
-					directionsService = new google.maps.DirectionsService();
-					directionsDisplay = new google.maps.DirectionsRenderer({
-						suppressMarkers: true
-					});
+            //directionsSetup = function() {
+            //	directionsService = new google.maps.DirectionsService();
+            //	directionsDisplay = new google.maps.DirectionsRenderer({
+            //		suppressMarkers: true
+            //	});
+            //
+            //	directionsDisplay.setPanel($Selectors.dirSteps[0]);
+            //}, // direstionsSetup Ends
+            //
+            //trafficSetup = function() {
+            //	// Creating a Custom Control and appending it to the map
+            //	var controlDiv = document.createElement('div'),
+            //		controlUI = document.createElement('div'),
+            //		trafficLayer = new google.maps.TrafficLayer();
+            //
+            //	$(controlDiv).addClass('gmap-control-container').addClass('gmnoprint');
+            //	$(controlUI).text('Traffic').addClass('gmap-control');
+            //	$(controlDiv).append(controlUI);
+            //
+            //	// Traffic Btn Click Event
+            //	google.maps.event.addDomListener(controlUI, 'click', function() {
+            //		if (typeof trafficLayer.getMap() == 'undefined' || trafficLayer.getMap() === null) {
+            //			jQuery(controlUI).addClass('gmap-control-active');
+            //			trafficLayer.setMap(map);
+            //		} else {
+            //			trafficLayer.setMap(null);
+            //			jQuery(controlUI).removeClass('gmap-control-active');
+            //		}
+            //	});
+            //	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
+            //}, // trafficSetup Ends
 
-					directionsDisplay.setPanel($Selectors.dirSteps[0]);
-				}, // direstionsSetup Ends
 
-				//trafficSetup = function() {
-				//	// Creating a Custom Control and appending it to the map
-				//	var controlDiv = document.createElement('div'),
-				//		controlUI = document.createElement('div'),
-				//		trafficLayer = new google.maps.TrafficLayer();
-				//
-				//	$(controlDiv).addClass('gmap-control-container').addClass('gmnoprint');
-				//	$(controlUI).text('Traffic').addClass('gmap-control');
-				//	$(controlDiv).append(controlUI);
-				//
-				//	// Traffic Btn Click Event
-				//	google.maps.event.addDomListener(controlUI, 'click', function() {
-				//		if (typeof trafficLayer.getMap() == 'undefined' || trafficLayer.getMap() === null) {
-				//			jQuery(controlUI).addClass('gmap-control-active');
-				//			trafficLayer.setMap(map);
-				//		} else {
-				//			trafficLayer.setMap(null);
-				//			jQuery(controlUI).removeClass('gmap-control-active');
-				//		}
-				//	});
-				//	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
-				//}, // trafficSetup Ends
-
-
-                // Define all arrays
+            // Define all arrays
                 parkInfo = [
                     ['Minnesota Valley National Wildlife Refuge', 'The Refuge has many sections along its 99 miles of the Minnesota River. Two access points are easy via transit: the Bloomington Visitor Center and the Bass Ponds. Both of these are within the Long Meadow Lake Unit. Great places to see wildlife.', '952-854-5900', '3815 American Blvd E, Bloomington, MN, 55425', 'http://goo.gl/Hxg9If', '44.82883648', '-93.23845108'],
                     ['Battle Creek Regional Park', 'Hiking, biking, and ski trails, sports areas, and an off-leash dog area. Oak woods, old fields, creek, and second growth woodlands. Great birding opportunities.\r\n', '612-748-2500', 'Point Douglas Rd, St. Paul, MN, 55106', 'http://goo.gl/6KUA9b', '44.93510263', '-93.01953334'],
@@ -114,14 +170,13 @@
                 ],
                 entranceMarkerArray = [],
                 infoMarkerArray = [],
-                // End array defs
+            // End array defs
 
-                // Define services
+            // Define services
                 infoBox = new InfoBox(),
-                // End service defs
+            // End service defs
 
                 infoSetup = function () {
-                    console.log("INFO TITLES:");
                     for (var i = 0; i < parkInfo.length; i++) {
                         var park = parkInfo[i];
                         var infoMarker = function() {
@@ -146,16 +201,15 @@
                             boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
                             boxText.innerHTML =
                                 '<div class="parkInfo">' +
-                                '<div class="parkHead">' +
-                                '<h3 style="color: #3ABC9E" class="parkName">'+ park[0] + ' </h3>' +
-                                '</div>' +
-                                '<div class="parkContent">' +
-                                '<p style="color:black"><b> Park Description</b><br>' + park[1] + '</p>' +
-                                '<p style="color:black"><b> Address</b><br>' + park[3] + '</p>' +
-                                '<p style="color:black"><b> Phone</b><br>' + park[2] + '</p>' +
-                                    //'<p> <a href='+park[4]+' target="_blank"> Website</a>' + '  </p>'+
-                                    //'<div id="gd-btn">Get Directions Here</div>'+
-                                '</div>' +
+                                    '<div class="parkHead">' +
+                                        '<h3 style="color: #3ABC9E" class="parkName">'+ park[0] + ' </h3>' +
+                                    '</div>' +
+                                    '<div class="parkContent">' +
+                                        '<p style="color:black"><b> Park Description</b><br>' + park[1] + '</p>' +
+                                        '<p style="color:black"><b> Address</b><br>' + park[3] + '</p>' +
+                                        '<p style="color:black"><b> Phone</b><br>' + park[2] + '</p>' +
+                                        '<p> <a href=' + park[4] + ' target="_blank" style:"color: blue!important">Visit Website</a></p>'+
+                                    '</div>' +
                                 '</div>';
 
                             var myOptions = {
@@ -186,7 +240,6 @@
                                 map.setZoom(14);
                                 map.panTo(marker.getPosition());
                             });
-                            console.log(marker.title);
                             return marker;
                         };
                         infoMarkerArray.push(infoMarker());
@@ -264,85 +317,87 @@
                     }
                 },
 
-				mapSetup = function() {
-					map = new google.maps.Map($Selectors.mapCanvas, {
-							zoom: 10,
-							center: new google.maps.LatLng(44.95467069112005, -93.23650393164066),
-                            //mapTypeControl: true,
-                            //mapTypeControlOptions: {
-		                     //   style: google.maps.MapTypeControlStyle.DEFAULT,
-		                     //   position: google.maps.ControlPosition.TOP_LEFT
-                            //},
-                            //
-                            //panControl: true,
-                            //panControlOptions: {
-		                     //   position: google.maps.ControlPosition.LEFT_TOP
-                            //},
-                            //
-                            //zoomControl: true,
-                            //zoomControlOptions: {
-		                     //   style: google.maps.ZoomControlStyle.LARGE,
-		                     //   position: google.maps.ControlPosition.LEFT_TOP
-                            //},
-                            //
-                            //scaleControl: true,
-							//streetViewControl: true,
-							//overviewMapControl: true,
+                mapSetup = function() {
+                    map = new google.maps.Map($Selectors.mapCanvas, {
+                        zoom: 10,
+                        center: new google.maps.LatLng(44.95467069112005, -93.23650393164066),
+                        mapTypeControl: false,
+                        panControl: false,
+                        streetViewControl: true,
+                        streetViewControlOptions: {
+                            position: google.maps.ControlPosition.RIGHT_BOTTOM
+                        },
+                        zoomControl: true,
+                        zoomControlOptions: {
+                            style: google.maps.ZoomControlStyle.DEFAULT,
+                            position: google.maps.ControlPosition.RIGHT_BOTTOM
+                        },
+                        scaleControl: true,
 
-							mapTypeId: google.maps.MapTypeId.ROADMAP
-					});
+                        overviewMapControl: false,
 
-					autoCompleteSetup();
-					directionsSetup();
-					//trafficSetup();
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    });
+
+                    autoCompleteSetup();
+                    //directionsSetup();
+                    //trafficSetup();
                     infoSetup();
                     entranceSetup();
-				}, // mapSetup Ends
+                }, // mapSetup Ends
 
-				//directionsRender = function(source, destination) {
-				//	$Selectors.dirSteps.find('.msg').hide();
-				//	directionsDisplay.setMap(map);
-				//
-				//	var request = {
-				//		origin: source,
-				//		destination: destination,
-				//		provideRouteAlternatives: false,
-				//		travelMode: google.maps.DirectionsTravelMode.DRIVING
-				//	};
-				//
-				//	directionsService.route(request, function(response, status) {
-				//		if (status == google.maps.DirectionsStatus.OK) {
-                //
-				//			directionsDisplay.setDirections(response);
-				//
-				//			var _route = response.routes[0].legs[0];
-				//
-				//			pinA = new google.maps.Marker({position: _route.start_location, map: map, icon: markerA}),
-				//			pinB = new google.maps.Marker({position: _route.end_location, map: map, icon: markerB});
-				//		}
-				//	});
-				//}, // directionsRender Ends
-				//
+            //    directionsRender = function(source, destination) {
+            //        $Selectors.dirSteps.find('.msg').hide();
+            //        directionsDisplay.setMap(map);
+            //
+            //        var request = {
+            //            origin: source,
+            //            destination: destination,
+            //            provideRouteAlternatives: true,
+            //            travelMode: google.maps.DirectionsTravelMode.DRIVING
+            //        };
+            //
+            //	directionsService.route(request, function(response, status) {
+            //		if (status == google.maps.DirectionsStatus.OK) {
+            //
+            //			directionsDisplay.setDirections(response);
+            //
+            //			var _route = response.routes[0].legs[0];
+            //
+            //			pinA = new google.maps.Marker({position: _route.start_location, map: map, icon: markerA}),
+            //			pinB = new google.maps.Marker({position: _route.end_location, map: map, icon: markerB});
+            //		}
+            //	});
+            //}, // directionsRender Ends
+
                 setUserLocation = function() {
-                    var input = $Selectors.dirOrigin.val();
-                    var pos = new google.maps.LatLng(input);
                     var icon = {
-
+                        anchor: new google.maps.Point(0, 0),
+                        origin: new google.maps.Point(0, 0),
+                        scaledSize: new google.maps.Size(20, 20),
+                        size: new google.maps.Size(20, 20),
+                        url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png'
                     };
                     var user = new google.maps.Marker({
                         icon: icon,
                         map: map,
-                        position: pos
+                        title: "You are here!",
+                        position: userPos
 
                     });
+                    map.setZoom(14);
+                    map.setCenter(userPos);
                 }, //setUserLocation Ends
-				userGeolocation = function(p) {
+
+                userGeolocation = function(p) {
                     var lat = p.coords.latitude;
                     var lng = p.coords.longitude;
                     $Selectors.dirOrigin.val(lat + ", " + lng);
-				}, // userGeolocation Ends
+                    userPos = new google.maps.LatLng(lat, lng);
+                    setUserLocation();
+                }, // userGeolocation Ends
 
-				invokeEvents = function() {
+                invokeEvents = function() {
                     // Helpers
                     function setAllMap(array, map) {
                         for (var i = 0; i < array.length; i++) {
@@ -351,25 +406,14 @@
                     }
                     // End helpers
 
-                    $(function(){
-                        var $a = $("#accordion");
-                        $a.accordion({
-                            heightStyle: "fill",
-                            navigation: true
-                        });
-                        //$("#innerContainer").click(function(){
-                        //    $("#panel").toggle(panelOptions);
-                        //})
-                    });
-
                     //// Get Directions
-					//$Selectors.getDirBtn.on('click', function(e) {
-					//	e.preventDefault();
-					//	var src = $Selectors.dirSrc.val(),
-					//		dst = $Selectors.dirDst.val();
+                    //$Selectors.getDirBtn.on('click', function(e) {
+                    //	e.preventDefault();
+                    //	var src = $Selectors.dirSrc.val(),
+                    //		dst = $Selectors.dirDst.val();
                     //
-					//	directionsRender(src, dst);
-					//});
+                    //	directionsRender(src, dst);
+                    //});
 
                     // Set visibile extent for park entrances
                     google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -382,68 +426,49 @@
 
                     // Set click behavior
 
+                    // Keydown listener for entering directions
+                    //$Selectors.dirOrigin.keypress(function() {
+                    //    if(event.which == 13)
+                    //    {
+                    //        // Trigger submit
+                    //    }
+                    //});​
 
-					//// Reset Btn
-					//$Selectors.paneResetBtn.on('click', function(e) {
-					//	$Selectors.dirSteps.html('');
-					//	$Selectors.dirSrc.val('');
-					//	$Selectors.dirDst.val('');
-                    //
-					//	if(pinA) pinA.setMap(null);
-					//	if(pinB) pinB.setMap(null);
-                    //
-					//	directionsDisplay.setMap(null);
-					//});
 
-					// Toggle Btn
-                    var panelOptions = {
-                        effect: 'slide',
-                        direction: 'right',
-                        easing: 'linear',
-                        duration: 500
-                    };
-                    var collapsed = false;
-					$Selectors.panelToggle.click(function() {
-						$Selectors.dirPanel.toggle(panelOptions);
-                        if (collapsed) {
-                            $Selectors.iC.html('&gt;');
-                            $Selectors.panelToggle.animate({right: '+=30%'}, {
-                                    duration: 500,
-                                    easing: 'linear'
-                                });
-                            collapsed = false;
-                        } else {
-                            $Selectors.iC.html('&lt;');
-                            $Selectors.panelToggle.animate({right: '-=30%'}, {
-                                duration: 500,
-                                easing: 'linear'
+                    //// Reset Btn
+                    //$Selectors.paneResetBtn.on('click', function(e) {
+                    //	$Selectors.dirSteps.html('');
+                    //	$Selectors.dirSrc.val('');
+                    //	$Selectors.dirDst.val('');
+                    //
+                    //	if(pinA) pinA.setMap(null);
+                    //	if(pinB) pinB.setMap(null);
+                    //
+                    //	directionsDisplay.setMap(null);
+                    //});
+
+
+                    // Use My Location / Geo Location Btn
+                    $Selectors.gpsBtn.click(function() {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(function(position) {
+                                userGeolocation(position);
                             });
-                            collapsed = true;
                         }
-						//$Selectors.dirPanel.animate({'left': '+=305px'});
-					});
-
-					// Use My Location / Geo Location Btn
-					$Selectors.gpsBtn.click(function() {
-						if (navigator.geolocation) {
-							navigator.geolocation.getCurrentPosition(function(position) {
-								userGeolocation(position);
-							});
-						}
-					});
+                    });
                 }, //invokeEvents Ends
 
-				_init = function() {
-					mapSetup();
-					invokeEvents();
-				}; // _init Ends
+                _init = function() {
+                    mapSetup();
+                    invokeEvents();
+                }; // _init Ends
 
-			this.init = function() {
-				_init();
-				return this; // Refers to: mapDemo.Directions
-			};
-			return this.init(); // Refers to: mapDemo.Directions.init()
-		} // _Directions Ends
-		return new _Directions(); // Creating a new object of _Directions rather than a funtion
-	}()); // mapDemo.Directions Ends
+            this.init = function() {
+                _init();
+                return this; // Refers to: mapDemo.Directions
+            };
+            return this.init(); // Refers to: mapDemo.Directions.init()
+        } // _Directions Ends
+        return new _Directions(); // Creating a new object of _Directions rather than a funtion
+    }()); // mapDemo.Directions Ends
 })(window.mapDemo = window.mapDemo || {}, jQuery);
