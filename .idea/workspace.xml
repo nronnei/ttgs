@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3b02e9d2-9457-443a-bcff-ba0e9f4c2539" name="Default" comment="Update to">
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_css\accordion.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_css\ttgs.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_css\ttgsv1.7.0s.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_css\ttgsv1.7.1e.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_js\ttgs1.7.0e.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_js\ttgs1.7.0s.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_js\ttgs_v1.5.1e.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\_js\ttgs_v1.5.2e.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\accordion-panel-only.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\ttgs_v1.7e.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\ttgs_v1.7s.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="3b02e9d2-9457-443a-bcff-ba0e9f4c2539" name="Default" comment="" />
     <ignored path="ttgs.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,7 +47,7 @@
       <file leaf-file-name="ttgs1.8.0e.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_js/ttgs1.8.0e.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14379086" vertical-offset="2003" max-vertical-offset="3876">
+            <state vertical-scroll-proportion="0.14402619" vertical-offset="2003" max-vertical-offset="3876">
               <caret line="375" column="60" selection-start-line="375" selection-start-column="60" selection-end-line="375" selection-end-column="60" />
               <folding>
                 <element signature="e#258#1750#0" expanded="false" />
@@ -350,13 +337,20 @@
       <option name="project" value="LOCAL" />
       <updated>1427332494625</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Update to version 1.8">
+      <created>1428108959852</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1428108959852</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -371,7 +365,6 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -397,7 +390,8 @@
     <MESSAGE value="Most recent changes to my branch" />
     <MESSAGE value="Make sure we add all files to my branch" />
     <MESSAGE value="New responsive css file" />
-    <option name="LAST_COMMIT_MESSAGE" value="New responsive css file" />
+    <MESSAGE value="Update to version 1.8" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to version 1.8" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -599,7 +593,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_js/ttgs1.8.0e.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14379086" vertical-offset="2003" max-vertical-offset="3876">
+        <state vertical-scroll-proportion="0.14402619" vertical-offset="2003" max-vertical-offset="3876">
           <caret line="375" column="60" selection-start-line="375" selection-start-column="60" selection-end-line="375" selection-end-column="60" />
           <folding>
             <element signature="e#258#1750#0" expanded="false" />
