@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3b02e9d2-9457-443a-bcff-ba0e9f4c2539" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_js/infobox-mini.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_css/normalize.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_css/sidebar.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_js/ttgs_1.8.min.js" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\infobox-mini.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\ttgsv1.7.0s.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\ttgsv1.7.1e.css" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\admin\Documents\GitHub\ttgs\ttgs1.7.0s.js" afterPath="$PROJECT_DIR$/_js/ttgs_1.8s.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="3b02e9d2-9457-443a-bcff-ba0e9f4c2539" name="Default" comment="" />
     <ignored path="ttgs.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
