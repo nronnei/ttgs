@@ -1,7 +1,73 @@
 /**
- * @author Giri Jeedigunta
- * Visit: http://thewebstorebyg.wordpress.com/ for more tutorials on maps
+ * @author Nicholas Ronnei
+ * Special Thanks to:
+ * Giri Jeedigunta (http://thewebstorebyg.wordpress.com/) Visit for great tutorials on maps
+ * Tobias Bieniek (https://github.com/Turbo87) for his wonderful jQuery sidebar!
  */
+
+/**
+ * @author Nicholas Ronnei
+ * Special Thanks to:
+ * Giri Jeedigunta (http://thewebstorebyg.wordpress.com/) Visit for great tutorials on maps
+ * Tobias Bieniek (https://github.com/Turbo87) for his wonderful jQuery sidebar!
+ */
+
+
+$.fn.sidebar = function() {
+    var $sidebar = this;
+    var $tabs = $sidebar.children('.sidebar-tabs').first();
+    var $container = $sidebar.children('.sidebar-content').first();
+
+    $sidebar.find('.sidebar-tabs > li > a').on('click', function() {
+        var $tab = $(this).closest('li');
+
+        if ($tab.hasClass('active'))
+            $sidebar.close();
+        else
+            $sidebar.open(this.hash.slice(1), $tab);
+    });
+
+    $sidebar.open = function(id, $tab) {
+        if (typeof $tab === 'undefined')
+            $tab = $tabs.find('li > a[href="#' + id + '"]').parent();
+
+        // hide old active contents
+        $container.children('.sidebar-pane.active').removeClass('active');
+
+        // show new content
+        $container.children('#' + id).addClass('active');
+
+        // remove old active highlights
+        $tabs.children('li.active').removeClass('active');
+
+        // set new highlight
+        $tab.addClass('active');
+
+        $sidebar.trigger('content', { 'id': id });
+
+        if ($sidebar.hasClass('collapsed')) {
+            // open sidebar
+            $sidebar.trigger('opening');
+            $sidebar.removeClass('collapsed');
+        }
+    };
+
+    $sidebar.close = function() {
+        // remove old active highlights
+        $tabs.children('li.active').removeClass('active');
+
+        if (!$sidebar.hasClass('collapsed')) {
+            // close sidebar
+            $sidebar.trigger('closing');
+            $sidebar.addClass('collapsed');
+        }
+    };
+
+    return $sidebar;
+};
+
+var sidebar = $('#sidebar').sidebar();
+
 (function(mapDemo, $) {
     mapDemo.Directions = (function() {
         function _Directions() {
@@ -27,9 +93,7 @@
                     dirDst: $('#dirDestination'),
                     getDirBtn: $('#getDirections'),
                     dirSteps: $('#directionSteps'),
-                    panelToggle: $('.panelToggleBtn'),
-                    iC: $('#innerContainer'),
-                    gpsBtn: $('#gpsBtn'),
+                    gpsBtn: $('#useGPSBtn'),
                     paneResetBtn: $('#paneReset')
                 },
 
@@ -120,7 +184,6 @@
             // End service defs
 
                 infoSetup = function () {
-                    console.log("INFO TITLES:");
                     for (var i = 0; i < parkInfo.length; i++) {
                         var park = parkInfo[i];
                         var infoMarker = function() {
@@ -152,8 +215,7 @@
                                 '<p style="color:black"><b> Park Description</b><br>' + park[1] + '</p>' +
                                 '<p style="color:black"><b> Address</b><br>' + park[3] + '</p>' +
                                 '<p style="color:black"><b> Phone</b><br>' + park[2] + '</p>' +
-                                    //'<p> <a href='+park[4]+' target="_blank"> Website</a>' + '  </p>'+
-                                    //'<div id="gd-btn">Get Directions Here</div>'+
+                                '<p> <a href=' + park[4] + ' target="_blank" style:"color: blue!important">Visit Website</a></p>'+
                                 '</div>' +
                                 '</div>';
 
@@ -185,7 +247,6 @@
                                 map.setZoom(14);
                                 map.panTo(marker.getPosition());
                             });
-                            console.log(marker.title);
                             return marker;
                         };
                         infoMarkerArray.push(infoMarker());
@@ -267,26 +328,20 @@
                     map = new google.maps.Map($Selectors.mapCanvas, {
                         zoom: 10,
                         center: new google.maps.LatLng(44.95467069112005, -93.23650393164066),
-                        //mapTypeControl: true,
-                        //mapTypeControlOptions: {
-                        //   style: google.maps.MapTypeControlStyle.DEFAULT,
-                        //   position: google.maps.ControlPosition.TOP_LEFT
-                        //},
-                        //
-                        //panControl: true,
-                        //panControlOptions: {
-                        //   position: google.maps.ControlPosition.LEFT_TOP
-                        //},
-                        //
-                        //zoomControl: true,
-                        //zoomControlOptions: {
-                        //   style: google.maps.ZoomControlStyle.LARGE,
-                        //   position: google.maps.ControlPosition.LEFT_TOP
-                        //},
-                        //
-                        //scaleControl: true,
-                        //streetViewControl: true,
-                        //overviewMapControl: true,
+                        mapTypeControl: false,
+                        panControl: false,
+                        streetViewControl: true,
+                        streetViewControlOptions: {
+                            position: google.maps.ControlPosition.RIGHT_BOTTOM
+                        },
+                        zoomControl: true,
+                        zoomControlOptions: {
+                            style: google.maps.ZoomControlStyle.DEFAULT,
+                            position: google.maps.ControlPosition.RIGHT_BOTTOM
+                        },
+                        scaleControl: true,
+
+                        overviewMapControl: false,
 
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
@@ -298,16 +353,16 @@
                     entranceSetup();
                 }, // mapSetup Ends
 
-            //directionsRender = function(source, destination) {
-            //	$Selectors.dirSteps.find('.msg').hide();
-            //	directionsDisplay.setMap(map);
+            //    directionsRender = function(source, destination) {
+            //        $Selectors.dirSteps.find('.msg').hide();
+            //        directionsDisplay.setMap(map);
             //
-            //	var request = {
-            //		origin: source,
-            //		destination: destination,
-            //		provideRouteAlternatives: false,
-            //		travelMode: google.maps.DirectionsTravelMode.DRIVING
-            //	};
+            //        var request = {
+            //            origin: source,
+            //            destination: destination,
+            //            provideRouteAlternatives: true,
+            //            travelMode: google.maps.DirectionsTravelMode.DRIVING
+            //        };
             //
             //	directionsService.route(request, function(response, status) {
             //		if (status == google.maps.DirectionsStatus.OK) {
@@ -321,7 +376,7 @@
             //		}
             //	});
             //}, // directionsRender Ends
-            //
+
                 setUserLocation = function() {
                     var icon = {
                         anchor: new google.maps.Point(0, 0),
@@ -357,15 +412,6 @@
                         }
                     }
                     // End helpers
-
-                    // Initiate the accordion
-                    $(function(){
-                        var $a = $("#accordion");
-                        $a.accordion({
-                            heightStyle: "fill",
-                            navigation: true
-                        });
-                    });
 
                     //// Get Directions
                     //$Selectors.getDirBtn.on('click', function(e) {
@@ -408,33 +454,6 @@
                     //	directionsDisplay.setMap(null);
                     //});
 
-                    // Toggle Btn
-                    var panelOptions = {
-                        effect: 'slide',
-                        direction: 'right',
-                        easing: 'linear',
-                        duration: 500
-                    };
-                    var collapsed = false;
-                    $Selectors.panelToggle.click(function() {
-                        $Selectors.dirPanel.toggle(panelOptions);
-                        if (collapsed) {
-                            $Selectors.iC.html('&gt;');
-                            $Selectors.panelToggle.animate({right: '+=30%'}, {
-                                duration: 500,
-                                easing: 'linear'
-                            });
-                            collapsed = false;
-                        } else {
-                            $Selectors.iC.html('&lt;');
-                            $Selectors.panelToggle.animate({right: '-=30%'}, {
-                                duration: 500,
-                                easing: 'linear'
-                            });
-                            collapsed = true;
-                        }
-                        //$Selectors.dirPanel.animate({'left': '+=305px'});
-                    });
 
                     // Use My Location / Geo Location Btn
                     $Selectors.gpsBtn.click(function() {
