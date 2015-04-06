@@ -29,7 +29,7 @@
 					dirSteps: jQuery('#directionSteps'), 
 					paneToggle: jQuery('#paneToggle'), 
 					useGPSBtn: jQuery('#useGPS'), 
-					paneResetBtn: jQuery('#paneReset')
+					resetBtn: jQuery('#paneReset')
 				},
 				
 				autoCompleteSetup = function() {
@@ -150,7 +150,7 @@
 					});
 					
 					// Reset Btn
-					$Selectors.paneResetBtn.on('click', function(e) {
+					$Selectors.resetBtn.on('click', function(e) {
 						$Selectors.dirSteps.html('');
 						$Selectors.dirSrc.val('');
 						$Selectors.dirDst.val('');

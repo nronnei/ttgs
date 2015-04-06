@@ -84,6 +84,9 @@
 #dsResults {
     display: none;
 }
+#dsInputs {
+    display: block;
+}
 .sidebar-pane {
     display: none;
     right: 0;
