@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3b02e9d2-9457-443a-bcff-ba0e9f4c2539" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_css/directions.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_js/ttgs1.8.1e.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/panel/directions.html" afterPath="$PROJECT_DIR$/example/panel/directions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/panel/sample.js" afterPath="$PROJECT_DIR$/example/panel/sample.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_css/sidebar.css" afterPath="$PROJECT_DIR$/_css/sidebar.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_js/ttgs1.8.0e.js" afterPath="$PROJECT_DIR$/_js/ttgs1.8.0e.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_css/directions.css" afterPath="$PROJECT_DIR$/_css/directions.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_js/ttgs1.8.1e.js" afterPath="$PROJECT_DIR$/_js/ttgs1.8.1e.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ttgs_v1.8e.html" afterPath="$PROJECT_DIR$/ttgs_v1.8e.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -36,8 +32,8 @@
       <file leaf-file-name="ttgs_v1.8e.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ttgs_v1.8e.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.230769" vertical-offset="391" max-vertical-offset="1071">
-              <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1088">
+              <caret line="11" column="70" selection-start-line="11" selection-start-column="70" selection-end-line="11" selection-end-column="70" />
               <folding>
                 <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -49,26 +45,22 @@
       <file leaf-file-name="ttgs1.8.1e.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_js/ttgs1.8.1e.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58101475" vertical-offset="1685" max-vertical-offset="4981">
-              <caret line="208" column="33" selection-start-line="208" selection-start-column="33" selection-end-line="208" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.6756757" vertical-offset="6599" max-vertical-offset="7735">
+              <caret line="544" column="23" selection-start-line="544" selection-start-column="23" selection-end-line="544" selection-end-column="23" />
               <folding>
                 <element signature="e#258#1750#0" expanded="false" />
-                <element signature="e#4769#11159#0" expanded="false" />
-                <element signature="e#11193#14698#0" expanded="false" />
-                <element signature="e#17763#21627#0" expanded="false" />
-                <element signature="e#21674#25988#0" expanded="false" />
-                <element signature="e#21729#25757#0" expanded="false" />
-                <element signature="e#25055#25423#0" expanded="false" />
-                <element signature="e#25520#25694#0" expanded="false" />
-                <element signature="e#26029#27189#0" expanded="false" />
-                <marker date="1428268136475" expanded="true" signature="16688:16706" placeholder="..." />
-                <marker date="1428268136475" expanded="true" signature="19070:19084" placeholder="..." />
-                <marker date="1428268136475" expanded="true" signature="19263:19274" placeholder="..." />
-                <marker date="1428268136475" expanded="true" signature="19366:19377" placeholder="..." />
-                <marker date="1428268136475" expanded="true" signature="19460:19471" placeholder="..." />
-                <marker date="1428268136475" expanded="true" signature="22995:23009" placeholder="..." />
-                <marker date="1428268136475" expanded="true" signature="23283:23294" placeholder="..." />
-                <marker date="1428268136475" expanded="true" signature="23450:23487" placeholder="..." />
+                <element signature="e#4881#11271#0" expanded="false" />
+                <element signature="e#11305#14810#0" expanded="false" />
+                <element signature="e#25880#26248#0" expanded="false" />
+                <element signature="e#26914#28074#0" expanded="false" />
+                <marker date="1428359783691" expanded="true" signature="16943:16957" placeholder="..." />
+                <marker date="1428359783691" expanded="true" signature="19895:19909" placeholder="..." />
+                <marker date="1428359783691" expanded="true" signature="20088:20099" placeholder="..." />
+                <marker date="1428359783691" expanded="true" signature="20191:20202" placeholder="..." />
+                <marker date="1428359783691" expanded="true" signature="20285:20296" placeholder="..." />
+                <marker date="1428359783691" expanded="true" signature="23820:23834" placeholder="..." />
+                <marker date="1428359783691" expanded="true" signature="24108:24119" placeholder="..." />
+                <marker date="1428359783691" expanded="true" signature="24275:24312" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -77,9 +69,11 @@
       <file leaf-file-name="directions.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_css/directions.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204">
-              <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding>
+                <marker date="1428359828796" expanded="true" signature="35:73" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -87,8 +81,8 @@
       <file leaf-file-name="sidebar.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_css/sidebar.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1008" max-vertical-offset="2975">
-              <caret line="88" column="1" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="600" max-vertical-offset="2975">
+              <caret line="63" column="16" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -134,10 +128,10 @@
         <option value="$PROJECT_DIR$/_js/ttgs1.8.0e.js" />
         <option value="$PROJECT_DIR$/example/panel/directions.html" />
         <option value="$PROJECT_DIR$/_js/ttgs1.8.0s.js" />
-        <option value="$PROJECT_DIR$/ttgs_v1.8e.html" />
         <option value="$PROJECT_DIR$/_css/sidebar.css" />
-        <option value="$PROJECT_DIR$/_css/directions.css" />
+        <option value="$PROJECT_DIR$/ttgs_v1.8e.html" />
         <option value="$PROJECT_DIR$/_js/ttgs1.8.1e.js" />
+        <option value="$PROJECT_DIR$/_css/directions.css" />
       </list>
     </option>
   </component>
@@ -147,8 +141,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="784" />
+    <option name="width" value="1296" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -173,7 +167,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -222,6 +215,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -341,17 +335,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16369048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16328125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -360,6 +352,8 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -389,11 +383,113 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="20" />
+      <option name="time" value="23" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ttgs_v1.8e.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1088">
+          <caret line="11" column="70" selection-start-line="11" selection-start-column="70" selection-end-line="11" selection-end-column="70" />
+          <folding>
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_js/ttgs1.8.1e.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7769">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#258#1750#0" expanded="false" />
+            <element signature="e#4881#11271#0" expanded="false" />
+            <element signature="e#11305#14810#0" expanded="false" />
+            <element signature="e#25880#26248#0" expanded="false" />
+            <element signature="e#26914#28074#0" expanded="false" />
+            <marker date="1428359783691" expanded="true" signature="16943:16957" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="19895:19909" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20088:20099" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20191:20202" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20285:20296" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="23820:23834" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="24108:24119" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="24275:24312" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_css/directions.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="459">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+          <folding>
+            <marker date="1428359828796" expanded="true" signature="35:73" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_css/sidebar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="600" max-vertical-offset="2975">
+          <caret line="63" column="16" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ttgs_v1.8e.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="1071">
+          <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
+          <folding>
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_js/ttgs1.8.1e.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4981">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#258#1750#0" expanded="false" />
+            <element signature="e#4881#11271#0" expanded="false" />
+            <element signature="e#11305#14810#0" expanded="false" />
+            <element signature="e#25880#26248#0" expanded="false" />
+            <element signature="e#26914#28074#0" expanded="false" />
+            <marker date="1428359783691" expanded="true" signature="16943:16957" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="19895:19909" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20088:20099" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20191:20202" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20285:20296" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="23820:23834" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="24108:24119" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="24275:24312" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_css/directions.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="204">
+          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <folding>
+            <marker date="1428359828796" expanded="true" signature="35:73" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_css/sidebar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1008" max-vertical-offset="2975">
+          <caret line="88" column="1" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/example/panel/sample.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2800" max-vertical-offset="3434">
@@ -443,18 +539,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/GIS/TtGS/panel-style-demo/index_nick.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0273752" vertical-offset="17" max-vertical-offset="2380">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/panel/directions.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-18.423077" vertical-offset="116" max-vertical-offset="748">
           <caret line="35" column="49" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -470,21 +558,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="1262" max-vertical-offset="8160">
           <caret line="82" column="20" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="20" />
-          <folding>
-            <marker date="1428169560496" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1428169560496" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1428169560496" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1428169560496" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1428169560496" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1428169560496" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_css/sidebar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="600" max-vertical-offset="2975">
+          <caret line="63" column="16" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ttgs_v1.8e.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.230769" vertical-offset="391" max-vertical-offset="1071">
-          <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1088">
+          <caret line="11" column="70" selection-start-line="11" selection-start-column="70" selection-end-line="11" selection-end-column="70" />
           <folding>
             <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -492,44 +581,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_css/sidebar.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1008" max-vertical-offset="2975">
-          <caret line="88" column="1" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_css/directions.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204">
-          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <marker date="1428359828796" expanded="true" signature="35:73" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_js/ttgs1.8.1e.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58101475" vertical-offset="1685" max-vertical-offset="4981">
-          <caret line="208" column="33" selection-start-line="208" selection-start-column="33" selection-end-line="208" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.6756757" vertical-offset="6599" max-vertical-offset="7735">
+          <caret line="544" column="23" selection-start-line="544" selection-start-column="23" selection-end-line="544" selection-end-column="23" />
           <folding>
             <element signature="e#258#1750#0" expanded="false" />
-            <element signature="e#4769#11159#0" expanded="false" />
-            <element signature="e#11193#14698#0" expanded="false" />
-            <element signature="e#17763#21627#0" expanded="false" />
-            <element signature="e#21674#25988#0" expanded="false" />
-            <element signature="e#21729#25757#0" expanded="false" />
-            <element signature="e#25055#25423#0" expanded="false" />
-            <element signature="e#25520#25694#0" expanded="false" />
-            <element signature="e#26029#27189#0" expanded="false" />
-            <marker date="1428268136475" expanded="true" signature="16688:16706" placeholder="..." />
-            <marker date="1428268136475" expanded="true" signature="19070:19084" placeholder="..." />
-            <marker date="1428268136475" expanded="true" signature="19263:19274" placeholder="..." />
-            <marker date="1428268136475" expanded="true" signature="19366:19377" placeholder="..." />
-            <marker date="1428268136475" expanded="true" signature="19460:19471" placeholder="..." />
-            <marker date="1428268136475" expanded="true" signature="22995:23009" placeholder="..." />
-            <marker date="1428268136475" expanded="true" signature="23283:23294" placeholder="..." />
-            <marker date="1428268136475" expanded="true" signature="23450:23487" placeholder="..." />
+            <element signature="e#4881#11271#0" expanded="false" />
+            <element signature="e#11305#14810#0" expanded="false" />
+            <element signature="e#25880#26248#0" expanded="false" />
+            <element signature="e#26914#28074#0" expanded="false" />
+            <marker date="1428359783691" expanded="true" signature="16943:16957" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="19895:19909" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20088:20099" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20191:20202" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="20285:20296" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="23820:23834" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="24108:24119" placeholder="..." />
+            <marker date="1428359783691" expanded="true" signature="24275:24312" placeholder="..." />
           </folding>
         </state>
       </provider>

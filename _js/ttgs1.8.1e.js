@@ -88,6 +88,8 @@ var sidebar = $('#sidebar').sidebar();
                     dirDst: $('#dirDestination'),
                     getDirBtn: $('#gd-btn'),
                     dirList: $('#dirList'),
+                    dirStepWrapper: $('.dirStepWrapper'),
+                    closeDirStep: $('.closeDirStep'),
                     gpsBtn: $('#useGPSBtn'),
                     resetBtn: $('#resetBtn')
                 },
@@ -197,19 +199,29 @@ var sidebar = $('#sidebar').sidebar();
                         };
 
                         directionsService.route(request, function(response, status) {
-                            console.log(response);
                             if (status == google.maps.DirectionsStatus.OK) {
                                 var _route = response.routes[0];
                                 for (var x = 0; x < _route.legs.length; x++) {
+                                    console.log("Leg " + x);
                                     var _leg = _route.legs[x];
-                                    for (var i = 0; i < _leg.length; i++) {
+                                    console.log(_leg.steps[0].instructions);
+                                    for (var i = 0; i < _leg.steps.length; i++) {
                                         var instructions = _leg.steps[i].instructions;
-                                        $Selectors.dirList.append('<div>' + instructions + '</div>');
+                                        console.log(instructions);
+                                        $Selectors.dirList.append(
+                                            '<div class="dirStepWrapper">' +
+                                            '<div class="dirLeg col-xs-12">' +
+                                            '<div class="pull-right closeDirStep"><i class="fa fa-times" style="font-size: 8pt"></i></div>' +
+                                            '<div class="instructions col-xs-12">' + instructions +'</div>' +
+                                            '</div>' +
+                                            '<div class="row col-xs-12 dirStepSpacer"></div>' +
+                                            '</div>');
                                     }
                                 }
 
+
                             } else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
-                                $Selectors.dirList.append('<div class="dirLeg" style="text-align: center">' +
+                                $Selectors.dirList.append('<div class="dirLeg">' +
                                     'Looks like Google Maps couldn&#39;t find that place. Sorry!'
                                 + '</div>');
                             } else if (status == google.maps.DirectionsStatus.ZERO_RESULTS) {
@@ -370,6 +382,7 @@ var sidebar = $('#sidebar').sidebar();
                         });
                         google.maps.event.addListener(entranceIBs[i], "domready", function () {
                             $('#gd-btn').on('click', function () {
+                                $Selectors.dirList.empty();
                                 getDirections()
                             });
                         });
@@ -523,6 +536,13 @@ var sidebar = $('#sidebar').sidebar();
                     	directionsDisplay.setMap(null);
                     });
 
+                    // Close direction step
+                    var lastElementRemoved;
+                    $Selectors.dsResults.on("click", "div.closeDirStep", function() {
+                        var $elem = $(this);
+                        lastElementRemoved = $elem.closest('.dirStepWrapper');
+                        lastElementRemoved.detach();
+                    });
 
                     // Use My Location / Geo Location Btn
                     $Selectors.gpsBtn.click(function() {
