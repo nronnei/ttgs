@@ -1,5 +1,6 @@
 .dirStepWrapper {
-
+    right: auto;
+    left: auto;
 }
 .dirStepSpacer {
     width: 100%;

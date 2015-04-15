@@ -82,7 +82,7 @@ var sidebar = $('#sidebar').sidebar();
                     mapCanvas: $('#mapCanvas')[0],
                     dirPanel: $('#panel'),
                     dirInputs: $('.directionInputs'),
-                    dirOrigin: $('#dirOrigin'),
+                    origin: $('#origin'),
                     dirDst: $('#dirDestination'),
                     getDirBtn: $('#getDirections'),
                     dirSteps: $('#directionSteps'),
@@ -92,7 +92,7 @@ var sidebar = $('#sidebar').sidebar();
 
 
                 autoCompleteSetup = function() {
-                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirOrigin[0]);
+                    autoSrc = new google.maps.places.Autocomplete($Selectors.origin[0]);
                 }, // autoCompleteSetup Ends
 
             //directionsSetup = function() {
@@ -392,7 +392,7 @@ var sidebar = $('#sidebar').sidebar();
                 userGeolocation = function(p) {
                     var lat = p.coords.latitude;
                     var lng = p.coords.longitude;
-                    $Selectors.dirOrigin.val(lat + ", " + lng);
+                    $Selectors.origin.val(lat + ", " + lng);
                     userPos = new google.maps.LatLng(lat, lng);
                     setUserLocation();
                 }, // userGeolocation Ends
@@ -427,7 +427,7 @@ var sidebar = $('#sidebar').sidebar();
                     // Set click behavior
 
                     // Keydown listener for entering directions
-                    //$Selectors.dirOrigin.keypress(function() {
+                    //$Selectors.origin.keypress(function() {
                     //    if(event.which == 13)
                     //    {
                     //        // Trigger submit

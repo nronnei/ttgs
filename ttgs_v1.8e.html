@@ -24,26 +24,28 @@
     <!-- Tab panes -->
     <div class="sidebar-content active">
         <div class="sidebar-pane" id="directions">
+            <!--Starts Hidden-->
             <div id="dsResults">
                 <div class="row">
                     <div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-danger" id="resetBtn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Reset</button>
                     </div>
                 </div>
-                <div id="dirList" class="scrollReady">
+                <div id="dirList">
                     <!--HTML in here-->
 
                 </div>
             </div>
-                <!--Shown part-->
+            <!--Starts Shown-->
             <div id="dsInputs">
                 <h1>Get Directions</h1>
                 <div class="row">
                     <div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-info" id="useGPSBtn"><i class="fa fa-crosshairs"></i>&nbsp;&nbsp;Use My Location</button>
                     </div>
+                    <!--<input type="text" class="form-control search" value="" placeholder="Cross Streets   OR   Your Address" id="origin"/>-->
                     <div class="col-lg-12" style="padding-bottom: 10px">
-                        <input type="text" class="form-control search" value="" placeholder="Cross Streets   OR   Your Address" id="dirOrigin"/>
+                        <input type="text" class="form-control search" value="" placeholder="Cross Streets   OR   Your Address" id="origin"/>
                     </div>
                 </div>
                 <p style="text-align: center">

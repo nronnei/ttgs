@@ -69,6 +69,11 @@ var sidebar = $('#sidebar').sidebar();
                 autoSrc, autoDest, pinA, pinB, userPos,
                 parkDest,
 
+                ////////////////////
+                // Testing for DirectionsRenderer
+                userPos = new google.maps.LatLng(44.944664, -93.181506),
+                // TODO Remove this section of code before roll-out
+                ////////////////////
             //markerA = new google.maps.MarkerImage('m1.png',
             //		new google.maps.Size(24, 27),
             //		new google.maps.Point(0, 0),
@@ -84,7 +89,7 @@ var sidebar = $('#sidebar').sidebar();
                     dsResults: $('#dsResults'),
                     dsInputs: $('#dsInputs'),
                     dirInputs: $('.directionInputs'),
-                    dirOrigin: $('#dirOrigin'),
+                    origin: $('#origin'),
                     dirDst: $('#dirDestination'),
                     getDirBtn: $('#gd-btn'),
                     dirList: $('#dirList'),
@@ -96,7 +101,16 @@ var sidebar = $('#sidebar').sidebar();
 
 
                 autoCompleteSetup = function() {
-                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirOrigin[0]);
+                    autoSrc = new google.maps.places.Autocomplete($Selectors.origin[0]);
+                    //autoSrc.bindTo('bounds', map);
+                    //google.maps.event.addListener(autoSrc, 'place_changed', function() {
+                    //    var place = autoSrc.getPlace();
+                    //    userPos = place.geometry.location;
+                    //    setUserLocation();
+                    //    $Selectors.origin.val(place.formatted_address);
+                    //
+                    //
+                    //});
                 }, // autoCompleteSetup Ends
 
             //directionsSetup = function() {
@@ -181,7 +195,16 @@ var sidebar = $('#sidebar').sidebar();
 
             // Define services
                 directionsService = new google.maps.DirectionsService(),
+
             // End service defs
+
+                displayRoute = function(r) {
+                    	directionsDisplay = new google.maps.DirectionsRenderer({
+                    		suppressMarkers: true
+                    	});
+                    directionsDisplay.setMap(map);
+                    directionsDisplay.setDirections(r);
+                },
 
                 getDirections = function() {
                     if (userPos == undefined) {
@@ -194,7 +217,7 @@ var sidebar = $('#sidebar').sidebar();
                         var request = {
                             origin: userPos,
                             destination: parkDest,
-                            provideRouteAlternatives: false,
+                            provideRouteAlternatives: true,
                             travelMode: google.maps.DirectionsTravelMode.TRANSIT
                         };
 
@@ -218,7 +241,7 @@ var sidebar = $('#sidebar').sidebar();
                                             '</div>');
                                     }
                                 }
-
+                                displayRoute(response);
 
                             } else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
                                 $Selectors.dirList.append('<div class="dirLeg">' +
@@ -483,7 +506,7 @@ var sidebar = $('#sidebar').sidebar();
                 userGeolocation = function(p) {
                     var lat = p.coords.latitude;
                     var lng = p.coords.longitude;
-                    $Selectors.dirOrigin.val(lat + ", " + lng);
+                    $Selectors.origin.val(lat + ", " + lng);
                     userPos = new google.maps.LatLng(lat, lng);
                     setUserLocation();
                 }, // userGeolocation Ends
@@ -515,7 +538,7 @@ var sidebar = $('#sidebar').sidebar();
                     // Set click behavior
 
                     // Keydown listener for entering directions
-                    //$Selectors.dirOrigin.keypress(function() {
+                    //$Selectors.origin.keypress(function() {
                     //    if(event.which == 13)
                     //    {
                     //        // Trigger submit
@@ -528,7 +551,7 @@ var sidebar = $('#sidebar').sidebar();
                     	$Selectors.dirList.empty();
                         $Selectors.dsResults.hide();
                         $Selectors.dsInputs.show();
-                    	$Selectors.dirOrigin.val('');
+                    	$Selectors.origin.val('');
 
                     	if(pinA) pinA.setMap(null);
                     	if(pinB) pinB.setMap(null);
