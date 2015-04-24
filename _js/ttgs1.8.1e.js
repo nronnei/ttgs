@@ -190,6 +190,8 @@ var sidebar = $('#sidebar').sidebar();
                 entranceIBs = [],
                 infoMarkerArray = [],
                 infoIBs = [],
+                dirResultsArray = [],// This holds a set of arrays with the relevant [DirectionsRoute, DirectionsRenderer] objects
+		selectedRouteIndex = 0
 
             // End array defs
 
@@ -197,15 +199,99 @@ var sidebar = $('#sidebar').sidebar();
                 directionsService = new google.maps.DirectionsService(),
 
             // End service defs
-
-                displayRoute = function(r) {
-                    	directionsDisplay = new google.maps.DirectionsRenderer({
-                    		suppressMarkers: true
-                    	});
-                    directionsDisplay.setMap(map);
-                    directionsDisplay.setDirections(r);
+               
+                warningCard = function (warn) {
+                    var warningCardContent =
+                        '<div class="warningWrapper">' +
+                            '<div class="warning">' + warn + '</div>' +
+                            // insert an OK button here
+                        '</div>';
+                    return warningCardContent;
                 },
+                stepCard = function (inst) {
+                    var stepCardContent =
+                    '<div class="dirStepWrapper">' +
+                    '<div class="dirLeg col-xs-12">' +
+                    '<div class="pull-right closeDirStep"><i class="fa fa-times" style="font-size: 8pt"></i></div>' +
+                    '<div class="instructions col-xs-12">' + inst +'</div>' +
+                    '</div>' +
+                    '<div class="row col-xs-12 dirStepSpacer"></div>' +
+                    '</div>';
+                    return stepCardContent;
+                },
+                copyrightCard = function (c) {
+		    var copyrightCardContent = 
+                      '<div class="copyrightWrapper">' +
+                          '<div class="copyright">' + c + '</div>' +
+                          // insert an OK button here
+                      '</div>';
+		    return copyrightCardContent;
+		},
+                genStepCards = function (_r) {
+                    var instructions, card;
+                    // Put warnings at top of card deck
+                    var warns = _r.warnings;
+                    for (var x=0; x < warns.length; x++) {
+                        var warn = warns[x];
+                        card = warningCard(warn);
+                        $Selectors.dirList.append(card);
+                    }
 
+                    // Add all the DirecionSteps to the card deck
+                    for (var y=0; y < _r.legs.length; y++) {
+                        var _l = _r.legs[y];
+                        for (var i = 0; i < _l.steps.length; i++) {
+			    console.log("Number of SubSteps: " + _l.steps[i].length); 
+                            instructions = _l.steps[i].instructions;
+                            card = stepCard(instructions);
+                            $Selectors.dirList.append(card);
+                            if (_l.steps[i].length > 0) {
+                                for (var z = 0; z < _l.steps[i].length; z++) {
+				    instructions = _l.steps[i].instructions;
+                                    card = stepCard(instructions);
+                                    $Selectors.dirList.append(card);
+                                }
+                            }
+                        }
+                    }
+
+                    // Add Copyright info to bottom of card deck
+                    var cr = _r.copyrights;
+                    card = copyrightCard(cr);
+                    $Selectors.dirList.append(card);
+                },
+	        displayRoutes = function() {
+			var r = dirResultsArray;
+			
+			for (var i = 0; i < r.length; i++) {
+				route = r[i][0];
+				ren = r[i][1];
+				if (i == selectedRouteIndex) {
+					var lineOps = {
+					clickable: true,
+					draggable: false,
+					zIndex: 10
+					};
+					ren.setMap(map);
+					ren.setOptions({
+						//ops here
+					});
+					genStepCards(route);
+				} else {
+					var lineOps = {
+					clickable: true,
+					draggable: false,
+					strokeColor: "#ffffff",
+					opacity: 0.8,
+					zIndex: 1
+					};
+					ren.setMap(map);
+					ren.setOptions({
+						//ops here
+					});
+				}
+			}
+                },
                 getDirections = function() {
                     if (userPos == undefined) {
                         alert('Make sure you have both a start end endpoint! Enter your location before clicking "Get Directions".')
@@ -223,27 +309,23 @@ var sidebar = $('#sidebar').sidebar();
 
                         directionsService.route(request, function(response, status) {
                             if (status == google.maps.DirectionsStatus.OK) {
-                                var _route = response.routes[0];
-                                for (var x = 0; x < _route.legs.length; x++) {
-                                    console.log("Leg " + x);
-                                    var _leg = _route.legs[x];
-                                    console.log(_leg.steps[0].instructions);
-                                    for (var i = 0; i < _leg.steps.length; i++) {
-                                        var instructions = _leg.steps[i].instructions;
-                                        console.log(instructions);
-                                        $Selectors.dirList.append(
-                                            '<div class="dirStepWrapper">' +
-                                            '<div class="dirLeg col-xs-12">' +
-                                            '<div class="pull-right closeDirStep"><i class="fa fa-times" style="font-size: 8pt"></i></div>' +
-                                            '<div class="instructions col-xs-12">' + instructions +'</div>' +
-                                            '</div>' +
-                                            '<div class="row col-xs-12 dirStepSpacer"></div>' +
-                                            '</div>');
-                                    }
+                                dirResultsArray = [];
+                                for (var i = 0; i < response.routes.length; i++) {
+                                    var dr = new google.maps.DirectionsRenderer({
+                                        map: map,
+                                        directions: response,
+                                        routeIndex: i
+                                    });
+                                    var _route = response.routes[i];
+                                    var dirResult = [_route, dr];
+                                    dirResultsArray.push(dirResult);
                                 }
-                                displayRoute(response);
+				console.log("dirResultsArray Length: " + dirResultsArray.length);
+
+				displayRoutes();
 
                             } else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
+
                                 $Selectors.dirList.append('<div class="dirLeg">' +
                                     'Looks like Google Maps couldn&#39;t find that place. Sorry!'
                                 + '</div>');
@@ -445,44 +527,6 @@ var sidebar = $('#sidebar').sidebar();
                     infoSetup();
                     entranceSetup();
                 }, // mapSetup Ends
-
-            //    directionsRender = function() {
-            //        directionsDisplay.setMap(map);
-            //
-            //        var request = {
-            //            origin: userPos,
-            //            destination: parkDest,
-            //            provideRouteAlternatives: false,
-            //            travelMode: google.maps.DirectionsTravelMode.TRANSIT
-            //        };
-            //
-            //        directionsService.route(request, function(response, status) {
-            //            if (status == google.maps.DirectionsStatus.OK) {
-            //
-            //                directionsDisplay.setDirections(response);
-            //
-            //                var _route = response.routes[0].legs[0];
-            //
-            //
-            //            }
-            //        });
-            //
-            //}, // directionsRender Ends
-
-
-
-
-
-                        //
-                        //        directionsDisplay.setDirections(response);
-                        //
-                        //        var _route = response.routes[0].legs[0];
-                        //
-                        //
-                        //    }
-                        //});
-
-
 
                 setUserLocation = function() {
                     var icon = {
