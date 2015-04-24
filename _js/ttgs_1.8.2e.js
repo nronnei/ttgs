@@ -64,24 +64,14 @@ var sidebar = $('#sidebar').sidebar();
 (function(mapDemo, $) {
     mapDemo.Directions = (function() {
         function _Directions() {
-            var map,
-                directionsDisplay,
-                autoSrc, autoDest, pinA, pinB, userPos,
-                parkDest,
+            var map, autoSrc, userPos, parkDest, userMarker,
+                directionsService, directionsRenderer,
 
-                ////////////////////
-                // Testing for DirectionsRenderer
+            ////////////////////
+            // Testing for DirectionsRenderer
                 userPos = new google.maps.LatLng(44.944664, -93.181506),
-                // TODO Remove this section of code before roll-out
-                ////////////////////
-            //markerA = new google.maps.MarkerImage('m1.png',
-            //		new google.maps.Size(24, 27),
-            //		new google.maps.Point(0, 0),
-            //		new google.maps.Point(12, 27)),
-            //markerB = new google.maps.MarkerImage('m2.png',
-            //		new google.maps.Size(24, 28),
-            //		new google.maps.Point(0, 0),
-            //		new google.maps.Point(12, 28)),
+            // TODO Remove this section of code before roll-out
+            ////////////////////
 
             // Caching the Selectors
                 $Selectors = {
@@ -99,10 +89,10 @@ var sidebar = $('#sidebar').sidebar();
                     resetBtn: $('#resetBtn')
                 },
 
-
                 autoCompleteSetup = function() {
-                    autoSrc = new google.maps.places.Autocomplete($Selectors.origin[0]);
-                    //autoSrc.bindTo('bounds', map);
+                    //autoSrc = new google.maps.places.Autocomplete(document.querySelector("#origin"));
+                    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
+                    autoSrc.bindTo('bounds', map);
                     //google.maps.event.addListener(autoSrc, 'place_changed', function() {
                     //    var place = autoSrc.getPlace();
                     //    userPos = place.geometry.location;
@@ -113,14 +103,6 @@ var sidebar = $('#sidebar').sidebar();
                     //});
                 }, // autoCompleteSetup Ends
 
-            //directionsSetup = function() {
-            //	directionsService = new google.maps.DirectionsService();
-            //	directionsDisplay = new google.maps.DirectionsRenderer({
-            //		suppressMarkers: true
-            //	});
-
-            	//directionsDisplay.setPanel($Selectors.dirList[0]);
-            //}, // direstionsSetup Ends
 
             //trafficSetup = function() {
             //	// Creating a Custom Control and appending it to the map
@@ -146,7 +128,7 @@ var sidebar = $('#sidebar').sidebar();
             //}, // trafficSetup Ends
 
 
-            // Define all arrays
+                // Define all arrays
                 parkInfo = [
                     ['Minnesota Valley National Wildlife Refuge', 'The Refuge has many sections along its 99 miles of the Minnesota River. Two access points are easy via transit: the Bloomington Visitor Center and the Bass Ponds. Both of these are within the Long Meadow Lake Unit. Great places to see wildlife.', '952-854-5900', '3815 American Blvd E, Bloomington, MN, 55425', 'http://goo.gl/Hxg9If', '44.82883648', '-93.23845108'],
                     ['Battle Creek Regional Park', 'Hiking, biking, and ski trails, sports areas, and an off-leash dog area. Oak woods, old fields, creek, and second growth woodlands. Great birding opportunities.\r\n', '612-748-2500', 'Point Douglas Rd, St. Paul, MN, 55106', 'http://goo.gl/6KUA9b', '44.93510263', '-93.01953334'],
@@ -190,119 +172,25 @@ var sidebar = $('#sidebar').sidebar();
                 entranceIBs = [],
                 infoMarkerArray = [],
                 infoIBs = [],
-                dirResultsArray = [],// This holds a set of arrays with the relevant [DirectionsRoute, DirectionsRenderer] objects
-		        selectedRouteIndex = 0;
+                // End array defs
 
-            // End array defs
 
-            // Define services
-                directionsService = new google.maps.DirectionsService(),
-
-            // End service defs
-               
-                warningCard = function (warn) {
-                    var warningCardContent =
-                        '<div class="warningWrapper">' +
-                            '<div class="warning">' + warn + '</div>' +
-                            // insert an OK button here
-                        '</div>';
-                    return warningCardContent;
-                },
-                stepCard = function (inst) {
-                    var stepCardContent =
-                    '<div class="dirStepWrapper">' +
-                    '<div class="dirLeg col-xs-12">' +
-                    '<div class="pull-right closeDirStep"><i class="fa fa-times" style="font-size: 8pt"></i></div>' +
-                    '<div class="instructions col-xs-12">' + inst +'</div>' +
-                    '</div>' +
-                    '<div class="row col-xs-12 dirStepSpacer"></div>' +
-                    '</div>';
-                    return stepCardContent;
-                },
-                copyrightCard = function (c) {
-		            var copyrightCardContent =
-                      '<div class="copyrightWrapper">' +
-                          '<div class="copyright">' + c + '</div>' +
-                          // insert an OK button here
-                      '</div>';
-		            return copyrightCardContent;
-		        },
-                genStepCards = function (_r) {
-                    var instructions, card;
-                    // Put warnings at top of card deck
-                    var warns = _r.warnings;
-                    for (var x=0; x < warns.length; x++) {
-                        var warn = warns[x];
-                        card = warningCard(warn);
-                        $Selectors.dirList.append(card);
-                    }
-
-                    // Add all the DirecionSteps to the card deck
-                    for (var y=0; y < _r.legs.length; y++) {
-                        var _l = _r.legs[y];
-                        for (var i = 0; i < _l.steps.length; i++) {
-			                console.log("Number of SubSteps: " + _l.steps[i].length);
-                            instructions = _l.steps[i].instructions;
-                            card = stepCard(instructions);
-                            $Selectors.dirList.append(card);
-                            if (_l.steps[i].length > 0) {
-                                for (var z = 0; z < _l.steps[i].length; z++) {
-				                    instructions = _l.steps[i].instructions;
-                                    card = stepCard(instructions);
-                                    $Selectors.dirList.append(card);
-                                }
-                            }
-                        }
-                    }
-
-                    // Add Copyright info to bottom of card deck
-                    var cr = _r.copyrights;
-                    card = copyrightCard(cr);
-                    $Selectors.dirList.append(card);
-                },
-	            displayRoutes = function() {
-                    var r = dirResultsArray;
-
-                    for (var i = 0; i < r.length; i++) {
-                        var route = r[i][0];
-                        var ren = r[i][1];
-                        var lineOps;
-                        if (i == selectedRouteIndex) {
-                            console.log("Fired a main route style.");
-                            lineOps = {
-                            clickable: true,
-                            draggable: false,
-                            zIndex: 10
-                            };
-                            //ren.setMap(map);
-                            ren.setOptions({
-                                panel: document.querySelector("#dirList"),
-                                hideResultList: false,
-                                polylineOptions: lineOps
-                            });
-                            //genStepCards(route);
-                        } else {
-                            console.log("Fired an alternative route style.");
-                            lineOps = {
-                            clickable: true,
-                            draggable: false,
-                            //strokeColor: "#eeeeee",
-                            opacity: 0.8,
-                            zIndex: 1
-                            };
-                            ren.setMap(null);
-                            ren.setOptions({
-                                polylineOptions: lineOps,
-                                suppressMarkers: true
-                            });
-                        }
+                setAllMap = function(array, map) {
+                    for (var i = 0; i < array.length; i++) {
+                        array[i].setMap(map);
                     }
                 },
+
+                directionsSetup = function() {
+                    directionsService = new google.maps.DirectionsService();
+                    directionsRenderer = new google.maps.DirectionsRenderer();
+                    directionsRenderer.setPanel(document.querySelector("#dirList"));
+                }, // directionsSetup Ends
+
                 getDirections = function() {
                     if (userPos == undefined) {
                         alert('Make sure you have both a start end endpoint! Enter your location before clicking "Get Directions".')
                     } else {
-                        //
                         // Swap panel content
                         $Selectors.dsInputs.hide();
                         $Selectors.dsResults.show();
@@ -315,43 +203,41 @@ var sidebar = $('#sidebar').sidebar();
 
                         directionsService.route(request, function(response, status) {
                             if (status == google.maps.DirectionsStatus.OK) {
-                                dirResultsArray = [];
-                                //var dr = new google.maps.DirectionsRenderer({
-                                //    hideRouteList: false,
-                                //    directions: response,
-                                //    panel: document.querySelector("#dirList"),
-                                //    routeIndex: i
-                                //});
-                                //dr.setMap(map);
 
-                                for (var i = 0; i < response.routes.length; i++) {
-                                    var dr = new google.maps.DirectionsRenderer({
-                                        map: map,
-                                        directions: response,
-                                        routeIndex: i
-                                    });
-                                    var _route = response.routes[i];
-                                    var dirResult = [_route, dr];
-                                    dirResultsArray.push(dirResult);
-                                }
-                                console.log("dirResultsArray Length: " + dirResultsArray.length);
-                                ////displayRoutes();
+                                directionsRenderer.setDirections(response);
+                                directionsRenderer.setPanel(document.querySelector("#dirList"));
+                                directionsRenderer.setMap(map);
 
                             } else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
 
                                 $Selectors.dirList.append('<div class="dirLeg">' +
-                                    'Looks like Google Maps couldn&#39;t find that place. Sorry!'
-                                + '</div>');
+                                    'Looks like Google Maps couldn&#39;t find that place. Sorry!' +
+                                    '</div>' +
+                                    '<br><br><div class="dirLeg">' +
+                                    'If you entered your address manually, make sure it is properly' +
+                                    'formatted:' +
+                                    '</div>' +
+                                    '<br><div class="dirLeg" style="text-align: center">' +
+                                    '123 Example Rd., St. Paul, MN <br>' +
+                                    'OR <br>' +
+                                    'Example Rd & Some St, Minneapolis' +
+                                    '</div>'
+                                );
+
                             } else if (status == google.maps.DirectionsStatus.ZERO_RESULTS) {
+
                                 $Selectors.dirList.append('<div class="dirLeg">' +
-                                'Oh no! Google Maps returned no usable routes. We apologize for the inconvenience!'
-                                + '</div>');
+                                    'Oh no! Google Maps returned no usable routes. We apologize for the inconvenience!'
+                                    + '</div>');
+
                             } else {
+
                                 $Selectors.dirList.append('<div class="dirLeg">' +
-                                'Shoot, something went wrong. It could be a number of things, but try it again. ' +
-                                'If the problem persists, please email nronnei@gmail.com.' +
-                                + '</div>');
+                                    'Shoot, something went wrong. It could be a number of things, but try it again. ' +
+                                    'If the problem persists, please email nronnei@gmail.com.' +
+                                    + '</div>');
                                 console.log(response);
+
                             }
                         });
 
@@ -501,6 +387,8 @@ var sidebar = $('#sidebar').sidebar();
                         google.maps.event.addListener(entranceIBs[i], "domready", function () {
                             $('#gd-btn').on('click', function () {
                                 $Selectors.dirList.empty();
+                                setAllMap(entranceMarkerArray, null);
+                                setAllMap(infoMarkerArray, null);
                                 getDirections()
                             });
                         });
@@ -534,28 +422,33 @@ var sidebar = $('#sidebar').sidebar();
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 
-                    autoCompleteSetup();
-                    //directionsSetup();
                     //trafficSetup();
-                    infoSetup();
                     entranceSetup();
+                    infoSetup();
+                    directionsSetup();
+                    autoCompleteSetup();
+
                 }, // mapSetup Ends
 
                 setUserLocation = function() {
-                    var icon = {
-                        anchor: new google.maps.Point(0, 0),
-                        origin: new google.maps.Point(0, 0),
-                        scaledSize: new google.maps.Size(30, 30),
-                        size: new google.maps.Size(30, 30),
-                        url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png'
-                    };
-                    var user = new google.maps.Marker({
-                        icon: icon,
-                        map: map,
-                        title: "You are here!",
-                        position: userPos
+                    if (userMarker == undefined) {
+                        var icon = {
+                            anchor: new google.maps.Point(0, 0),
+                            origin: new google.maps.Point(0, 0),
+                            scaledSize: new google.maps.Size(30, 30),
+                            size: new google.maps.Size(30, 30),
+                            url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png'
+                        };
+                        userMarker = new google.maps.Marker({
+                            icon: icon,
+                            map: map,
+                            title: "You are here!",
+                            position: userPos
 
-                    });
+                        });
+                    } else {
+                        userMarker.setPosition(userPos);
+                    }
                     map.setZoom(14);
                     map.setCenter(userPos);
                 }, //setUserLocation Ends
@@ -569,20 +462,6 @@ var sidebar = $('#sidebar').sidebar();
                 }, // userGeolocation Ends
 
                 invokeEvents = function() {
-                    // Helpers
-                    function setAllMap(array, map) {
-                        for (var i = 0; i < array.length; i++) {
-                            array[i].setMap(map);
-                        }
-                    }
-                    // End helpers
-
-                    //// Get Directions
-                    //$Selectors.getDirBtn.on('click', function(e) {
-                    //	e.preventDefault();
-                    //	getDirections();
-                    //});
-
                     // Set visibile extent for park entrances
                     google.maps.event.addListener(map, 'zoom_changed', function() {
                         var zoomLevel = map.getZoom();
@@ -600,28 +479,16 @@ var sidebar = $('#sidebar').sidebar();
                     //    {
                     //        // Trigger submit
                     //    }
-                    //});​
+                    //});?
 
 
                     // Reset Btn
                     $Selectors.resetBtn.on('click', function(e) {
-                    	$Selectors.dirList.empty();
+                        $Selectors.dirList.empty();
                         $Selectors.dsResults.hide();
                         $Selectors.dsInputs.show();
-                    	$Selectors.origin.val('');
-
-                    	if(pinA) pinA.setMap(null);
-                    	if(pinB) pinB.setMap(null);
-
-                    	directionsDisplay.setMap(null);
-                    });
-
-                    // Close direction step
-                    var lastElementRemoved;
-                    $Selectors.dsResults.on("click", "div.closeDirStep", function() {
-                        var $elem = $(this);
-                        lastElementRemoved = $elem.closest('.dirStepWrapper');
-                        lastElementRemoved.detach();
+                        setAllMap(infoMarkerArray, map);
+                        directionsRenderer.setMap(null);
                     });
 
                     // Use My Location / Geo Location Btn
@@ -648,4 +515,3 @@ var sidebar = $('#sidebar').sidebar();
         return new _Directions(); // Creating a new object of _Directions rather than a funtion
     }()); // mapDemo.Directions Ends
 })(window.mapDemo = window.mapDemo || {}, jQuery);
-
