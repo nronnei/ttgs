@@ -1,3 +1,20 @@
+::-webkit-input-placeholder {
+    text-align: center;
+}
+:-moz-placeholder {
+    text-align: center;
+}
+::-moz-placeholder {
+    text-align: center;
+}
+:-ms-input-placeholder {
+     text-align: center;
+}
+html,body,#mapCanvas {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 .sidebar {
     position: absolute;
     left: 0;
