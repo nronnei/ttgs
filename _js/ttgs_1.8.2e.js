@@ -65,7 +65,7 @@ var sidebar = $('#sidebar').sidebar();
     mapDemo.Directions = (function() {
         function _Directions() {
             var map, autoSrc, userPos, parkDest, userMarker,
-                directionsService, directionsRenderer,
+                directionsService, directionsRenderer, geocoder,
 
             ////////////////////
             // Testing for DirectionsRenderer
@@ -78,30 +78,31 @@ var sidebar = $('#sidebar').sidebar();
                     mapCanvas: $('#mapCanvas')[0],
                     dsResults: $('#dsResults'),
                     dsInputs: $('#dsInputs'),
-                    dirInputs: $('.directionInputs'),
                     origin: $('#origin'),
-                    dirDst: $('#dirDestination'),
-                    getDirBtn: $('#gd-btn'),
                     dirList: $('#dirList'),
-                    dirStepWrapper: $('.dirStepWrapper'),
-                    closeDirStep: $('.closeDirStep'),
                     gpsBtn: $('#useGPSBtn'),
-                    resetBtn: $('#resetBtn')
+                    resetBtn: $('#resetBtn'),
+                    getDirBtn: $('#gd-btn'),
+                    newLocation: $('#newLoaction')
+
                 },
 
-                autoCompleteSetup = function() {
-                    //autoSrc = new google.maps.places.Autocomplete(document.querySelector("#origin"));
-                    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
-                    autoSrc.bindTo('bounds', map);
-                    //google.maps.event.addListener(autoSrc, 'place_changed', function() {
-                    //    var place = autoSrc.getPlace();
-                    //    userPos = place.geometry.location;
-                    //    setUserLocation();
-                    //    $Selectors.origin.val(place.formatted_address);
-                    //
-                    //
-                    //});
-                }, // autoCompleteSetup Ends
+                geocodeSetup = function() {
+                    geocoder = new google.maps.Geocoder;
+                },
+                //autoCompleteSetup = function() {
+                //    //autoSrc = new google.maps.places.Autocomplete(document.querySelector("#origin"));
+                //    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
+                //    autoSrc.bindTo('bounds', map);
+                //    //google.maps.event.addListener(autoSrc, 'place_changed', function() {
+                //    //    var place = autoSrc.getPlace();
+                //    //    userPos = place.geometry.location;
+                //    //    setUserLocation();
+                //    //    $Selectors.origin.val(place.formatted_address);
+                //    //
+                //    //
+                //    //});
+                //}, // autoCompleteSetup Ends
 
 
             //trafficSetup = function() {
@@ -422,12 +423,14 @@ var sidebar = $('#sidebar').sidebar();
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 
+                    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
+                    autoSrc.bindTo('bounds', map);
+
                     //trafficSetup();
                     entranceSetup();
                     infoSetup();
                     directionsSetup();
-                    autoCompleteSetup();
-
+                    geocodeSetup();
                 }, // mapSetup Ends
 
                 setUserLocation = function() {
@@ -461,8 +464,25 @@ var sidebar = $('#sidebar').sidebar();
                     setUserLocation();
                 }, // userGeolocation Ends
 
+                userGeocode = function () {
+                    var input = document.querySelector("#origin").value;
+                    var request = {
+                        address: input,
+                        bounds: map.getBounds()
+                    };
+                    geocoder.geocode(request, function (result, status) {
+                        if (result == google.maps.GeocoderStatus.OK) {
+                            userPos = status.geometry.location;
+                            setUserLocation();
+                            //console.log("userPos = " + userPos);
+                            //console.log("Result = " + result);
+                            console.log("Status = " + status);
+                        }
+                    });
+                },
+
                 invokeEvents = function() {
-                    // Set visibile extent for park entrances
+                    // Set visible extent for park entrances
                     google.maps.event.addListener(map, 'zoom_changed', function() {
                         var zoomLevel = map.getZoom();
                         if (zoomLevel >= 14) {
@@ -471,15 +491,21 @@ var sidebar = $('#sidebar').sidebar();
                             setAllMap(entranceMarkerArray,null)    }
                     });
 
+                    //Keydown listener for entering user location
+                    $Selectors.origin.keypress(function() {
+                        if(event.which == 13)
+                        {
+                            userGeocode();
+                        }
+                    });
+
+
                     // Set click behavior
 
-                    // Keydown listener for entering directions
-                    //$Selectors.origin.keypress(function() {
-                    //    if(event.which == 13)
-                    //    {
-                    //        // Trigger submit
-                    //    }
-                    //});?
+                    // Submit User Location
+                    $Selectors.newLocation.on('click', function() {
+                        userGeocode();
+                    });
 
 
                     // Reset Btn
