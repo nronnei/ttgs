@@ -64,46 +64,35 @@ var sidebar = $('#sidebar').sidebar();
 (function(mapDemo, $) {
     mapDemo.Directions = (function() {
         function _Directions() {
-            var map,
-                directionsService, directionsDisplay,
-                autoSrc, autoDest, pinA, pinB, userPos,
+            var map, autoSrc, userPos, parkDest, userMarker,
+                directionsService, directionsRenderer, geocoder,
 
-            //markerA = new google.maps.MarkerImage('m1.png',
-            //		new google.maps.Size(24, 27),
-            //		new google.maps.Point(0, 0),
-            //		new google.maps.Point(12, 27)),
-            //markerB = new google.maps.MarkerImage('m2.png',
-            //		new google.maps.Size(24, 28),
-            //		new google.maps.Point(0, 0),
-            //		new google.maps.Point(12, 28)),
 
             // Caching the Selectors
                 $Selectors = {
                     mapCanvas: $('#mapCanvas')[0],
-                    dirPanel: $('#panel'),
-                    dirInputs: $('.directionInputs'),
-                    dirOrigin: $('#dirOrigin'),
-                    dirDst: $('#dirDestination'),
-                    getDirBtn: $('#getDirections'),
-                    dirSteps: $('#directionSteps'),
+                    dsResults: $('#dsResults'),
+                    dsInputs: $('#dsInputs'),
+                    dirInput: $('.directionsInput')[0],
+                    origin: $('#origin'),
+                    dirPane: $('#directions'),
+                    dirList: $('#dirList'),
                     gpsBtn: $('#useGPSBtn'),
-                    paneResetBtn: $('#paneReset')
+                    resetBtn: $('#resetBtn'),
+                    getDirBtn: $('#gd-btn'),
+                    submitPos: $('#submitPos')
+
                 },
 
-
+                geocodeSetup = function() {
+                    geocoder = new google.maps.Geocoder;
+                },
                 autoCompleteSetup = function() {
-                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirOrigin[0]);
+                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirInput);
+                    autoSrc.bindTo('bounds', map);
                 }, // autoCompleteSetup Ends
 
-            //directionsSetup = function() {
-            //	directionsService = new google.maps.DirectionsService();
-            //	directionsDisplay = new google.maps.DirectionsRenderer({
-            //		suppressMarkers: true
-            //	});
-            //
-            //	directionsDisplay.setPanel($Selectors.dirSteps[0]);
-            //}, // direstionsSetup Ends
-            //
+
             //trafficSetup = function() {
             //	// Creating a Custom Control and appending it to the map
             //	var controlDiv = document.createElement('div'),
@@ -128,7 +117,7 @@ var sidebar = $('#sidebar').sidebar();
             //}, // trafficSetup Ends
 
 
-            // Define all arrays
+                // Define all arrays
                 parkInfo = [
                     ['Minnesota Valley National Wildlife Refuge', 'The Refuge has many sections along its 99 miles of the Minnesota River. Two access points are easy via transit: the Bloomington Visitor Center and the Bass Ponds. Both of these are within the Long Meadow Lake Unit. Great places to see wildlife.', '952-854-5900', '3815 American Blvd E, Bloomington, MN, 55425', 'http://goo.gl/Hxg9If', '44.82883648', '-93.23845108'],
                     ['Battle Creek Regional Park', 'Hiking, biking, and ski trails, sports areas, and an off-leash dog area. Oak woods, old fields, creek, and second growth woodlands. Great birding opportunities.\r\n', '612-748-2500', 'Point Douglas Rd, St. Paul, MN, 55106', 'http://goo.gl/6KUA9b', '44.93510263', '-93.01953334'],
@@ -169,151 +158,235 @@ var sidebar = $('#sidebar').sidebar();
                     ['Lebanon Hills Regional Park Entrance', 'http://goo.gl/1ASLgW', 'Access via the Johnny Cake Ridge Rd stop.', '44.7730489', '-93.18736295']
                 ],
                 entranceMarkerArray = [],
+                entranceIBs = [],
                 infoMarkerArray = [],
-            // End array defs
+                infoIBs = [],
+                // End array defs
 
-            // Define services
-                infoBox = new InfoBox(),
-            // End service defs
+
+                setAllMap = function(array, map) {
+                    for (var i = 0; i < array.length; i++) {
+                        array[i].setMap(map);
+                    }
+                },
+
+                directionsSetup = function() {
+                    directionsService = new google.maps.DirectionsService();
+                    directionsRenderer = new google.maps.DirectionsRenderer();
+                    directionsRenderer.setPanel(document.querySelector("#dirList"));
+                }, // directionsSetup Ends
+
+                getDirections = function() {
+                    if (userPos == undefined) {
+                        alert('Make sure you have both a start end endpoint! Enter your location before clicking "Get Directions".')
+                    } else {
+                        // Swap panel content
+                        $Selectors.dsInputs.hide();
+                        $Selectors.dsResults.show();
+                        var request = {
+                            origin: userPos,
+                            destination: parkDest,
+                            provideRouteAlternatives: true,
+                            travelMode: google.maps.DirectionsTravelMode.TRANSIT
+                        };
+
+                        directionsService.route(request, function(response, status) {
+                            if (status == google.maps.DirectionsStatus.OK) {
+
+                                directionsRenderer.setDirections(response);
+                                directionsRenderer.setPanel(document.querySelector("#dirList"));
+                                directionsRenderer.setMap(map);
+
+                            } else if (status == google.maps.DirectionsStatus.NOT_FOUND) {
+
+                                $Selectors.dirList.append('<div class="dirLeg">' +
+                                    'Looks like Google Maps couldn&#39;t find that place. Sorry!' +
+                                    '</div>' +
+                                    '<br><br><div class="dirLeg">' +
+                                    'If you entered your address manually, make sure it is properly' +
+                                    'formatted:' +
+                                    '</div>' +
+                                    '<br><div class="dirLeg" style="text-align: center">' +
+                                    '123 Example Rd., St. Paul, MN <br>' +
+                                    'OR <br>' +
+                                    'Example Rd & Some St, Minneapolis' +
+                                    '</div>'
+                                );
+
+                            } else if (status == google.maps.DirectionsStatus.ZERO_RESULTS) {
+
+                                $Selectors.dirList.append('<div class="dirLeg">' +
+                                    'Oh no! Google Maps returned no usable routes. We apologize for the inconvenience!'
+                                    + '</div>');
+
+                            } else {
+
+                                $Selectors.dirList.append('<div class="dirLeg">' +
+                                    'Shoot, something went wrong. It could be a number of things, but try it again. ' +
+                                    'If the problem persists, please email nronnei@gmail.com.' +
+                                    + '</div>');
+                                console.log(response);
+
+                            }
+                        });
+
+                    }
+                },
 
                 infoSetup = function () {
+                    var infoMarker = function(i) {
+                        var siteLatLng = new google.maps.LatLng(park[5], park[6]);
+                        var icon = {
+                            anchor: new google.maps.Point(0, 0),
+                            origin: new google.maps.Point(0, 0),
+                            scaledSize: new google.maps.Size(20, 20),
+                            size: new google.maps.Size(20, 20),
+                            url: 'http://maps.google.com/mapfiles/kml/pal2/icon4.png'
+                        };
+                        var marker = new google.maps.Marker({
+                            position: siteLatLng,
+                            map: map,
+                            title: park[0],
+                            icon: icon,
+                            index: i
+                        });
+
+                        // Begin example code to get custom infobox
+                        var boxText = document.createElement("div");
+                        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
+                        boxText.innerHTML =
+                            '<div class="parkInfo">' +
+                            '<div class="parkHead">' +
+                            '<h3 style="color: #3ABC9E" class="parkName">'+ park[0] + ' </h3>' +
+                            '</div>' +
+                            '<div class="parkContent">' +
+                            '<p style="color:black"><b> Park Description</b><br>' + park[1] + '</p>' +
+                            '<p style="color:black"><b> Address</b><br>' + park[3] + '</p>' +
+                            '<p style="color:black"><b> Phone</b><br>' + park[2] + '</p>' +
+                            '<p> <a href=' + park[4] + ' target="_blank" style:"color: blue!important">Visit Website</a></p>'+
+                            '</div>' +
+                            '</div>';
+
+                        var myOptions = {
+                            content: boxText
+                            ,disableAutoPan: false
+                            ,maxWidth: 0
+                            ,pixelOffset: new google.maps.Size(-131, 16)
+                            ,zIndex: null
+                            ,boxStyle: {
+                                background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.12/examples/tipbox.gif') no-repeat"
+                                ,opacity: 0.9
+                                ,width: "320px"
+                            }
+                            ,closeBoxMargin: "10px 2px 2px 2px"
+                            ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+                            ,infoBoxClearance: new google.maps.Size(50, 50)
+                            ,isHidden: false
+                            ,pane: "floatPane"
+                            ,enableEventPropagation: false
+                        };
+                        // end example code for custom infobox
+
+                        var infoBox = new InfoBox(myOptions);
+                        infoIBs.push(infoBox);
+
+                        google.maps.event.addListener(marker, "click", function () {
+                            for (var x = 0; x < infoIBs.length; x++) {
+                                infoIBs[x].close();
+                            }
+                            infoIBs[i].open(map, this);
+                            map.setZoom(14);
+                            map.panTo(marker.getPosition());
+                        });
+                        return marker;
+                    };
                     for (var i = 0; i < parkInfo.length; i++) {
                         var park = parkInfo[i];
-                        var infoMarker = function() {
-                            var siteLatLng = new google.maps.LatLng(park[5], park[6]);
-                            var icon = {
-                                anchor: new google.maps.Point(0, 0),
-                                origin: new google.maps.Point(0, 0),
-                                scaledSize: new google.maps.Size(20, 20),
-                                size: new google.maps.Size(20, 20),
-                                url: 'http://maps.google.com/mapfiles/kml/pal2/icon4.png'
-                            };
-                            var marker = new google.maps.Marker({
-                                position: siteLatLng,
-                                map: map,
-                                title: park[0],
-                                icon: icon,
-                                index: i
-                            });
-
-                            // Begin example code to get custom infobox
-                            var boxText = document.createElement("div");
-                            boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
-                            boxText.innerHTML =
-                                '<div class="parkInfo">' +
-                                    '<div class="parkHead">' +
-                                        '<h3 style="color: #3ABC9E" class="parkName">'+ park[0] + ' </h3>' +
-                                    '</div>' +
-                                    '<div class="parkContent">' +
-                                        '<p style="color:black"><b> Park Description</b><br>' + park[1] + '</p>' +
-                                        '<p style="color:black"><b> Address</b><br>' + park[3] + '</p>' +
-                                        '<p style="color:black"><b> Phone</b><br>' + park[2] + '</p>' +
-                                        '<p> <a href=' + park[4] + ' target="_blank" style:"color: blue!important">Visit Website</a></p>'+
-                                    '</div>' +
-                                '</div>';
-
-                            var myOptions = {
-                                content: boxText
-                                ,disableAutoPan: false
-                                ,maxWidth: 0
-                                ,pixelOffset: new google.maps.Size(-131, 16)
-                                ,zIndex: null
-                                ,boxStyle: {
-                                    background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.12/examples/tipbox.gif') no-repeat"
-                                    ,opacity: 0.9
-                                    ,width: "320px"
-                                }
-                                ,closeBoxMargin: "10px 2px 2px 2px"
-                                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
-                                ,infoBoxClearance: new google.maps.Size(50, 50)
-                                ,isHidden: false
-                                ,pane: "floatPane"
-                                ,enableEventPropagation: false
-                            };
-                            // end example code for custom infobox
-
-                            google.maps.event.addListener(marker, "click", function () {
-                                //pos = marker.getPosition();
-                                infoBox.close();
-                                infoBox.setOptions(myOptions);
-                                infoBox.open(map, this);
-                                map.setZoom(14);
-                                map.panTo(marker.getPosition());
-                            });
-                            return marker;
-                        };
-                        infoMarkerArray.push(infoMarker());
+                        infoMarkerArray.push(infoMarker(i));
                     }
                 },
 
                 entranceSetup = function () {
-                    console.log("ENTRANCE TITLES:");
+                    var entranceMarker = function(i) {
+                        var siteLatLng = new google.maps.LatLng(ent[3], ent[4]);
+                        var icon = {
+                            anchor: new google.maps.Point(0, 20),
+                            origin: new google.maps.Point(0, 0),
+                            scaledSize: new google.maps.Size(20, 20),
+                            size: new google.maps.Size(20, 20),
+                            url: 'http://www.clipartbest.com/cliparts/9cz/EGG/9czEGGdRi.png'
+                        };
+                        var marker = new google.maps.Marker({
+                            position: siteLatLng,
+                            map: null,
+                            title: ent[0],
+                            icon: icon,
+                            index: i
+                        });
+
+                        // Begin example code to get custom infobox
+                        var boxText = document.createElement("div");
+                        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
+                        boxText.innerHTML =
+                            '<div class="parkEntrances">' +
+                            '<div class="parkHead">' +
+                            '<h3 style="color: #000000" class="parkName">'+ ent[0] + ' </h3>' +
+                            '</div>' +
+                            '<div class="parkContent">' +
+                            '<p> <a href='+ent[1]+' target="_blank">Directions</a>' + '  </p>'+
+                            '<p style="color:black"><b> Description</b><br>' + ent[2] + '</p>' +
+                            '<div class="row">' +
+                            '<div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">' +
+                            '<button id="gd-btn" class="btn btn-primary btn-block">Get Directions Here</button>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'+
+                            '</div>';
+
+                        var myOptions = {
+                            content: boxText
+                            ,disableAutoPan: false
+                            ,maxWidth: 0
+                            ,pixelOffset: new google.maps.Size(-131, 16)
+                            ,zIndex: null
+                            ,boxStyle: {
+                                background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.12/examples/tipbox.gif') no-repeat"
+                                ,opacity: 0.9
+                                ,width: "320px"
+                            }
+                            ,closeBoxMargin: "10px 2px 2px 2px"
+                            ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+                            ,infoBoxClearance: new google.maps.Size(50, 50)
+                            ,isHidden: false
+                            ,pane: "floatPane"
+                            ,enableEventPropagation: true
+                        };
+                        // end example code for custom infobox
+                        var infoBox = new InfoBox(myOptions);
+                        entranceIBs.push(infoBox);
+
+                        google.maps.event.addListener(marker, "click", function () {
+                            parkDest = marker.getPosition();
+                            for (var x = 0; x < entranceIBs.length; x++) {
+                                entranceIBs[x].close();
+                            }
+                            entranceIBs[i].open(map, this);
+                            map.panTo(this.getPosition());
+                        });
+                        google.maps.event.addListener(entranceIBs[i], "domready", function () {
+                            $('#gd-btn').on('click', function () {
+                                $Selectors.dirPane.addClass("scrollReady");
+                                $Selectors.dirList.empty();
+                                setAllMap(entranceMarkerArray, null);
+                                setAllMap(infoMarkerArray, null);
+                                getDirections()
+                            });
+                        });
+                        return marker;
+                    };
                     for (var i = 0; i < parkEntrances.length; i++) {
                         var ent = parkEntrances[i];
-                        var entranceMarker = function() {
-                            var siteLatLng = new google.maps.LatLng(ent[3], ent[4]);
-                            var icon = {
-                                anchor: new google.maps.Point(0, 0),
-                                origin: new google.maps.Point(0, 0),
-                                scaledSize: new google.maps.Size(20, 20),
-                                size: new google.maps.Size(20, 20),
-                                url: 'http://www.clipartbest.com/cliparts/9cz/EGG/9czEGGdRi.png'
-                            };
-                            var marker = new google.maps.Marker({
-                                position: siteLatLng,
-                                map: null,
-                                title: ent[0],
-                                icon: icon,
-                                index: i
-                            });
-
-                            // Begin example code to get custom infobox
-                            var boxText = document.createElement("div");
-                            boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
-                            boxText.innerHTML =
-                                '<div class="parkEntrances">' +
-                                '<div class="parkHead">' +
-                                '<h3 style="color: #000000" class="parkName">'+ ent[0] + ' </h3>' +
-                                '</div>' +
-                                '<div class="parkContent">' +
-                                '<p> <a href='+ent[1]+' target="_blank">Directions</a>' + '  </p>'+
-                                    //'<p style="color:black"><b> </b><br>'<href='+ park[1]' + ' target="_blank">direciton</a>'+' </p>' +
-                                '<p style="color:black"><b> Description</b><br>' + ent[2] + '</p>' +
-                                '<button id="gd-btn" onclick="getDirections(pos)">Get Directions Here</button>' +
-                                '</div>' +
-                                '</div>';
-
-                            var myOptions = {
-                                content: boxText
-                                ,disableAutoPan: false
-                                ,maxWidth: 0
-                                ,pixelOffset: new google.maps.Size(-131, 16)
-                                ,zIndex: null
-                                ,boxStyle: {
-                                    background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.12/examples/tipbox.gif') no-repeat"
-                                    ,opacity: 0.9
-                                    ,width: "320px"
-                                }
-                                ,closeBoxMargin: "10px 2px 2px 2px"
-                                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
-                                ,infoBoxClearance: new google.maps.Size(50, 50)
-                                ,isHidden: false
-                                ,pane: "floatPane"
-                                ,enableEventPropagation: false
-                            };
-                            // end example code for custom infobox
-
-                            google.maps.event.addListener(marker, "click", function () {
-                                //pos = marker.getPosition();
-                                infoBox.close();
-                                infoBox.setOptions(myOptions);
-                                infoBox.open(map, this);
-                                map.panTo(this.getPosition());
-                            });
-                            console.log(marker.title);
-                            return marker;
-                        };
-                        entranceMarkerArray.push(entranceMarker());
+                        entranceMarkerArray.push(entranceMarker(i));
                     }
                 },
 
@@ -339,52 +412,35 @@ var sidebar = $('#sidebar').sidebar();
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 
-                    autoCompleteSetup();
-                    //directionsSetup();
+                    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
+                    autoSrc.bindTo('bounds', map);
+
                     //trafficSetup();
-                    infoSetup();
                     entranceSetup();
+                    infoSetup();
+                    autoCompleteSetup();
+                    directionsSetup();
                 }, // mapSetup Ends
 
-            //    directionsRender = function(source, destination) {
-            //        $Selectors.dirSteps.find('.msg').hide();
-            //        directionsDisplay.setMap(map);
-            //
-            //        var request = {
-            //            origin: source,
-            //            destination: destination,
-            //            provideRouteAlternatives: true,
-            //            travelMode: google.maps.DirectionsTravelMode.DRIVING
-            //        };
-            //
-            //	directionsService.route(request, function(response, status) {
-            //		if (status == google.maps.DirectionsStatus.OK) {
-            //
-            //			directionsDisplay.setDirections(response);
-            //
-            //			var _route = response.routes[0].legs[0];
-            //
-            //			pinA = new google.maps.Marker({position: _route.start_location, map: map, icon: markerA}),
-            //			pinB = new google.maps.Marker({position: _route.end_location, map: map, icon: markerB});
-            //		}
-            //	});
-            //}, // directionsRender Ends
-
                 setUserLocation = function() {
-                    var icon = {
-                        anchor: new google.maps.Point(0, 0),
-                        origin: new google.maps.Point(0, 0),
-                        scaledSize: new google.maps.Size(20, 20),
-                        size: new google.maps.Size(20, 20),
-                        url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png'
-                    };
-                    var user = new google.maps.Marker({
-                        icon: icon,
-                        map: map,
-                        title: "You are here!",
-                        position: userPos
+                    if (userMarker == undefined) {
+                        var icon = {
+                            anchor: new google.maps.Point(0, 30),
+                            origin: new google.maps.Point(0, 0),
+                            scaledSize: new google.maps.Size(30, 30),
+                            size: new google.maps.Size(30, 30),
+                            url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png'
+                        };
+                        userMarker = new google.maps.Marker({
+                            icon: icon,
+                            map: map,
+                            title: "You are here!",
+                            position: userPos
 
-                    });
+                        });
+                    } else {
+                        userMarker.setPosition(userPos);
+                    }
                     map.setZoom(14);
                     map.setCenter(userPos);
                 }, //setUserLocation Ends
@@ -392,30 +448,13 @@ var sidebar = $('#sidebar').sidebar();
                 userGeolocation = function(p) {
                     var lat = p.coords.latitude;
                     var lng = p.coords.longitude;
-                    $Selectors.dirOrigin.val(lat + ", " + lng);
+                    $Selectors.origin.val(lat + ", " + lng);
                     userPos = new google.maps.LatLng(lat, lng);
                     setUserLocation();
                 }, // userGeolocation Ends
 
                 invokeEvents = function() {
-                    // Helpers
-                    function setAllMap(array, map) {
-                        for (var i = 0; i < array.length; i++) {
-                            array[i].setMap(map);
-                        }
-                    }
-                    // End helpers
-
-                    //// Get Directions
-                    //$Selectors.getDirBtn.on('click', function(e) {
-                    //	e.preventDefault();
-                    //	var src = $Selectors.dirSrc.val(),
-                    //		dst = $Selectors.dirDst.val();
-                    //
-                    //	directionsRender(src, dst);
-                    //});
-
-                    // Set visibile extent for park entrances
+                    // Set visible extent for park entrances
                     google.maps.event.addListener(map, 'zoom_changed', function() {
                         var zoomLevel = map.getZoom();
                         if (zoomLevel >= 14) {
@@ -424,29 +463,33 @@ var sidebar = $('#sidebar').sidebar();
                             setAllMap(entranceMarkerArray,null)    }
                     });
 
-                    // Set click behavior
-
-                    // Keydown listener for entering directions
-                    //$Selectors.dirOrigin.keypress(function() {
+                    ////Keydown listener for entering user location
+                    //$Selectors.origin.keypress(function() {
                     //    if(event.which == 13)
                     //    {
-                    //        // Trigger submit
+                    //        userGeocode();
                     //    }
-                    //});​
-
-
-                    //// Reset Btn
-                    //$Selectors.paneResetBtn.on('click', function(e) {
-                    //	$Selectors.dirSteps.html('');
-                    //	$Selectors.dirSrc.val('');
-                    //	$Selectors.dirDst.val('');
-                    //
-                    //	if(pinA) pinA.setMap(null);
-                    //	if(pinB) pinB.setMap(null);
-                    //
-                    //	directionsDisplay.setMap(null);
                     //});
 
+                    google.maps.event.addListener(autoSrc, 'place_changed', function() {
+                        var place = autoSrc.getPlace();
+                        userPos = place.geometry.location;
+                        setUserLocation();
+                        $Selectors.origin.val(place.formatted_address);
+                    });
+
+                    // Set click behavior
+
+
+                    // Reset Btn
+                    $Selectors.resetBtn.on('click', function(e) {
+                        $Selectors.dirList.empty();
+                        $Selectors.dirPane.removeClass("scrollReady");
+                        $Selectors.dsResults.hide();
+                        $Selectors.dsInputs.show();
+                        setAllMap(infoMarkerArray, map);
+                        directionsRenderer.setMap(null);
+                    });
 
                     // Use My Location / Geo Location Btn
                     $Selectors.gpsBtn.click(function() {

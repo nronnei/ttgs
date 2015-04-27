@@ -8,7 +8,6 @@
     <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="_css/sidebar.css"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="_css/ttgs_basic.css">
 </head>
 <body>
 <div id="sidebar" class="sidebar collapsed">
@@ -23,26 +22,27 @@
     <!-- Tab panes -->
     <div class="sidebar-content active">
         <div class="sidebar-pane" id="directions">
+            <!--Starts Hidden-->
             <div id="dsResults">
                 <div class="row">
                     <div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-danger" id="resetBtn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Reset</button>
                     </div>
                 </div>
-                <div id="dirList" class="scrollReady">
+                <div id="dirList">
                     <!--HTML in here-->
 
                 </div>
             </div>
-                <!--Shown part-->
+            <!--Starts Shown-->
             <div id="dsInputs">
                 <h1>Get Directions</h1>
                 <div class="row">
                     <div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-info" id="useGPSBtn"><i class="fa fa-crosshairs"></i>&nbsp;&nbsp;Use My Location</button>
                     </div>
-                    <div class="col-lg-12" style="padding-bottom: 10px">
-                        <input type="text" class="form-control search" placeholder="Cross Streets   OR   Your Address" id="dirOrigin"/>
+                    <div class="col-lg-12">
+                        <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address"/>
                     </div>
                 </div>
                 <p style="text-align: center">
@@ -65,7 +65,7 @@
                     After a couple years of working with a lovely paper map of the same title, the North Start Sierra Club (Minnesota's chapter of the famous organization) decided they wanted to take their project to the web.  Through a partnership with the University of St. Thomas (St. Paul, MN) they began work on a map.  The first run produced no usable product.
                 </p>
                 <p>
-                    Having improved his web development skills significantly, recent graduate Nick Ronnei headed up a team of newly interested students (Hung Le, Rani Mohanty, and Nate Bettin) and built a better version of the map.  This new version is fully responsive thanks to Bryan McBride's work on <a href="https://github.com/bmcbride/bootleaf" target="_blank">Bootleaf</a>.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  A BIG thanks to both of them for their hard work!
+                    Having improved his web development skills significantly, recent graduate Nick Ronnei headed up a team of newly interested students (Hung Le, Rani Mohanty, and Nate Bettin) and built a better version of the map.  This new version is fully responsive thanks to <a href="https://github.com/Turbo87" target="_blank">Tobias Bieniek's</a>  (https://github.com/Turbo87) wonderful jQuery sidebar!.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  A BIG thanks to all of them for their hard work!
                 </p>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Park Information</div>
@@ -90,9 +90,8 @@
 <div id="mapCanvas" class="sidebar-map"></div>
 
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-<!--<script src="_js/jquery-sidebar.js" type="text/javascript"></script>-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByxM5ZHu1Tytu7rIrbnC8Bdf7dfBYUuJ0&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script src="_js/infobox-mini.js" type="text/javascript"></script>
-<script type="text/javascript" src="_js/ttgs1.8.0e.js"></script>
+<script type="text/javascript" src="_js/ttgs_1.8.2e.js"></script>
 </body>
 </html>
