@@ -42,10 +42,7 @@
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-info" id="useGPSBtn"><i class="fa fa-crosshairs"></i>&nbsp;&nbsp;Use My Location</button>
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" class="form-control search" value="" placeholder="Cross Streets   OR   Your Address" id="origin"/>
-                    </div>
-                    <div class="col-lg-12" style="padding-bottom: 10px; padding-top: 5px">
-                        <button type="button" style="font-size: 14pt" class="btn btn-block btn-secondary" id="submitPos"><i class="fa fa-search"></i>&nbsp;&nbsp;Submit</button>
+                        <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address"/>
                     </div>
                 </div>
                 <p style="text-align: center">
@@ -68,7 +65,7 @@
                     After a couple years of working with a lovely paper map of the same title, the North Start Sierra Club (Minnesota's chapter of the famous organization) decided they wanted to take their project to the web.  Through a partnership with the University of St. Thomas (St. Paul, MN) they began work on a map.  The first run produced no usable product.
                 </p>
                 <p>
-                    Having improved his web development skills significantly, recent graduate Nick Ronnei headed up a team of newly interested students (Hung Le, Rani Mohanty, and Nate Bettin) and built a better version of the map.  This new version is fully responsive thanks to Bryan McBride's work on <a href="https://github.com/bmcbride/bootleaf" target="_blank">Bootleaf</a>.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  A BIG thanks to both of them for their hard work!
+                    Having improved his web development skills significantly, recent graduate Nick Ronnei headed up a team of newly interested students (Hung Le, Rani Mohanty, and Nate Bettin) and built a better version of the map.  This new version is fully responsive thanks to <a href="https://github.com/Turbo87" target="_blank">Tobias Bieniek's</a>  (https://github.com/Turbo87) wonderful jQuery sidebar!.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  A BIG thanks to all of them for their hard work!
                 </p>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Park Information</div>
@@ -96,9 +93,5 @@
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script src="_js/infobox-mini.js" type="text/javascript"></script>
 <script type="text/javascript" src="_js/ttgs_1.8.2e.js"></script>
-<script>
-    var input = document.querySelector("#origin");
-    var pac = new google.maps.places.Autocomplete();
-</script>
 </body>
 </html>

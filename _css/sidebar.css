@@ -15,6 +15,13 @@ html,body,#mapCanvas {
     margin: 0;
     padding: 0;
 }
+.pac-container {
+    background-color: #FFF;
+    z-index: 2020;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
 .sidebar {
     position: absolute;
     left: 0;
@@ -102,16 +109,17 @@ html,body,#mapCanvas {
     display: none;
 }
 #dsInputs {
+    z-index: 2010;
     display: block;
 }
 .sidebar-pane {
     display: none;
     right: 0;
     box-sizing: border-box;
-    padding: 10px 15px 10px 8px;
+    padding: 10px 20px 10px 8px;
 }
 .scrollReady {
-    padding: 10px 15px 10px 8px;
+    padding: 10px 4px 10px 8px;
 }
 .sidebar-pane.active {
     display: block;
@@ -140,6 +148,7 @@ html,body,#mapCanvas {
         padding: 5px 25px 10px 10px;
     }
 }
+
 .sidebar-map {
     margin-left: 40px;
 }

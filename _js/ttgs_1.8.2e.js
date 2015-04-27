@@ -67,42 +67,30 @@ var sidebar = $('#sidebar').sidebar();
             var map, autoSrc, userPos, parkDest, userMarker,
                 directionsService, directionsRenderer, geocoder,
 
-            ////////////////////
-            // Testing for DirectionsRenderer
-                userPos = new google.maps.LatLng(44.944664, -93.181506),
-            // TODO Remove this section of code before roll-out
-            ////////////////////
 
             // Caching the Selectors
                 $Selectors = {
                     mapCanvas: $('#mapCanvas')[0],
                     dsResults: $('#dsResults'),
                     dsInputs: $('#dsInputs'),
+                    dirInput: $('.directionsInput')[0],
                     origin: $('#origin'),
+                    dirPane: $('#directions'),
                     dirList: $('#dirList'),
                     gpsBtn: $('#useGPSBtn'),
                     resetBtn: $('#resetBtn'),
                     getDirBtn: $('#gd-btn'),
-                    newLocation: $('#newLoaction')
+                    submitPos: $('#submitPos')
 
                 },
 
                 geocodeSetup = function() {
                     geocoder = new google.maps.Geocoder;
                 },
-                //autoCompleteSetup = function() {
-                //    //autoSrc = new google.maps.places.Autocomplete(document.querySelector("#origin"));
-                //    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
-                //    autoSrc.bindTo('bounds', map);
-                //    //google.maps.event.addListener(autoSrc, 'place_changed', function() {
-                //    //    var place = autoSrc.getPlace();
-                //    //    userPos = place.geometry.location;
-                //    //    setUserLocation();
-                //    //    $Selectors.origin.val(place.formatted_address);
-                //    //
-                //    //
-                //    //});
-                //}, // autoCompleteSetup Ends
+                autoCompleteSetup = function() {
+                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirInput);
+                    autoSrc.bindTo('bounds', map);
+                }, // autoCompleteSetup Ends
 
 
             //trafficSetup = function() {
@@ -322,7 +310,7 @@ var sidebar = $('#sidebar').sidebar();
                     var entranceMarker = function(i) {
                         var siteLatLng = new google.maps.LatLng(ent[3], ent[4]);
                         var icon = {
-                            anchor: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(0, 20),
                             origin: new google.maps.Point(0, 0),
                             scaledSize: new google.maps.Size(20, 20),
                             size: new google.maps.Size(20, 20),
@@ -387,6 +375,7 @@ var sidebar = $('#sidebar').sidebar();
                         });
                         google.maps.event.addListener(entranceIBs[i], "domready", function () {
                             $('#gd-btn').on('click', function () {
+                                $Selectors.dirPane.addClass("scrollReady");
                                 $Selectors.dirList.empty();
                                 setAllMap(entranceMarkerArray, null);
                                 setAllMap(infoMarkerArray, null);
@@ -429,14 +418,14 @@ var sidebar = $('#sidebar').sidebar();
                     //trafficSetup();
                     entranceSetup();
                     infoSetup();
+                    autoCompleteSetup();
                     directionsSetup();
-                    geocodeSetup();
                 }, // mapSetup Ends
 
                 setUserLocation = function() {
                     if (userMarker == undefined) {
                         var icon = {
-                            anchor: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(0, 30),
                             origin: new google.maps.Point(0, 0),
                             scaledSize: new google.maps.Size(30, 30),
                             size: new google.maps.Size(30, 30),
@@ -464,23 +453,6 @@ var sidebar = $('#sidebar').sidebar();
                     setUserLocation();
                 }, // userGeolocation Ends
 
-                userGeocode = function () {
-                    var input = document.querySelector("#origin").value;
-                    var request = {
-                        address: input,
-                        bounds: map.getBounds()
-                    };
-                    geocoder.geocode(request, function (result, status) {
-                        if (result == google.maps.GeocoderStatus.OK) {
-                            userPos = status.geometry.location;
-                            setUserLocation();
-                            //console.log("userPos = " + userPos);
-                            //console.log("Result = " + result);
-                            console.log("Status = " + status);
-                        }
-                    });
-                },
-
                 invokeEvents = function() {
                     // Set visible extent for park entrances
                     google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -491,26 +463,28 @@ var sidebar = $('#sidebar').sidebar();
                             setAllMap(entranceMarkerArray,null)    }
                     });
 
-                    //Keydown listener for entering user location
-                    $Selectors.origin.keypress(function() {
-                        if(event.which == 13)
-                        {
-                            userGeocode();
-                        }
-                    });
+                    ////Keydown listener for entering user location
+                    //$Selectors.origin.keypress(function() {
+                    //    if(event.which == 13)
+                    //    {
+                    //        userGeocode();
+                    //    }
+                    //});
 
+                    google.maps.event.addListener(autoSrc, 'place_changed', function() {
+                        var place = autoSrc.getPlace();
+                        userPos = place.geometry.location;
+                        setUserLocation();
+                        $Selectors.origin.val(place.formatted_address);
+                    });
 
                     // Set click behavior
-
-                    // Submit User Location
-                    $Selectors.newLocation.on('click', function() {
-                        userGeocode();
-                    });
 
 
                     // Reset Btn
                     $Selectors.resetBtn.on('click', function(e) {
                         $Selectors.dirList.empty();
+                        $Selectors.dirPane.removeClass("scrollReady");
                         $Selectors.dsResults.hide();
                         $Selectors.dsInputs.show();
                         setAllMap(infoMarkerArray, map);
