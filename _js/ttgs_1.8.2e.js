@@ -180,9 +180,20 @@ var sidebar = $('#sidebar').sidebar();
                     if (userPos == undefined) {
                         alert('Make sure you have both a start end endpoint! Enter your location before clicking "Get Directions".')
                     } else {
+
                         // Swap panel content
                         $Selectors.dsInputs.hide();
                         $Selectors.dsResults.show();
+
+                        // Prepare Content
+                        $Selectors.dirPane.addClass("scrollReady");
+                        $Selectors.dirList.empty();
+
+                        //Remove distracting markers from map
+                        setAllMap(entranceMarkerArray, null);
+                        setAllMap(infoMarkerArray, null);
+
+                        // DirectionsRequest object
                         var request = {
                             origin: userPos,
                             destination: parkDest,
@@ -375,10 +386,6 @@ var sidebar = $('#sidebar').sidebar();
                         });
                         google.maps.event.addListener(entranceIBs[i], "domready", function () {
                             $('#gd-btn').on('click', function () {
-                                $Selectors.dirPane.addClass("scrollReady");
-                                $Selectors.dirList.empty();
-                                setAllMap(entranceMarkerArray, null);
-                                setAllMap(infoMarkerArray, null);
                                 getDirections()
                             });
                         });
