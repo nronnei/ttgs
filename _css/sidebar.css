@@ -112,6 +112,9 @@ html,body,#mapCanvas {
     z-index: 2010;
     display: block;
 }
+.settingsContainer {
+    display: block;
+}
 .sidebar-pane {
     display: none;
     right: 0;

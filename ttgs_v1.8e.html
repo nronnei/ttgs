@@ -45,9 +45,10 @@
                         <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address"/>
                     </div>
                 </div>
-                <p style="text-align: center">
+                <p id="msg" style="text-align: center">
                     <br> <br>
-                    Start by pressing "Use My Location" or entering your starting position in the text box. Next, pick a park entrance and click "Get Directions"
+                    Start by pressing "Use My Location" or entering your starting position in the text box.
+                    Next, pick a park entrance and click "Get Directions"
                     <br> <br>
                     Your Directions will appear here.
                     <br> <br>
@@ -83,6 +84,13 @@
         </div>
         <div class="sidebar-pane" id="settings">
             <h1>Settings</h1>
+            <div class="settingsContainer">
+                <div class="row">
+                    <div id="trafficControl" class="control">
+                        Toggle Traffic Layer <i class="fa fa-toggle-off fa-x3 pull-right"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -66,6 +66,12 @@ var sidebar = $('#sidebar').sidebar();
         function _Directions() {
             var map, autoSrc, userPos, parkDest, userMarker,
                 directionsService, directionsRenderer, geocoder,
+                dirFlag = false,
+                msgDefault =
+                    '<p id="msg" style="text-align: center"><br><br>' +
+                    'Start by pressing "Use My Location" or entering your starting position in the text box. ' +
+                    'Next, pick a park entrance and click "Get Directions" <br><br>' +
+                    'Your Directions will appear here.<br><br></p>',
 
 
             // Caching the Selectors
@@ -74,6 +80,7 @@ var sidebar = $('#sidebar').sidebar();
                     dsResults: $('#dsResults'),
                     dsInputs: $('#dsInputs'),
                     dirInput: $('.directionsInput')[0],
+                    msg: $('#msg'),
                     origin: $('#origin'),
                     dirPane: $('#directions'),
                     dirList: $('#dirList'),
@@ -170,6 +177,12 @@ var sidebar = $('#sidebar').sidebar();
                     }
                 },
 
+                closeAllIBs = function(array) {
+                    for (var i = 0; i < array.length; i++) {
+                        array[i].close()
+                    }
+                },
+
                 directionsSetup = function() {
                     directionsService = new google.maps.DirectionsService();
                     directionsRenderer = new google.maps.DirectionsRenderer();
@@ -180,7 +193,8 @@ var sidebar = $('#sidebar').sidebar();
                     if (userPos == undefined) {
                         alert('Make sure you have both a start end endpoint! Enter your location before clicking "Get Directions".')
                     } else {
-
+                        // Set flag to true to keep entrance markers off map
+                        dirFlag = true;
                         // Swap panel content
                         $Selectors.dsInputs.hide();
                         $Selectors.dsResults.show();
@@ -189,9 +203,13 @@ var sidebar = $('#sidebar').sidebar();
                         $Selectors.dirPane.addClass("scrollReady");
                         $Selectors.dirList.empty();
 
-                        //Remove distracting markers from map
+                        //Remove distractions from map
                         setAllMap(entranceMarkerArray, null);
                         setAllMap(infoMarkerArray, null);
+                        userMarker.setMap(null);
+                        closeAllIBs(entranceIBs);
+                        closeAllIBs(infoIBs);
+
 
                         // DirectionsRequest object
                         var request = {
@@ -302,9 +320,8 @@ var sidebar = $('#sidebar').sidebar();
                         infoIBs.push(infoBox);
 
                         google.maps.event.addListener(marker, "click", function () {
-                            for (var x = 0; x < infoIBs.length; x++) {
-                                infoIBs[x].close();
-                            }
+                            closeAllIBs(entranceIBs);
+                            closeAllIBs(infoIBs);
                             infoIBs[i].open(map, this);
                             map.setZoom(14);
                             map.panTo(marker.getPosition());
@@ -378,9 +395,8 @@ var sidebar = $('#sidebar').sidebar();
 
                         google.maps.event.addListener(marker, "click", function () {
                             parkDest = marker.getPosition();
-                            for (var x = 0; x < entranceIBs.length; x++) {
-                                entranceIBs[x].close();
-                            }
+                            closeAllIBs(entranceIBs);
+                            closeAllIBs(infoIBs);
                             entranceIBs[i].open(map, this);
                             map.panTo(this.getPosition());
                         });
@@ -461,32 +477,34 @@ var sidebar = $('#sidebar').sidebar();
                 }, // userGeolocation Ends
 
                 invokeEvents = function() {
+
+                    //////
+                    // Set Google Maps Listeners
+                    //////
+
                     // Set visible extent for park entrances
                     google.maps.event.addListener(map, 'zoom_changed', function() {
                         var zoomLevel = map.getZoom();
-                        if (zoomLevel >= 14) {
+                        if (zoomLevel >= 14 && !dirFlag) {
                             setAllMap(entranceMarkerArray, map);
                         } else {
-                            setAllMap(entranceMarkerArray,null)    }
+                            setAllMap(entranceMarkerArray,null)
+                        }
                     });
 
-                    ////Keydown listener for entering user location
-                    //$Selectors.origin.keypress(function() {
-                    //    if(event.which == 13)
-                    //    {
-                    //        userGeocode();
-                    //    }
-                    //});
-
+                    // Handle Autocomplete inpute
                     google.maps.event.addListener(autoSrc, 'place_changed', function() {
                         var place = autoSrc.getPlace();
                         userPos = place.geometry.location;
                         setUserLocation();
                         $Selectors.origin.val(place.formatted_address);
+                        $Selectors.msg.html('<br><br><br><strong>We found you!</strong>' +
+                            '&nbsp;&nbsp;<i class="fa fa-check" style="color: #00a100"></i>');
                     });
 
+                    //////
                     // Set click behavior
-
+                    //////
 
                     // Reset Btn
                     $Selectors.resetBtn.on('click', function(e) {
@@ -494,18 +512,60 @@ var sidebar = $('#sidebar').sidebar();
                         $Selectors.dirPane.removeClass("scrollReady");
                         $Selectors.dsResults.hide();
                         $Selectors.dsInputs.show();
+                        $Selectors.msg.html(msgDefault);
                         setAllMap(infoMarkerArray, map);
+                        var zoomLevel = map.getZoom();
+                        if (zoomLevel >= 14) {
+                            setAllMap(entranceMarkerArray, map);
+                        } else {
+                            setAllMap(entranceMarkerArray,null)
+                        }
+                        dirFlag = true;
+                        userMarker.setMap(map);
                         directionsRenderer.setMap(null);
                     });
 
-                    // Use My Location / Geo Location Btn
+                    // Use My Location  Btn
                     $Selectors.gpsBtn.click(function() {
+                        var success = function(position) {
+                            userGeolocation(position);
+                            $Selectors.msg.html('<br><br><br><strong>We found you!</strong>' +
+                                '&nbsp;&nbsp;<i class="fa fa-check" style="color: #00a100"></i>');
+                        };
+                        var error = function(error) {
+                            var content = '<br><br>' +
+                                '<h3 style="color: red">Error:</h3><br>';
+                            switch (error.code) {
+                                case error.PERMISSION_DENIED:
+                                    content += '<p>You denied our request to get your location! ' +
+                                            'If you changed your mind, you can refresh and try again.</p>';
+                                    break;
+                                case error.LOCATION_UNAVAILABLE:
+                                    content += '<p>We could not seem to find you, sorry! Enter your location manually.</p>';
+                                    break;
+                                case error.TIMEOUT:
+                                    content += '<p>The location request timed out. Make sure that your ' +
+                                            'location services are enabled if you are using this page on your phone.</p>';
+                                    break;
+                                case error.UNKNOWN_ERROR:
+                                    content += '<p>(0.0&#8217;)  Woops! Something went wrong, but we do not know what... ' +
+                                            'Try entering your location manually. </p>'
+                            }
+                            $Selectors.msg.html(content);
+                        };
+                        var options = {
+                            enableHighAccuracy: true,
+                            timeout: 5000
+                        };
                         if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(function(position) {
-                                userGeolocation(position);
-                            });
+                            navigator.geolocation.getCurrentPosition(success, error, options);
+                        } else {
+                            $Selectors.msg.html('<br><br><br><strong>Your browswer does not support geolocation</strong>' +
+                                '&nbsp;&nbsp;<i class="fa fa-times-circle" style="color: #dd201b"></i><br>' +
+                                'Enter your location manually to use our application.');
                         }
-                    });
+                    })
+
                 }, //invokeEvents Ends
 
                 _init = function() {
@@ -519,6 +579,6 @@ var sidebar = $('#sidebar').sidebar();
             };
             return this.init(); // Refers to: mapDemo.Directions.init()
         } // _Directions Ends
-        return new _Directions(); // Creating a new object of _Directions rather than a funtion
+        return new _Directions(); // Creating a new object of _Directions rather than a function
     }()); // mapDemo.Directions Ends
 })(window.mapDemo = window.mapDemo || {}, jQuery);
