@@ -150,9 +150,6 @@ var sidebar = $('#sidebar').sidebar();
                     ['Wayzata Blvd N & Theodore Wirth Pkwy Entrance', 'http://goo.gl/i8lgNS', 'Take Bus 9 to reach this entrance.', '44.97086952', '-93.32226364'],
                     ['Richfield Rd & Wm Berry Rd Entrance', 'http://goo.gl/ee0UMv', 'Take Bus 6 to reach this entrance.', '44.9339563', '-93.30942457'],
                     ['50th St W & Minnehaha Parkway Entrance', 'http://goo.gl/5eSXXv', 'Take buses 4 or 6 to reach this stop. This is the southernmost access to the Minneapolis Chain of Lakes, stopping just south of Lake Harriet.', '44.91287848', '-93.29798804'],
-                    ['46th St & 44th Ave Entrance', 'http://goo.gl/1IBme1', 'Take Buses 46,74,84 to access this entrance.', '44.91827598', '-93.21035849'],
-                    ['46th St & 46th Ave Entrance', 'http://goo.gl/ItUyWW', 'Take Bus 23 to access this entrance.', '44.9177217', '-93.21203487'],
-                    ['46th St & Minneapolis Entrance', 'http://goo.gl/xqazgk', 'Take Buses 7 or 9 to access the park from this entrance.', '44.91690759', '-93.21421421'],
                     ['Hyland Lake Park Reserve Entrance', 'http://goo.gl/GJpsRg', 'Sits about 0.6 miles from the Normandale Blvd & Poplar Bridge Rd bus stop.', '44.83311265', '-93.36311821'],
                     ['MN Valley National Wildlife Refuge Entrance (Bass Ponds)', 'http://goo.gl/XJv3tr', 'Enter here for the best access to the Bass Ponds.  Take the MOA stop on the Hiawatha LRT or the 539 bus to 86th and Old Shakopee Rd.', '44.84870649', '-93.22874384'],
                     ['MN Valley National Wildlife Refuge Entrance (Visitor Center)', 'http://goo.gl/oxmd7T', 'Enter here for the best access to the Visitor Center.  Take the American Blvd stop on the Hiawatha LRT.', '44.86122776', '-93.2146195'],
@@ -162,7 +159,16 @@ var sidebar = $('#sidebar').sidebar();
                     ['Thompson County Park Entrance', 'http://goo.gl/7a4OSn', 'None', '44.91236178', '-93.07112191'],
                     ['Kaposia Park Entrance', 'http://goo.gl/fWExyl', 'None', '44.91381562', '-93.0543134'],
                     ['Fort Snelling State Park Entrance', 'http://goo.gl/l9RW3Q', 'None', '44.89244109', '-93.18290096'],
-                    ['Lebanon Hills Regional Park Entrance', 'http://goo.gl/1ASLgW', 'Access via the Johnny Cake Ridge Rd stop.', '44.7730489', '-93.18736295']
+                    ['Lebanon Hills Regional Park Entrance', 'http://goo.gl/1ASLgW', 'Access via the Johnny Cake Ridge Rd stop.', '44.7730489', '-93.18736295'],
+                    ['Minnesota River Valley Wildlife Refuge Visitors Center Entrances', 'http://goo.gl/CHQfso', '', '44.8605', '-93.21748333'],
+                    ['Minnesota River Valley Entrance', 'http://goo.gl/lhczpF', '', '44.848', '-93.23731667'],
+                    ['Pond Dakota Mission Entrance', 'http://goo.gl/kH03D5', '', '44.81526667', '-93.27303333'],
+                    ['Nine Mile Creek Entrance', 'http://goo.gl/tuFmak', '', '44.81768333', '-93.3087'],
+                    ['Crosby Lake Regional Park Entrance', 'SKIP', 'In Middle of Neighborhood', '0', '0'],
+                    ['Minnehaha Park Entrance 1', 'http://goo.gl/hNcItm', '', '44.91885', '-93.20811667'],
+                    ['Minnehaha Park Entrance 2', 'http://goo.gl/TzxdqK', '', '44.9179', '-93.20913333'],
+                    ['Minnehaha Park Entrance 3', 'http://goo.gl/eWD3Vm', '', '44.91555', '-93.21263333'],
+                    ['Chain of Lakes Entrance', 'http://goo.gl/mzlAad', '', '44.91661667', '-93.21266667']
                 ],
                 entranceMarkerArray = [],
                 entranceIBs = [],
@@ -520,7 +526,7 @@ var sidebar = $('#sidebar').sidebar();
                         } else {
                             setAllMap(entranceMarkerArray,null)
                         }
-                        dirFlag = true;
+                        dirFlag = false;
                         userMarker.setMap(map);
                         directionsRenderer.setMap(null);
                     });
