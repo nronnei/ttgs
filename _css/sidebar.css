@@ -119,6 +119,17 @@ febf00
     z-index: 2010;
     display: block;
 }
+.settingsControl {
+    padding: 30px;
+    font-size: 28px;
+}
+.fa-toggle-on{
+    color: #00a100;
+}
+.fa-check{
+    color: #00a100;
+    font-size: 40px;
+}
 .sidebar-pane {
     display: none;
     right: 0;

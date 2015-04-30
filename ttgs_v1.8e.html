@@ -42,7 +42,7 @@
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-info" id="useGPSBtn"><i class="fa fa-crosshairs"></i>&nbsp;&nbsp;Use My Location</button>
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address"/>
+                        <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address" autocomplete="off"/>
                     </div>
                 </div>
                 <p id="msg" style="text-align: center">
@@ -66,7 +66,7 @@
                     After a couple years of working with a lovely paper map of the same title, the North Start Sierra Club (Minnesota's chapter of the famous organization) decided they wanted to take their project to the web.  Through a partnership with the University of St. Thomas (St. Paul, MN) they began work on a map.  The first run produced no usable product.
                 </p>
                 <p>
-                    Having improved his web development skills significantly, recent graduate Nick Ronnei headed up a team of newly interested students (Hung Le, Rani Mohanty, and Nate Bettin) and built a better version of the map.  This new version is fully responsive thanks to <a href="https://github.com/Turbo87" target="_blank">Tobias Bieniek's</a>  (https://github.com/Turbo87) wonderful jQuery sidebar!.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  A BIG thanks to all of them for their hard work!
+                    Having improved his web development skills significantly, recent graduate Nick Ronnei headed up a team of newly interested students (Hung Le, Rani Mohanty, and Nate Bettin) and built a better version of the map.  This new version is fully responsive thanks to <a href="https://github.com/Turbo87" target="_blank">Tobias Bieniek's</a> wonderful jQuery sidebar!.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  A BIG thanks to all of them for their hard work!
                 </p>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Park Information</div>
@@ -86,8 +86,18 @@
             <h1>Settings</h1>
             <div class="settingsContainer">
                 <div class="row">
-                    <div id="trafficControl" class="control">
-                        Toggle Traffic Layer <i class="fa fa-toggle-off fa-x3 pull-right"></i>
+                    <div id="trafficControl" class="settingsControl col-lg-12">
+                        Toggle Traffic Layer <i class="fa fa-toggle-off pull-right settingsToggle" style="font-size: 40px" id="trafficToggle"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="rememberControl" class="settingsControl col-lg-12" style="font-size: 20px">
+                        Remember Location on Reset <i class="fa fa-toggle-off pull-right settingsToggle" style="font-size: 40px" id="rememberToggle"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="ROAD" class="map-type col-lg-12">
+
                     </div>
                 </div>
             </div>

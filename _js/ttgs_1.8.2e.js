@@ -65,13 +65,16 @@ var sidebar = $('#sidebar').sidebar();
     mapDemo.Directions = (function() {
         function _Directions() {
             var map, autoSrc, userPos, parkDest, userMarker,
-                directionsService, directionsRenderer,
+                directionsService, directionsRenderer, trafficLayer,
                 dirFlag = false,
                 msgDefault =
                     '<p id="msg" style="text-align: center"><br><br>' +
                     'Start by pressing "Use My Location" or entering your starting position in the text box. ' +
                     'Next, pick a park entrance and click "Get Directions" <br><br>' +
                     'Your Directions will appear here.<br><br></p>',
+                msgUserFound =
+                    '<br><br><br><strong>We found you!</strong>' +
+                    '&nbsp;&nbsp;<i class="fa fa-check"></i>',
 
 
             // Caching the Selectors
@@ -87,39 +90,9 @@ var sidebar = $('#sidebar').sidebar();
                     gpsBtn: $('#useGPSBtn'),
                     resetBtn: $('#resetBtn'),
                     getDirBtn: $('#gd-btn'),
-                    submitPos: $('#submitPos')
-
+                    trafficControl: $('#trafficControl'),
+                    trafficToggle: $('#trafficToggle')
                 },
-
-                autoCompleteSetup = function() {
-                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirInput);
-                    autoSrc.bindTo('bounds', map);
-                }, // autoCompleteSetup Ends
-
-
-            //trafficSetup = function() {
-            //	// Creating a Custom Control and appending it to the map
-            //	var controlDiv = document.createElement('div'),
-            //		controlUI = document.createElement('div'),
-            //		trafficLayer = new google.maps.TrafficLayer();
-            //
-            //	$(controlDiv).addClass('gmap-control-container').addClass('gmnoprint');
-            //	$(controlUI).text('Traffic').addClass('gmap-control');
-            //	$(controlDiv).append(controlUI);
-            //
-            //	// Traffic Btn Click Event
-            //	google.maps.event.addDomListener(controlUI, 'click', function() {
-            //		if (typeof trafficLayer.getMap() == 'undefined' || trafficLayer.getMap() === null) {
-            //			jQuery(controlUI).addClass('gmap-control-active');
-            //			trafficLayer.setMap(map);
-            //		} else {
-            //			trafficLayer.setMap(null);
-            //			jQuery(controlUI).removeClass('gmap-control-active');
-            //		}
-            //	});
-            //	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
-            //}, // trafficSetup Ends
-
 
                 // Define all arrays
                 parkInfo = [
@@ -173,7 +146,6 @@ var sidebar = $('#sidebar').sidebar();
                 infoIBs = [],
                 // End array defs
 
-
                 setAllMap = function(array, map) {
                     for (var i = 0; i < array.length; i++) {
                         array[i].setMap(map);
@@ -186,11 +158,14 @@ var sidebar = $('#sidebar').sidebar();
                     }
                 },
 
-                directionsSetup = function() {
+                serviceSetup = function() {
                     directionsService = new google.maps.DirectionsService();
                     directionsRenderer = new google.maps.DirectionsRenderer();
                     directionsRenderer.setPanel(document.querySelector("#dirList"));
-                }, // directionsSetup Ends
+                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirInput);
+                    autoSrc.bindTo('bounds', map);
+                    trafficLayer = new google.maps.TrafficLayer();
+                }, // serviceSetup Ends
 
                 getDirections = function() {
                     if (userPos == undefined) {
@@ -438,14 +413,9 @@ var sidebar = $('#sidebar').sidebar();
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 
-                    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
-                    autoSrc.bindTo('bounds', map);
-
-                    //trafficSetup();
                     entranceSetup();
                     infoSetup();
-                    autoCompleteSetup();
-                    directionsSetup();
+                    serviceSetup();
                 }, // mapSetup Ends
 
                 setUserLocation = function() {
@@ -462,13 +432,10 @@ var sidebar = $('#sidebar').sidebar();
                             map: map,
                             title: "You are here!",
                             position: userPos
-
                         });
                     } else {
                         userMarker.setPosition(userPos);
                     }
-                    map.setZoom(14);
-                    map.setCenter(userPos);
                 }, //setUserLocation Ends
 
                 userGeolocation = function(p) {
@@ -501,21 +468,30 @@ var sidebar = $('#sidebar').sidebar();
                         userPos = place.geometry.location;
                         setUserLocation();
                         $Selectors.origin.val(place.formatted_address);
-                        $Selectors.msg.html('<br><br><br><strong>We found you!</strong>' +
-                            '&nbsp;&nbsp;<i class="fa fa-check" style="color: #00a100"></i>');
+                        $Selectors.msg.html(msgUserFound);
                     });
 
                     //////
                     // Set click behavior
                     //////
 
+                    // Toggle Traffic Btn
+                    $Selectors.trafficToggle.click(function(){
+                        $Selectors.trafficToggle.toggleClass('fa-toggle-off fa-toggle-on');
+                        if (typeof trafficLayer.getMap() == 'undefined' || trafficLayer.getMap() === null) {
+                            trafficLayer.setMap(map);
+                        } else {
+                            trafficLayer.setMap(null);
+                        }
+                    });
+
                     // Reset Btn
-                    $Selectors.resetBtn.on('click', function(e) {
+                    $Selectors.resetBtn.click(function(e) {
                         $Selectors.dirList.empty();
                         $Selectors.dirPane.removeClass("scrollReady");
                         $Selectors.dsResults.hide();
                         $Selectors.dsInputs.show();
-                        $Selectors.msg.html(msgDefault);
+                        $Selectors.msg.html(msgUserFound);
                         setAllMap(infoMarkerArray, map);
                         var zoomLevel = map.getZoom();
                         if (zoomLevel >= 14) {
@@ -532,8 +508,7 @@ var sidebar = $('#sidebar').sidebar();
                     $Selectors.gpsBtn.click(function() {
                         var success = function(position) {
                             userGeolocation(position);
-                            $Selectors.msg.html('<br><br><br><strong>We found you!</strong>' +
-                                '&nbsp;&nbsp;<i class="fa fa-check" style="color: #00a100"></i>');
+                            $Selectors.msg.html(msgUserFound);
                         };
                         var error = function(error) {
                             var content = '<br><br>' +
@@ -541,14 +516,15 @@ var sidebar = $('#sidebar').sidebar();
                             switch (error.code) {
                                 case error.PERMISSION_DENIED:
                                     content += '<p>You denied our request to get your location! ' +
-                                            'If you changed your mind, you can refresh and try again.</p>';
+                                            'If you are on your phone, make sure your location services ' +
+                                            'are turned on. If not, refresh your browser and try again.</p>';
                                     break;
                                 case error.LOCATION_UNAVAILABLE:
                                     content += '<p>We could not seem to find you, sorry! Enter your location manually.</p>';
                                     break;
                                 case error.TIMEOUT:
-                                    content += '<p>The location request timed out. Make sure that your ' +
-                                            'location services are enabled if you are using this page on your phone.</p>';
+                                    content += '<p>The location request timed out. Check your internet connection ' +
+                                        'and try again.</p>';
                                     break;
                                 case error.UNKNOWN_ERROR:
                                     content += '<p>(0.0&#8217;)  Woops! Something went wrong, but we do not know what... ' +
@@ -563,11 +539,11 @@ var sidebar = $('#sidebar').sidebar();
                         if (navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(success, error, options);
                         } else {
-                            $Selectors.msg.html('<br><br><br><strong>Your browswer does not support geolocation</strong>' +
+                            $Selectors.msg.html('<br><br><strong>Your browswer does not support geolocation</strong>' +
                                 '&nbsp;&nbsp;<i class="fa fa-times-circle" style="color: #dd201b"></i><br>' +
                                 'Enter your location manually to use our application.');
                         }
-                    })
+                    });
 
                 }, //invokeEvents Ends
 
