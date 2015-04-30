@@ -6,35 +6,27 @@
     <title>TtGS</title>
     <link type="text/css" rel="stylesheet" href="_css/normalize.min.css"/>
     <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="_css/sidebar.css"/>
+    <link type="text/css" rel="stylesheet" href="_css/sidebar.min.css"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="sidebar" class="sidebar collapsed">
-    <!-- Nav tabs -->
     <ul class="sidebar-tabs" role="tablist">
         <li><a href="#directions" role="tab"><i class="fa fa-bus"></i></a></li>
         <li><a href="#about" role="tab"><i class="fa fa-info"></i></a></li>
         <li><a href="#help" role="tab"><i class="fa fa-question"></i></a></li>
         <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
     </ul>
-
-    <!-- Tab panes -->
     <div class="sidebar-content active">
         <div class="sidebar-pane" id="directions">
-            <!--Starts Hidden-->
             <div id="dsResults">
                 <div class="row">
                     <div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-danger" id="resetBtn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Reset</button>
                     </div>
                 </div>
-                <div id="dirList">
-                    <!--HTML in here-->
-
-                </div>
+                <div id="dirList"></div>
             </div>
-            <!--Starts Shown-->
             <div id="dsInputs">
                 <h1>Get Directions</h1>
                 <div class="row">
@@ -94,12 +86,10 @@
         </div>
     </div>
 </div>
-
 <div id="mapCanvas" class="sidebar-map"></div>
-
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script src="_js/infobox-mini.js" type="text/javascript"></script>
-<script type="text/javascript" src="_js/ttgs_1.8.2e.js"></script>
+<script type="text/javascript" src="_js/ttgs_1.8.2e.min.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
     text-align: center;
 }
 :-ms-input-placeholder {
-     text-align: center;
+    text-align: center;
 }
 html,body,#mapCanvas {
     height: 100%;
@@ -80,9 +80,12 @@ html,body,#mapCanvas {
     background-color: #fff9e6;
 }
 .sidebar-tabs > li.active {
-    color: #000;
-    background-color: #febf00;
+    color: #000000;
+    background-color: #5BC0DE;
 }
+/*
+febf00
+*/
 .sidebar-tabs > li > a {
     display: block;
     width: 100%;
@@ -103,16 +106,17 @@ html,body,#mapCanvas {
     overflow-y: auto;
 }
 .sidebar-content  a {
-    color: #346CAA;
+    color: #5BC0DE;
+
+    /*
+    3ABC9E
+    */
 }
 #dsResults {
     display: none;
 }
 #dsInputs {
     z-index: 2010;
-    display: block;
-}
-.settingsContainer {
     display: block;
 }
 .sidebar-pane {

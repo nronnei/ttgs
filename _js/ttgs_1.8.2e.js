@@ -65,7 +65,7 @@ var sidebar = $('#sidebar').sidebar();
     mapDemo.Directions = (function() {
         function _Directions() {
             var map, autoSrc, userPos, parkDest, userMarker,
-                directionsService, directionsRenderer, geocoder,
+                directionsService, directionsRenderer,
                 dirFlag = false,
                 msgDefault =
                     '<p id="msg" style="text-align: center"><br><br>' +
@@ -91,9 +91,6 @@ var sidebar = $('#sidebar').sidebar();
 
                 },
 
-                geocodeSetup = function() {
-                    geocoder = new google.maps.Geocoder;
-                },
                 autoCompleteSetup = function() {
                     autoSrc = new google.maps.places.Autocomplete($Selectors.dirInput);
                     autoSrc.bindTo('bounds', map);
