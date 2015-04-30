@@ -4,9 +4,9 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
     <title>TtGS</title>
-    <link type="text/css" rel="stylesheet" href="normalize.min.css"/>
+    <link type="text/css" rel="stylesheet" href="_css/normalize.min.css"/>
     <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="sidebar.min.css"/>
+    <link type="text/css" rel="stylesheet" href="_css/sidebar.min.css"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
@@ -25,8 +25,7 @@
                         <button type="button" style="font-size: 14pt" class="btn btn-block btn-danger" id="resetBtn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Reset</button>
                     </div>
                 </div>
-                <div id="dirList">
-                </div>
+                <div id="dirList"></div>
             </div>
             <div id="dsInputs">
                 <h1>Get Directions</h1>
@@ -38,9 +37,10 @@
                         <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address"/>
                     </div>
                 </div>
-                <p style="text-align: center">
+                <p id="msg" style="text-align: center">
                     <br> <br>
-                    Start by pressing "Use My Location" or entering your starting position in the text box. Next, pick a park entrance and click "Get Directions"
+                    Start by pressing "Use My Location" or entering your starting position in the text box.
+                    Next, pick a park entrance and click "Get Directions"
                     <br> <br>
                     Your Directions will appear here.
                     <br> <br>
@@ -76,13 +76,20 @@
         </div>
         <div class="sidebar-pane" id="settings">
             <h1>Settings</h1>
+            <div class="settingsContainer">
+                <div class="row">
+                    <div id="trafficControl" class="control">
+                        Toggle Traffic Layer <i class="fa fa-toggle-off fa-x3 pull-right"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <div id="mapCanvas" class="sidebar-map"></div>
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-<script src="infobox-mini.js" type="text/javascript"></script>
-<script type="text/javascript" src="ttgs_1.8.2e.min.js"></script>
+<script src="_js/infobox-mini.js" type="text/javascript"></script>
+<script type="text/javascript" src="_js/ttgs_1.8.2e.min.js"></script>
 </body>
 </html>
