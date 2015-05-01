@@ -61,7 +61,7 @@
                 <br>
                 <p style="text-align: center">Looking for tips on how to use the map? Click on the <i class="fa fa-question"></i> tab to learn more.</p>
                 <br>
-                <p>Open source, GNU licensed, and available on <a href="https://github.com/ronn4031/ttgs" target="_blank">GitHub</a>.
+                <p>Open source, GNU GPL licensed, and available on <a href="https://github.com/ronn4031/ttgs" target="_blank">GitHub</a>.
                 <p>
                     After a couple years of working with a lovely paper map of the same title, the North Start Sierra Club (Minnesota's chapter of the famous organization) decided they wanted to take their project to the web.  Through a partnership with the University of St. Thomas (St. Paul, MN) they began work on a map.  The first run produced no usable product.
                 </p>
@@ -89,15 +89,32 @@
                     <div id="trafficControl" class="settingsControl col-lg-12">
                         Toggle Traffic Layer <i class="fa fa-toggle-off pull-right settingsToggle" style="font-size: 40px" id="trafficToggle"></i>
                     </div>
-                </div>
-                <div class="row">
-                    <div id="rememberControl" class="settingsControl col-lg-12" style="font-size: 20px">
-                        Remember Location on Reset <i class="fa fa-toggle-off pull-right settingsToggle" style="font-size: 40px" id="rememberToggle"></i>
+                    <div id="remControl" class="settingsControl col-lg-12">
+                    Remember Location on Reset <i class="fa fa-toggle-on pull-right settingsToggle" style="font-size: 40px" id="remToggle"></i>
                     </div>
                 </div>
-                <div class="row">
-                    <div id="ROAD" class="map-type col-lg-12">
-
+                <div id="ROAD" class="map-type selected col-lg-12">
+                    <div class="row">
+                        <p class="map-type-text">
+                            ROAD
+                        </p>
+                        <img src="_img/red.png"/>
+                    </div>
+                </div>
+                <div id="HYBRID" class="map-type col-lg-12">
+                    <div class="row">
+                        <p class="map-type-text">
+                            HYBRID
+                        </p>
+                        <img src="_img/green.png"/>
+                    </div>
+                </div>
+                <div id="SAT" class="map-type col-lg-12">
+                    <div class="row">
+                        <p class="map-type-text">
+                            SATELLITE
+                        </p>
+                        <img src="_img/blue.png"/>
                     </div>
                 </div>
             </div>

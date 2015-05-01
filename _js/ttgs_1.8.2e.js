@@ -67,6 +67,7 @@ var sidebar = $('#sidebar').sidebar();
             var map, autoSrc, userPos, parkDest, userMarker,
                 directionsService, directionsRenderer, trafficLayer,
                 dirFlag = false,
+                remFlag = true,
                 msgDefault =
                     '<p id="msg" style="text-align: center"><br><br>' +
                     'Start by pressing "Use My Location" or entering your starting position in the text box. ' +
@@ -91,7 +92,11 @@ var sidebar = $('#sidebar').sidebar();
                     resetBtn: $('#resetBtn'),
                     getDirBtn: $('#gd-btn'),
                     trafficControl: $('#trafficControl'),
-                    trafficToggle: $('#trafficToggle')
+                    trafficToggle: $('#trafficToggle'),
+                    remToggle: $('#remToggle'),
+                    mapType: $('.map-type'),
+                    mapTypeText: $('.map-type-text')
+
                 },
 
                 // Define all arrays
@@ -462,7 +467,7 @@ var sidebar = $('#sidebar').sidebar();
                         }
                     });
 
-                    // Handle Autocomplete inpute
+                    // Handle Autocomplete input
                     google.maps.event.addListener(autoSrc, 'place_changed', function() {
                         var place = autoSrc.getPlace();
                         userPos = place.geometry.location;
@@ -485,6 +490,37 @@ var sidebar = $('#sidebar').sidebar();
                         }
                     });
 
+                    // Remember Toggle Btn
+                    $Selectors.remToggle.click(function(){
+                        $Selectors.remToggle.toggleClass('fa-toggle-off fa-toggle-on');
+                        if (remFlag) {
+                            remFlag = false;
+                        } else {
+                            remFlag = true;
+                        }
+                    });
+
+                    // Map type selection
+                    $Selectors.mapType.click(function () {
+                            var $this = $(this);
+                        $Selectors.mapType.removeClass('selected');
+                        $this.addClass('selected');
+                        switch ($this.attr('id')) {
+                            case 'ROAD':
+                                console.log("ROAD");
+                                map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+                                break;
+                            case 'HYBRID':
+                                console.log("HYBRID");
+                                map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+                                break;
+                            case 'SAT':
+                                console.log("SAT");
+                                map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                                break;
+                            }
+                    });
+
                     // Reset Btn
                     $Selectors.resetBtn.click(function(e) {
                         $Selectors.dirList.empty();
@@ -500,8 +536,15 @@ var sidebar = $('#sidebar').sidebar();
                             setAllMap(entranceMarkerArray,null)
                         }
                         dirFlag = false;
-                        userMarker.setMap(map);
                         directionsRenderer.setMap(null);
+                        if (remFlag) {
+                            userMarker.setMap(map);
+                            $Selectors.msg.html(msgUserFound);
+                        } else {
+                            userPos = null;
+                            $Selectors.msg.html(msgDefault);
+                            $Selectors.origin.val('');
+                        }
                     });
 
                     // Use My Location  Btn
