@@ -65,7 +65,17 @@ var sidebar = $('#sidebar').sidebar();
     mapDemo.Directions = (function() {
         function _Directions() {
             var map, autoSrc, userPos, parkDest, userMarker,
-                directionsService, directionsRenderer, geocoder,
+                directionsService, directionsRenderer, trafficLayer,
+                dirFlag = false,
+                remFlag = true,
+                msgDefault =
+                    '<p id="msg" style="text-align: center"><br><br>' +
+                    'Start by pressing "Use My Location" or entering your starting position in the text box. ' +
+                    'Next, pick a park entrance and click "Get Directions" <br><br>' +
+                    'Your Directions will appear here.<br><br></p>',
+                msgUserFound =
+                    '<br><br><br><strong>We found you!</strong>' +
+                    '&nbsp;&nbsp;<i class="fa fa-check"></i>',
 
 
             // Caching the Selectors
@@ -74,48 +84,20 @@ var sidebar = $('#sidebar').sidebar();
                     dsResults: $('#dsResults'),
                     dsInputs: $('#dsInputs'),
                     dirInput: $('.directionsInput')[0],
+                    msg: $('#msg'),
                     origin: $('#origin'),
                     dirPane: $('#directions'),
                     dirList: $('#dirList'),
                     gpsBtn: $('#useGPSBtn'),
                     resetBtn: $('#resetBtn'),
                     getDirBtn: $('#gd-btn'),
-                    submitPos: $('#submitPos')
+                    trafficControl: $('#trafficControl'),
+                    trafficToggle: $('#trafficToggle'),
+                    remToggle: $('#remToggle'),
+                    mapType: $('.map-type'),
+                    mapTypeText: $('.map-type-text')
 
                 },
-
-                geocodeSetup = function() {
-                    geocoder = new google.maps.Geocoder;
-                },
-                autoCompleteSetup = function() {
-                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirInput);
-                    autoSrc.bindTo('bounds', map);
-                }, // autoCompleteSetup Ends
-
-
-            //trafficSetup = function() {
-            //	// Creating a Custom Control and appending it to the map
-            //	var controlDiv = document.createElement('div'),
-            //		controlUI = document.createElement('div'),
-            //		trafficLayer = new google.maps.TrafficLayer();
-            //
-            //	$(controlDiv).addClass('gmap-control-container').addClass('gmnoprint');
-            //	$(controlUI).text('Traffic').addClass('gmap-control');
-            //	$(controlDiv).append(controlUI);
-            //
-            //	// Traffic Btn Click Event
-            //	google.maps.event.addDomListener(controlUI, 'click', function() {
-            //		if (typeof trafficLayer.getMap() == 'undefined' || trafficLayer.getMap() === null) {
-            //			jQuery(controlUI).addClass('gmap-control-active');
-            //			trafficLayer.setMap(map);
-            //		} else {
-            //			trafficLayer.setMap(null);
-            //			jQuery(controlUI).removeClass('gmap-control-active');
-            //		}
-            //	});
-            //	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
-            //}, // trafficSetup Ends
-
 
                 // Define all arrays
                 parkInfo = [
@@ -143,9 +125,6 @@ var sidebar = $('#sidebar').sidebar();
                     ['Wayzata Blvd N & Theodore Wirth Pkwy Entrance', 'http://goo.gl/i8lgNS', 'Take Bus 9 to reach this entrance.', '44.97086952', '-93.32226364'],
                     ['Richfield Rd & Wm Berry Rd Entrance', 'http://goo.gl/ee0UMv', 'Take Bus 6 to reach this entrance.', '44.9339563', '-93.30942457'],
                     ['50th St W & Minnehaha Parkway Entrance', 'http://goo.gl/5eSXXv', 'Take buses 4 or 6 to reach this stop. This is the southernmost access to the Minneapolis Chain of Lakes, stopping just south of Lake Harriet.', '44.91287848', '-93.29798804'],
-                    ['46th St & 44th Ave Entrance', 'http://goo.gl/1IBme1', 'Take Buses 46,74,84 to access this entrance.', '44.91827598', '-93.21035849'],
-                    ['46th St & 46th Ave Entrance', 'http://goo.gl/ItUyWW', 'Take Bus 23 to access this entrance.', '44.9177217', '-93.21203487'],
-                    ['46th St & Minneapolis Entrance', 'http://goo.gl/xqazgk', 'Take Buses 7 or 9 to access the park from this entrance.', '44.91690759', '-93.21421421'],
                     ['Hyland Lake Park Reserve Entrance', 'http://goo.gl/GJpsRg', 'Sits about 0.6 miles from the Normandale Blvd & Poplar Bridge Rd bus stop.', '44.83311265', '-93.36311821'],
                     ['MN Valley National Wildlife Refuge Entrance (Bass Ponds)', 'http://goo.gl/XJv3tr', 'Enter here for the best access to the Bass Ponds.  Take the MOA stop on the Hiawatha LRT or the 539 bus to 86th and Old Shakopee Rd.', '44.84870649', '-93.22874384'],
                     ['MN Valley National Wildlife Refuge Entrance (Visitor Center)', 'http://goo.gl/oxmd7T', 'Enter here for the best access to the Visitor Center.  Take the American Blvd stop on the Hiawatha LRT.', '44.86122776', '-93.2146195'],
@@ -155,7 +134,16 @@ var sidebar = $('#sidebar').sidebar();
                     ['Thompson County Park Entrance', 'http://goo.gl/7a4OSn', 'None', '44.91236178', '-93.07112191'],
                     ['Kaposia Park Entrance', 'http://goo.gl/fWExyl', 'None', '44.91381562', '-93.0543134'],
                     ['Fort Snelling State Park Entrance', 'http://goo.gl/l9RW3Q', 'None', '44.89244109', '-93.18290096'],
-                    ['Lebanon Hills Regional Park Entrance', 'http://goo.gl/1ASLgW', 'Access via the Johnny Cake Ridge Rd stop.', '44.7730489', '-93.18736295']
+                    ['Lebanon Hills Regional Park Entrance', 'http://goo.gl/1ASLgW', 'Access via the Johnny Cake Ridge Rd stop.', '44.7730489', '-93.18736295'],
+                    ['Minnesota River Valley Wildlife Refuge Visitors Center Entrances', 'http://goo.gl/CHQfso', '', '44.8605', '-93.21748333'],
+                    ['Minnesota River Valley Entrance', 'http://goo.gl/lhczpF', '', '44.848', '-93.23731667'],
+                    ['Pond Dakota Mission Entrance', 'http://goo.gl/kH03D5', '', '44.81526667', '-93.27303333'],
+                    ['Nine Mile Creek Entrance', 'http://goo.gl/tuFmak', '', '44.81768333', '-93.3087'],
+                    ['Crosby Lake Regional Park Entrance', 'SKIP', 'In Middle of Neighborhood', '0', '0'],
+                    ['Minnehaha Park Entrance 1', 'http://goo.gl/hNcItm', '', '44.91885', '-93.20811667'],
+                    ['Minnehaha Park Entrance 2', 'http://goo.gl/TzxdqK', '', '44.9179', '-93.20913333'],
+                    ['Minnehaha Park Entrance 3', 'http://goo.gl/eWD3Vm', '', '44.91555', '-93.21263333'],
+                    ['Chain of Lakes Entrance', 'http://goo.gl/mzlAad', '', '44.91661667', '-93.21266667']
                 ],
                 entranceMarkerArray = [],
                 entranceIBs = [],
@@ -163,24 +151,33 @@ var sidebar = $('#sidebar').sidebar();
                 infoIBs = [],
                 // End array defs
 
-
                 setAllMap = function(array, map) {
                     for (var i = 0; i < array.length; i++) {
                         array[i].setMap(map);
                     }
                 },
 
-                directionsSetup = function() {
+                closeAllIBs = function(array) {
+                    for (var i = 0; i < array.length; i++) {
+                        array[i].close()
+                    }
+                },
+
+                serviceSetup = function() {
                     directionsService = new google.maps.DirectionsService();
                     directionsRenderer = new google.maps.DirectionsRenderer();
                     directionsRenderer.setPanel(document.querySelector("#dirList"));
-                }, // directionsSetup Ends
+                    autoSrc = new google.maps.places.Autocomplete($Selectors.dirInput);
+                    autoSrc.bindTo('bounds', map);
+                    trafficLayer = new google.maps.TrafficLayer();
+                }, // serviceSetup Ends
 
                 getDirections = function() {
                     if (userPos == undefined) {
                         alert('Make sure you have both a start end endpoint! Enter your location before clicking "Get Directions".')
                     } else {
-
+                        // Set flag to true to keep entrance markers off map
+                        dirFlag = true;
                         // Swap panel content
                         $Selectors.dsInputs.hide();
                         $Selectors.dsResults.show();
@@ -189,9 +186,13 @@ var sidebar = $('#sidebar').sidebar();
                         $Selectors.dirPane.addClass("scrollReady");
                         $Selectors.dirList.empty();
 
-                        //Remove distracting markers from map
+                        //Remove distractions from map
                         setAllMap(entranceMarkerArray, null);
                         setAllMap(infoMarkerArray, null);
+                        userMarker.setMap(null);
+                        closeAllIBs(entranceIBs);
+                        closeAllIBs(infoIBs);
+
 
                         // DirectionsRequest object
                         var request = {
@@ -302,9 +303,8 @@ var sidebar = $('#sidebar').sidebar();
                         infoIBs.push(infoBox);
 
                         google.maps.event.addListener(marker, "click", function () {
-                            for (var x = 0; x < infoIBs.length; x++) {
-                                infoIBs[x].close();
-                            }
+                            closeAllIBs(entranceIBs);
+                            closeAllIBs(infoIBs);
                             infoIBs[i].open(map, this);
                             map.setZoom(14);
                             map.panTo(marker.getPosition());
@@ -378,9 +378,8 @@ var sidebar = $('#sidebar').sidebar();
 
                         google.maps.event.addListener(marker, "click", function () {
                             parkDest = marker.getPosition();
-                            for (var x = 0; x < entranceIBs.length; x++) {
-                                entranceIBs[x].close();
-                            }
+                            closeAllIBs(entranceIBs);
+                            closeAllIBs(infoIBs);
                             entranceIBs[i].open(map, this);
                             map.panTo(this.getPosition());
                         });
@@ -419,14 +418,9 @@ var sidebar = $('#sidebar').sidebar();
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 
-                    autoSrc = new google.maps.places.Autocomplete(document.getElementById("origin"));
-                    autoSrc.bindTo('bounds', map);
-
-                    //trafficSetup();
                     entranceSetup();
                     infoSetup();
-                    autoCompleteSetup();
-                    directionsSetup();
+                    serviceSetup();
                 }, // mapSetup Ends
 
                 setUserLocation = function() {
@@ -443,13 +437,10 @@ var sidebar = $('#sidebar').sidebar();
                             map: map,
                             title: "You are here!",
                             position: userPos
-
                         });
                     } else {
                         userMarker.setPosition(userPos);
                     }
-                    map.setZoom(14);
-                    map.setCenter(userPos);
                 }, //setUserLocation Ends
 
                 userGeolocation = function(p) {
@@ -461,51 +452,142 @@ var sidebar = $('#sidebar').sidebar();
                 }, // userGeolocation Ends
 
                 invokeEvents = function() {
+
+                    //////
+                    // Set Google Maps Listeners
+                    //////
+
                     // Set visible extent for park entrances
                     google.maps.event.addListener(map, 'zoom_changed', function() {
                         var zoomLevel = map.getZoom();
-                        if (zoomLevel >= 14) {
+                        if (zoomLevel >= 14 && !dirFlag) {
                             setAllMap(entranceMarkerArray, map);
                         } else {
-                            setAllMap(entranceMarkerArray,null)    }
+                            setAllMap(entranceMarkerArray,null)
+                        }
                     });
 
-                    ////Keydown listener for entering user location
-                    //$Selectors.origin.keypress(function() {
-                    //    if(event.which == 13)
-                    //    {
-                    //        userGeocode();
-                    //    }
-                    //});
-
+                    // Handle Autocomplete input
                     google.maps.event.addListener(autoSrc, 'place_changed', function() {
                         var place = autoSrc.getPlace();
                         userPos = place.geometry.location;
                         setUserLocation();
                         $Selectors.origin.val(place.formatted_address);
+                        $Selectors.msg.html(msgUserFound);
                     });
 
+                    //////
                     // Set click behavior
+                    //////
 
+                    // Toggle Traffic Btn
+                    $Selectors.trafficToggle.click(function(){
+                        $Selectors.trafficToggle.toggleClass('fa-toggle-off fa-toggle-on');
+                        if (typeof trafficLayer.getMap() == 'undefined' || trafficLayer.getMap() === null) {
+                            trafficLayer.setMap(map);
+                        } else {
+                            trafficLayer.setMap(null);
+                        }
+                    });
+
+                    // Remember Toggle Btn
+                    $Selectors.remToggle.click(function(){
+                        $Selectors.remToggle.toggleClass('fa-toggle-off fa-toggle-on');
+                        if (remFlag) {
+                            remFlag = false;
+                        } else {
+                            remFlag = true;
+                        }
+                    });
+
+                    // Map type selection
+                    $Selectors.mapType.click(function () {
+                            var $this = $(this);
+                        $Selectors.mapType.removeClass('selected');
+                        $this.addClass('selected');
+                        switch ($this.attr('id')) {
+                            case 'ROAD':
+                                console.log("ROAD");
+                                map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+                                break;
+                            case 'HYBRID':
+                                console.log("HYBRID");
+                                map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+                                break;
+                            case 'SAT':
+                                console.log("SAT");
+                                map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                                break;
+                            }
+                    });
 
                     // Reset Btn
-                    $Selectors.resetBtn.on('click', function(e) {
+                    $Selectors.resetBtn.click(function(e) {
                         $Selectors.dirList.empty();
                         $Selectors.dirPane.removeClass("scrollReady");
                         $Selectors.dsResults.hide();
                         $Selectors.dsInputs.show();
+                        $Selectors.msg.html(msgUserFound);
                         setAllMap(infoMarkerArray, map);
+                        var zoomLevel = map.getZoom();
+                        if (zoomLevel >= 14) {
+                            setAllMap(entranceMarkerArray, map);
+                        } else {
+                            setAllMap(entranceMarkerArray,null)
+                        }
+                        dirFlag = false;
                         directionsRenderer.setMap(null);
-                    });
-
-                    // Use My Location / Geo Location Btn
-                    $Selectors.gpsBtn.click(function() {
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(function(position) {
-                                userGeolocation(position);
-                            });
+                        if (remFlag) {
+                            userMarker.setMap(map);
+                            $Selectors.msg.html(msgUserFound);
+                        } else {
+                            userPos = null;
+                            $Selectors.msg.html(msgDefault);
+                            $Selectors.origin.val('');
                         }
                     });
+
+                    // Use My Location  Btn
+                    $Selectors.gpsBtn.click(function() {
+                        var success = function(position) {
+                            userGeolocation(position);
+                            $Selectors.msg.html(msgUserFound);
+                        };
+                        var error = function(error) {
+                            var content = '<br><br>' +
+                                '<h3 style="color: red">Error:</h3><br>';
+                            switch (error.code) {
+                                case error.PERMISSION_DENIED:
+                                    content += '<p>You denied our request to get your location! ' +
+                                            'If you are on your phone, make sure your location services ' +
+                                            'are turned on. If not, refresh your browser and try again.</p>';
+                                    break;
+                                case error.LOCATION_UNAVAILABLE:
+                                    content += '<p>We couldn&#8217;t seem to find you, sorry! Enter your location manually.</p>';
+                                    break;
+                                case error.TIMEOUT:
+                                    content += '<p>The location request timed out. Check your internet connection ' +
+                                        'and try again.</p>';
+                                    break;
+                                case error.UNKNOWN_ERROR:
+                                    content += '<p>(0.0&#8217;)  Woops! Something went wrong, but we don&#8217;t know what... ' +
+                                            'Try entering your location manually. </p>'
+                            }
+                            $Selectors.msg.html(content);
+                        };
+                        var options = {
+                            enableHighAccuracy: true,
+                            timeout: 5000
+                        };
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(success, error, options);
+                        } else {
+                            $Selectors.msg.html('<br><br><strong>Your browswer does not support geolocation</strong>' +
+                                '&nbsp;&nbsp;<i class="fa fa-times-circle" style="color: #dd201b"></i><br>' +
+                                'Enter your location manually to use our application.');
+                        }
+                    });
+
                 }, //invokeEvents Ends
 
                 _init = function() {
@@ -519,6 +601,6 @@ var sidebar = $('#sidebar').sidebar();
             };
             return this.init(); // Refers to: mapDemo.Directions.init()
         } // _Directions Ends
-        return new _Directions(); // Creating a new object of _Directions rather than a funtion
+        return new _Directions(); // Creating a new object of _Directions rather than a function
     }()); // mapDemo.Directions Ends
 })(window.mapDemo = window.mapDemo || {}, jQuery);
