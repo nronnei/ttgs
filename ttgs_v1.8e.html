@@ -18,44 +18,45 @@
         <li><a href="#help" role="tab"><i class="fa fa-question"></i></a></li>
         <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
     </ul>
-
     <!-- Tab panes -->
     <div class="sidebar-content active">
         <div class="sidebar-pane" id="directions">
-            <!--Starts Hidden-->
-            <div id="dsResults">
-                <div class="row">
-                    <div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">
-                        <button type="button" style="font-size: 14pt" class="btn btn-block btn-danger" id="resetBtn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Reset</button>
+            <div class="dirContainer">
+                <!--Starts Hidden-->
+                <div id="dsResults">
+                    <div class="row">
+                        <div class="col-lg-12 panel-btn">
+                            <button type="button" style="font-size: 14pt" class="btn btn-block btn-danger" id="resetBtn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Reset</button>
+                        </div>
                     </div>
-                </div>
-                <div id="dirList">
-                    <!--HTML in here-->
+                    <div id="dirList">
+                        <!--HTML in here-->
 
-                </div>
-            </div>
-            <!--Starts Shown-->
-            <div id="dsInputs">
-                <h1>Get Directions</h1>
-                <div class="row">
-                    <div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">
-                        <button type="button" style="font-size: 14pt" class="btn btn-block btn-info" id="useGPSBtn"><i class="fa fa-crosshairs"></i>&nbsp;&nbsp;Use My Location</button>
-                    </div>
-                    <div class="col-lg-12">
-                        <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address" autocomplete="off"/>
                     </div>
                 </div>
-                <p id="msg" style="text-align: center">
-                    <br> <br>
-                    Start by pressing "Use My Location" or entering your starting position in the text box.
-                    Next, pick a park entrance and click "Get Directions"
-                    <br> <br>
-                    Your Directions will appear here.
-                    <br> <br>
-                </p>
+                <!--Starts Shown-->
+                <div id="dsInputs">
+                    <h1>Get Directions</h1>
+                    <div class="row">
+                        <div class="col-lg-12 panel-btn">
+                            <button type="button" style="font-size: 14pt" class="btn btn-block btn-info" id="useGPSBtn"><i class="fa fa-crosshairs"></i>&nbsp;&nbsp;Use My Location</button>
+                        </div>
+                        <div class="col-lg-12">
+                            <input type="text" id="origin" class=" form-control directionsInput" placeholder="Cross Streets  OR  Address" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <p id="msg">
+                        <br> <br>
+                        Start by pressing "Use My Location" or entering your starting position in the text box.
+                        Next, pick a park entrance and click "Get Directions"
+                        <br> <br>
+                        Your Directions will appear here.
+                        <br> <br>
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="sidebar-pane scrollReady" id="about">
+        <div class="sidebar-pane" id="about">
             <h1>About</h1>
             <div id="aboutContainer">
                 <br>
@@ -87,34 +88,25 @@
             <div class="settingsContainer">
                 <div class="row">
                     <div id="trafficControl" class="settingsControl col-lg-12">
-                        Toggle Traffic Layer <i class="fa fa-toggle-off pull-right settingsToggle" style="font-size: 40px" id="trafficToggle"></i>
+                        Toggle Traffic Layer <i class="fa fa-toggle-off pull-right settingsToggle" id="trafficToggle"></i>
                     </div>
                     <div id="remControl" class="settingsControl col-lg-12">
-                    Remember Location on Reset <i class="fa fa-toggle-on pull-right settingsToggle" style="font-size: 40px" id="remToggle"></i>
+                        Remember Location on Reset <i class="fa fa-toggle-on pull-right settingsToggle" id="remToggle"></i>
                     </div>
                 </div>
                 <div id="ROAD" class="map-type selected col-lg-12">
                     <div class="row">
-                        <p class="map-type-text">
-                            ROAD
-                        </p>
-                        <img src="_img/red.png"/>
+                        <img src="_img/road_opt.png"/>
                     </div>
                 </div>
                 <div id="HYBRID" class="map-type col-lg-12">
                     <div class="row">
-                        <p class="map-type-text">
-                            HYBRID
-                        </p>
-                        <img src="_img/green.png"/>
+                        <img src="_img/hybrid_opt.png"/>
                     </div>
                 </div>
                 <div id="SAT" class="map-type col-lg-12">
                     <div class="row">
-                        <p class="map-type-text">
-                            SATELLITE
-                        </p>
-                        <img src="_img/blue.png"/>
+                        <img src="_img/sat_opt.png"/>
                     </div>
                 </div>
             </div>

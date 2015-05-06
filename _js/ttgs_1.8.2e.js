@@ -563,14 +563,14 @@ var sidebar = $('#sidebar').sidebar();
                                             'are turned on. If not, refresh your browser and try again.</p>';
                                     break;
                                 case error.LOCATION_UNAVAILABLE:
-                                    content += '<p>We could not seem to find you, sorry! Enter your location manually.</p>';
+                                    content += '<p>We couldn&#8217;t seem to find you, sorry! Enter your location manually.</p>';
                                     break;
                                 case error.TIMEOUT:
                                     content += '<p>The location request timed out. Check your internet connection ' +
                                         'and try again.</p>';
                                     break;
                                 case error.UNKNOWN_ERROR:
-                                    content += '<p>(0.0&#8217;)  Woops! Something went wrong, but we do not know what... ' +
+                                    content += '<p>(0.0&#8217;)  Woops! Something went wrong, but we don&#8217;t know what... ' +
                                             'Try entering your location manually. </p>'
                             }
                             $Selectors.msg.html(content);
