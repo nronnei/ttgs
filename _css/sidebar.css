@@ -221,7 +221,6 @@ html,body,#mapCanvas {
 }
 .map-type {
     margin: 0;
-    height: 150px;
     width: 100%;
     overflow: hidden;
 }
