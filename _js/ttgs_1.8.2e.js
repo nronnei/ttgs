@@ -95,7 +95,8 @@ var sidebar = $('#sidebar').sidebar();
                     trafficToggle: $('#trafficToggle'),
                     remToggle: $('#remToggle'),
                     mapType: $('.map-type'),
-                    mapTypeText: $('.map-type-text')
+                    mapTypeText: $('.map-type-text'),
+                    dirHead: $('#dirHead')
 
                 },
 
@@ -174,12 +175,13 @@ var sidebar = $('#sidebar').sidebar();
 
                 getDirections = function() {
                     if (userPos == undefined) {
-                        alert('Make sure you have both a start end endpoint! Enter your location before clicking "Get Directions".')
+                        alert('Make sure you have both a start and endpoint! Enter your location before clicking "Get Directions".')
                     } else {
                         // Set flag to true to keep entrance markers off map
                         dirFlag = true;
                         // Swap panel content
                         $Selectors.dsInputs.hide();
+                        $Selectors.dirHead.hide();
                         $Selectors.dsResults.show();
 
                         // Prepare Content
@@ -267,10 +269,10 @@ var sidebar = $('#sidebar').sidebar();
                         var boxText = document.createElement("div");
                         boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
                         boxText.innerHTML =
-                            '<div class="parkInfo">' +
                             '<div class="parkHead">' +
                             '<h3 style="color: #3ABC9E" class="parkName">'+ park[0] + ' </h3>' +
                             '</div>' +
+                            '<div class="parkInfo">' +
                             '<div class="parkContent">' +
                             '<p style="color:black"><b> Park Description</b><br>' + park[1] + '</p>' +
                             '<p style="color:black"><b> Address</b><br>' + park[3] + '</p>' +
@@ -288,7 +290,8 @@ var sidebar = $('#sidebar').sidebar();
                             ,boxStyle: {
                                 background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.12/examples/tipbox.gif') no-repeat"
                                 ,opacity: 0.9
-                                ,width: "320px"
+                                ,width: "260px"
+                                ,height: "260px"
                             }
                             ,closeBoxMargin: "10px 2px 2px 2px"
                             ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
@@ -335,21 +338,21 @@ var sidebar = $('#sidebar').sidebar();
                             index: i
                         });
 
+                        var lat2 = ent[3];
+                        var lng2 = ent[4];
+
                         // Begin example code to get custom infobox
                         var boxText = document.createElement("div");
                         boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: white; padding: 5px;";
                         boxText.innerHTML =
                             '<div class="parkEntrances">' +
-                            '<div class="parkHead">' +
+                            '<div class="parkHead" style="text-align: center">' +
                             '<h3 style="color: #000000" class="parkName">'+ ent[0] + ' </h3>' +
                             '</div>' +
-                            '<div class="parkContent">' +
-                            '<p> <a href='+ent[1]+' target="_blank">Directions</a>' + '  </p>'+
-                            '<p style="color:black"><b> Description</b><br>' + ent[2] + '</p>' +
                             '<div class="row">' +
-                            '<div class="col-lg-12" style="padding-bottom: 5px; padding-top: 5px">' +
-                            '<button id="gd-btn" class="btn btn-primary btn-block">Get Directions Here</button>' +
-                            '</div>' +
+                            '<div class="col-lg-12" style="padding-top: 5px">' +
+                            '<button id="gd-btn" class="btn btn-primary btn-block">Get Directions</button>' +
+                            '<a id="gd-google" href="#" class="btn btn-warning btn-block" role="button">Get Directions via Google Maps</a>' +
                             '</div>' +
                             '</div>'+
                             '</div>';
@@ -363,7 +366,7 @@ var sidebar = $('#sidebar').sidebar();
                             ,boxStyle: {
                                 background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.12/examples/tipbox.gif') no-repeat"
                                 ,opacity: 0.9
-                                ,width: "320px"
+                                ,width: "260px"
                             }
                             ,closeBoxMargin: "10px 2px 2px 2px"
                             ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
@@ -383,9 +386,20 @@ var sidebar = $('#sidebar').sidebar();
                             entranceIBs[i].open(map, this);
                             map.panTo(this.getPosition());
                         });
+                        // Add functionality to buttons
                         google.maps.event.addListener(entranceIBs[i], "domready", function () {
                             $('#gd-btn').on('click', function () {
                                 getDirections()
+                            });
+                            $('#gd-google').on('click', function () {
+                                if (userPos == undefined) {
+                                    alert('Make sure you have both a start and endpoint! Enter your location before clicking "Get Directions".')
+                                } else {
+                                    var lat1 = userPos.lat();
+                                    var lng1 = userPos.lng();
+                                    var url = 'https://maps.google.com/maps?saddr=' + lat1 + ',' + lng1 + '&daddr=' + lat2 + ',' + lng2 + '&dirflg=r';
+                                    window.open(url);
+                                }
                             });
                         });
                         return marker;
@@ -527,6 +541,7 @@ var sidebar = $('#sidebar').sidebar();
                         $Selectors.dirPane.removeClass("scrollReady");
                         $Selectors.dsResults.hide();
                         $Selectors.dsInputs.show();
+                        $Selectors.dirHead.show();
                         $Selectors.msg.html(msgUserFound);
                         setAllMap(infoMarkerArray, map);
                         var zoomLevel = map.getZoom();
