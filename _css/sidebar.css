@@ -1,27 +1,4 @@
-::-webkit-input-placeholder {
-    text-align: center;
-}
-:-moz-placeholder {
-    text-align: center;
-}
-::-moz-placeholder {
-    text-align: center;
-}
-:-ms-input-placeholder {
-     text-align: center;
-}
-html,body,#mapCanvas {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-.pac-container {
-    background-color: #FFF;
-    z-index: 2020;
-    position: fixed;
-    display: inline-block;
-    float: left;
-}
+/*Borrowed CSS for the Sidebar (slightly tweaked)*/
 .sidebar {
     position: absolute;
     left: 0;
@@ -77,11 +54,11 @@ html,body,#mapCanvas {
 }
 .sidebar-tabs > li:hover {
     color: #000;
-    background-color: #fff9e6;
+    background-color: #e3fcff;
 }
 .sidebar-tabs > li.active {
-    color: #000;
-    background-color: #febf00;
+    color: #000000;
+    background-color: #5BC0DE;
 }
 .sidebar-tabs > li > a {
     display: block;
@@ -103,23 +80,17 @@ html,body,#mapCanvas {
     overflow-y: auto;
 }
 .sidebar-content  a {
-    color: #346CAA;
+    color: #5BC0DE;
 }
-#dsResults {
-    display: none;
-}
-#dsInputs {
-    z-index: 2010;
-    display: block;
+.panel-btn {
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 .sidebar-pane {
     display: none;
     right: 0;
     box-sizing: border-box;
-    padding: 10px 20px 10px 8px;
-}
-.scrollReady {
-    padding: 10px 4px 10px 8px;
+    padding: 20px;
 }
 .sidebar-pane.active {
     display: block;
@@ -128,16 +99,10 @@ html,body,#mapCanvas {
     .sidebar-pane {
         width: 265px;
     }
-    .scrollReady {
-        padding: 10px 17px 10px 10px;
-    }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
     .sidebar-pane {
         width: 350px;
-    }
-    .scrollReady {
-        padding: 5px 20px 10px 10px;
     }
 }
 @media (min-width: 1200px) {
@@ -193,3 +158,111 @@ html,body,#mapCanvas {
     }
 }
 
+/*Custom CSS for App*/
+::-webkit-input-placeholder {
+    text-align: center;
+}
+:-moz-placeholder {
+    text-align: center;
+}
+::-moz-placeholder {
+    text-align: center;
+}
+:-ms-input-placeholder {
+    text-align: center;
+}
+html,body,#mapCanvas {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/*Infobox CSS*/
+.parkInfo {
+    height: 180px;
+    padding-right: 7px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/*Custom CSS for Directions Pane*/
+.dirContainer {
+    padding: 10px;
+}
+#dsResults {
+    display: none;
+}
+#dsInputs {
+    z-index: 2010;
+    display: block;
+}
+.pac-container {
+    background-color: #FFF;
+    z-index: 2020;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+#msg {
+    text-align: center;
+}
+.fa-check{
+    color: #00a100;
+    font-size: 40px;
+}
+
+/*Custom CSS for About Pane*/
+#aboutContainer {
+    padding: 15px;
+}
+
+/*Custom CSS for Help Pane*/
+.helpContainer {
+    padding: 10px;
+}
+.helpContainer img {
+    height: 30px;
+    width: 30px;
+}
+
+/*Custom CSS for Settings Pane*/
+.settingsContainer {
+    padding: 30px;
+}
+.settingsControl {
+    padding: 0 0 30px 0;
+    font-size: 20px;
+    line-height: 45px;
+}
+.map-type {
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+}
+.map-type:hover {
+    border: solid #89ecff 2px;
+}
+.map-type.selected {
+    border: solid #5BC0DE 2px;
+}
+.map-type:nth-of-type(2) {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.map-type:last-of-type {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.map-type-text {
+    z-index: 2010;
+}
+.map-type img {
+    width: 100%;
+    height: 100%;
+}
+.settingsToggle{
+    font-size: 40px !important;
+}
+.fa-toggle-on{
+    color: #00a100;
+}

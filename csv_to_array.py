@@ -1,6 +1,5 @@
 __author__ = 'Nick Ronnei (nronnei@gmail.com)'
 ## Written with Python 2.7
-## Works very well on my PC
 import csv
 
 
@@ -21,35 +20,33 @@ def readCSV(filepath):
 
 
 ## END FUNCTIONS
-## Declare necessary
 
 ## DON'T FORGET: you have to include the file extension (.csv)
-in_path = raw_input("The file path to the CSV file:  ")
+in_path = raw_input("The file path to the CSV file - don't forget the file extension (.csv):  ")
 
 ## DON'T FORGET: you have to include the file extension (.txt)
-out_path = raw_input("The file path of the array's text file:  ")
+out_path = raw_input("The file path of the array's text file - don't forget the file extension (.txt):  ")
 
 ## Just the name of the array, no need for "var" (ex. "parkInfo")
-array_name = raw_input("What should we name this array?  ")
-start_text = "var " + array_name + " = [\n"
-end_text = "];"
+array_name = raw_input("The name of the array you'd like to create (ex. parkEntrances):  ")
+start_text = array_name + " = [\n"
+end_text = "],"
 csv_in = readCSV(in_path)
-
-## Start the hard work
 
 with open(out_path, "w") as txt:
     txt.write(start_text)
     cutComma = len(csv_in) - 1
     i = 0
     for row in csv_in:
-        if i < cutComma:
-            text = str(row) + ",\n"
+        if i != 0:
+            if i < cutComma:
+                text = str(row) + ",\n"
+            else:
+                text = str(row) + "\n"
+            txt.write(text)
         else:
-            text = str(row) + "\n"
+            pass
         i += 1
-        txt.write(text)
     txt.write(end_text)
-
-## End the hard work
 
 print("Array writing successful, you can find it here: " + out_path)

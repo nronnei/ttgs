@@ -4,26 +4,23 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
     <title>TtGS</title>
-    <link type="text/css" rel="stylesheet" href="_css/normalize.min.css"/>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"/>
     <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="_css/sidebar.css"/>
+    <link type="text/css" rel="stylesheet" href="sidebar.min.css"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="sidebar" class="sidebar collapsed">
-    <!-- Nav tabs -->
     <ul class="sidebar-tabs" role="tablist">
         <li><a href="#directions" role="tab"><i class="fa fa-bus"></i></a></li>
         <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
         <li><a href="#help" role="tab"><i class="fa fa-question"></i></a></li>
         <li><a href="#about" role="tab"><i class="fa fa-info"></i></a></li>
     </ul>
-    <!-- Tab panes -->
     <div class="sidebar-content active">
         <div class="sidebar-pane" id="directions">
             <h1 id="dirHead">Get Directions</h1>
             <div class="dirContainer">
-                <!--Starts Hidden-->
                 <div id="dsResults">
                     <div class="row">
                         <div class="col-lg-12 panel-btn">
@@ -31,11 +28,8 @@
                         </div>
                     </div>
                     <div id="dirList">
-                        <!--HTML in here-->
-
                     </div>
                 </div>
-                <!--Starts Shown-->
                 <div id="dsInputs">
                     <div class="row">
                         <div class="col-lg-12 panel-btn">
@@ -68,19 +62,13 @@
                     </div>
                 </div>
                 <div id="ROAD" class="map-type selected col-lg-12">
-                    <div class="row">
-                        <img src="_img/road_opt.png"/>
-                    </div>
+                    <div class="row"><img src="road_opt.png"/></div>
                 </div>
                 <div id="HYBRID" class="map-type col-lg-12">
-                    <div class="row">
-                        <img src="_img/hybrid_opt.png"/>
-                    </div>
+                    <div class="row"><img src="hybrid_opt.png"/></div>
                 </div>
                 <div id="SAT" class="map-type col-lg-12">
-                    <div class="row">
-                        <img src="_img/sat_opt.png"/>
-                    </div>
+                    <div class="row"><img src="sat_opt.png"/></div>
                 </div>
             </div>
         </div>
@@ -91,12 +79,10 @@
                     The purpose of this map is to help you get to parks via public transit.  Nothing more, nothing less.  There is no particular way you must use this map, and we encourage you to play for a while to decide what works best for you.
                     By clicking on Park Information Marker, you can glean some basic information about the park.  You will also be zoomed in to the park, revealing small red Park Entrance Markers.
                 </p><br>
-                <p>
-                    Clicking a Park Entrance Marker gives you two options for getting directions to the park: via this map (“Get Directions”) or via Google Maps (“Get Directions via Google Maps”).  To use either button, you must input a location.
-                </p><br>
-                <p>
-                    To input your location, tap on the transit button (topmost symbol on the sidebar).  You can either enter it manually by typing it in the box, or click “Use My Location”.  Once you have entered your location, you can get directions to any of the parks visited by the NSSC!
-                </p><br>
+                <p>Clicking a Park Entrance Marker gives you two options for getting directions to the park: via this map (“Get Directions”) or via Google Maps (“Get Directions via Google Maps”).  To use either button, you must input a location.</p>
+                <br>
+                <p>To input your location, tap on the transit button (topmost symbol on the sidebar).  You can either enter it manually by typing it in the box, or click “Use My Location”.  Once you have entered your location, you can get directions to any of the parks visited by the NSSC!</p>
+                <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Legend</div>
                     <ul class="list-group">
@@ -112,26 +98,18 @@
             <div id="aboutContainer">
                 <br>
                 <p style="text-align: center">Looking for tips on how to use the map? Click on the <i class="fa fa-question"></i> tab to learn more.</p>
-                <p>
-                    After a couple years of working with a lovely paper map of the same title, the North Start Sierra Club (Minnesota's chapter of the famous organization) decided they wanted to take their project to the web.  Through a partnership with the University of St. Thomas (St. Paul, MN) they began work on a map.  The first run produced no usable product.
-                </p>
-                <p>
-                    Having improved his web development skills significantly, recent graduate Nick Ronnei built a better version of the map.  This new version is fully responsive thanks to <a href="https://github.com/Turbo87" target="_blank">Tobias Bieniek's</a> wonderful jQuery sidebar!.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  Nick received help on the code from colleague Hung Le.  He also had help with user training from Rani Mohanty and Nate Bettin.  Finally, Nick Smith (nicksmith2404@hotmail.com) helped with some image optimization and generation. A BIG thanks to all of them for their hard work!
-                </p>
+                <p>After a couple years of working with a lovely paper map of the same title, the North Start Sierra Club (Minnesota's chapter of the famous organization) decided they wanted to take their project to the web.  Through a partnership with the University of St. Thomas (St. Paul, MN) they began work on a map.  The first run produced no usable product.</p>
+                <p>Having improved his web development skills significantly, recent graduate Nick Ronnei built a better version of the map.  This new version is fully responsive thanks to <a href="https://github.com/Turbo87" target="_blank">Tobias Bieniek's</a> wonderful jQuery sidebar!.  Nick drew inspiration from <a href="http://www.davidtodd.info" target="_blank">David Todd's</a> map <a href="http://dmofot.github.io/batop250/" target="_blank">Beer Advocate's Top 250</a> and his custom <a href="https://github.com/dmofot/batop250" target="_blank">BeerLeaf</a> template which he forked from Bryan McBride's BootLeaf.  Nick received help on the code from colleague Hung Le.  He also had help with user training from Rani Mohanty and Nate Bettin.  Finally, Nick Smith (nicksmith2404@hotmail.com) helped with some image optimization and generation. A BIG thanks to all of them for their hard work!</p>
                 <br>
-                <p>
-                    The map's source code is open source, GNU GPL licensed, and available on <a href="https://github.com/ronn4031/ttgs" target="_blank">GitHub</a>. Its creator, Nick Ronnei (nronnei@gmail.com), would love to hear about it if you want to adapt it for your own use.
-                </p>
+                <p>The map's source code is open source, GNU GPL licensed, and available on <a href="https://github.com/ronn4031/ttgs" target="_blank">GitHub</a>. Its creator, Nick Ronnei (nronnei@gmail.com), would love to hear about it if you want to adapt it for your own use.</p>
             </div>
         </div>
     </div>
 </div>
-
 <div id="mapCanvas" class="sidebar-map"></div>
-
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-<script src="_js/infobox-mini.js" type="text/javascript"></script>
-<script type="text/javascript" src="_js/ttgs_1.8.2e.js"></script>
+<script src="infobox-mini.js" type="text/javascript"></script>
+<script src="ttgs_1.8.2e.min.js" type="text/javascript"></script>
 </body>
 </html>
