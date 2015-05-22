@@ -177,9 +177,17 @@ html,body,#mapCanvas {
     padding: 0;
 }
 
+/*Infobox CSS*/
+.parkInfo {
+    height: 180px;
+    padding-right: 7px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 /*Custom CSS for Directions Pane*/
 .dirContainer {
-    padding: 15px;
+    padding: 10px;
 }
 #dsResults {
     display: none;
@@ -209,6 +217,13 @@ html,body,#mapCanvas {
 }
 
 /*Custom CSS for Help Pane*/
+.helpContainer {
+    padding: 10px;
+}
+.helpContainer img {
+    height: 30px;
+    width: 30px;
+}
 
 /*Custom CSS for Settings Pane*/
 .settingsContainer {
@@ -239,7 +254,6 @@ html,body,#mapCanvas {
     border-bottom-left-radius: 10px;
 }
 .map-type-text {
-    /*padding: 20px;*/
     z-index: 2010;
 }
 .map-type img {
